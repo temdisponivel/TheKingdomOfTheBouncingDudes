@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace BounceDudes.Base
+namespace BounceDudes
 {
     /// <summary>
     /// Singleton for managing the gameplay.

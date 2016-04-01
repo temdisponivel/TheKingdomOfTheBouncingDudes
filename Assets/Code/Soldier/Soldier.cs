@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace BounceDudes.Base
+namespace BounceDudes
 {
     /// <summary>
     /// Base class for all soldiers.
     /// </summary>
-    public class Soldier : MonoBehaviour
+    abstract public class Soldier : MonoBehaviour
     {
         [Header("Attributes")]
         public Color _baseColor = Color.white;
@@ -36,10 +36,7 @@ namespace BounceDudes.Base
             this.Shoot();
         }
 
-        virtual public void Shoot()
-        {
-            this.RigidBody.AddForce(Weapon.Instance.transform.up * this._velocity * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
-        }
+        abstract public void Shoot();
 
         virtual public void FixedUpdate()
         {

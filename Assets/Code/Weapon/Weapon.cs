@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace BounceDudes.Base
+namespace BounceDudes
 {
     /// <summary>
     /// Weapon controlled by player.

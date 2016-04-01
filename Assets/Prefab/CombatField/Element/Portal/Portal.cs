@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using BounceDudes.Base;
 
 namespace BounceDudes
 {
@@ -19,6 +18,12 @@ namespace BounceDudes
                 this.LastTransported = collider.gameObject;
                 collider.gameObject.transform.position = this._otherEnd.transform.position;
             }
+        }
+
+        public void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(this.transform.position, this._otherEnd.transform.position);
         }
     }
 }
