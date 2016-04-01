@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using BounceDudes.Base;
 
-namespace BounceDudes.Base
+namespace BounceDudes
 {
     /// <summary>
     /// Element portal. Used to teleport on object from one position to another.
