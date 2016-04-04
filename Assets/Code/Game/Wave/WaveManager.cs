@@ -27,6 +27,7 @@ namespace BounceDudes
                 for (int j = 0; j < currentSpaws.Count; j++)
                 {
                     SpawnOption currentSpawn = currentSpaws[j];
+                    if (currentSpawn == null) { continue; }
                     currentSpawn._objectToSpawn.SetActive(true);
                     yield return new WaitForSeconds(currentSpawn._timeToNextSpawn);
                 }
@@ -44,7 +45,7 @@ namespace BounceDudes
             yield return new WaitForSeconds(seconds);
             callback();
         }
-
+        /*
         public void OnDrawGizmos()
         {
             for (int i = 0; i < this._waves.Count; i++)
@@ -52,20 +53,19 @@ namespace BounceDudes
                 UnityEngine.Random.seed = i;
                 Gizmos.color = UnityEngine.Random.ColorHSV();
                 Wave currentWave = this._waves[i];
+                if (currentWave == null) { continue; }
                 List<SpawnOption> currentSpaws = currentWave._spawns;
                 for (int j = 0; j < currentSpaws.Count - 1; j++)
                 {
                     SpawnOption currentSpawn = currentSpaws[j];
+                    if (currentSpawn == null) { continue; }
                     if (currentSpawn._objectToSpawn.transform.parent.gameObject.activeInHierarchy)
                     {
                         Gizmos.DrawLine(currentSpawn._objectToSpawn.transform.position, currentSpaws[j + 1]._objectToSpawn.transform.position);
                     }
                 }
-                if (i < this._waves.Count - 1)
-                {
-                    Gizmos.DrawLine(currentSpaws[currentSpaws.Count - 1]._objectToSpawn.transform.position, _waves[i + 1]._spawns[0]._objectToSpawn.transform.position);
-                }
             }
         }
+         */ 
     }
 }
