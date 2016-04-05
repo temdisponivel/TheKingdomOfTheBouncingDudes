@@ -65,7 +65,10 @@ namespace BounceDudes
             }
             else if (this._holding)
             {
-                this.Shoot();
+                if (Time.time - this._lastTimeShoot >= this._coolDown)
+                {
+                    this.Shoot();
+                }
                 this._ray.enabled = false;
                 this._holding = false;
             }
@@ -78,6 +81,7 @@ namespace BounceDudes
         {
             GameObject projectile = (GameObject)GameObject.Instantiate(this._projectiles[this._currentProjectileIndex], this.transform.position, this.transform.rotation);
             this._currentProjectileIndex = (this._currentProjectileIndex + 1) % this._projectiles.Count;
+            this._lastTimeShoot = Time.time;
         }
 
         protected void RotateTowardsMouse()

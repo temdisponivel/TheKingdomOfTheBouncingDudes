@@ -21,10 +21,6 @@ namespace BounceDudes
                 collision.gameObject.GetComponent<Base>().HP -= this.Damage;
                 this.Die();
             }
-            else if (collision.gameObject.layer == TagAndLayer.PLAYER_OBJECTS)
-            {
-                this.HP -= collision.gameObject.GetComponent<Character>().Damage;
-            }
         }
 
         virtual public void OnTriggerEnter2D(Collider2D collider)

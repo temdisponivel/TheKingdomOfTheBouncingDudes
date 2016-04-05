@@ -13,6 +13,7 @@ namespace BounceDudes
         static public GameManager Instance { get { return GameManager._instance; } }
 
         public List<GameObject> _allSoldiers = null;
+        public List<GameObject> _allMonsters = null;
         public List<int> _availableSoldiersId = null;
         protected List<GameObject> AvailableSoldiers = null;
         
@@ -36,6 +37,11 @@ namespace BounceDudes
                 }
             }
             return this.AvailableSoldiers;
+        }
+
+        public List<GameObject> GetAllMonsters()
+        {
+            return this._allMonsters;
         }
 
         public void GameOver()
