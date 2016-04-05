@@ -27,6 +27,19 @@ namespace BounceDudes
             }
         }
 
+        virtual public void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.tag == TagAndLayer.ENEMY_BASE)
+            {
+                collision.gameObject.GetComponent<Base>().HP += this.Damage;
+                this.Die();
+            }
+            else if (collision.gameObject.layer == TagAndLayer.PLAYER_OBJECTS)
+            {
+                this.HP -= collision.gameObject.GetComponent<Character>().Damage;
+            }
+        }
+
         virtual public void Die()
         {
             GameObject.Destroy(this.gameObject);

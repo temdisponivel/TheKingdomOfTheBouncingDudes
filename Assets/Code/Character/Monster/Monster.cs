@@ -18,8 +18,21 @@ namespace BounceDudes
         {
             if (collision.gameObject.tag == TagAndLayer.BASE)
             {
-                Base.Instance.HP -= this.Damage;
-                GameObject.Destroy(this.gameObject);
+                collision.gameObject.GetComponent<Base>().HP -= this.Damage;
+                this.Die();
+            }
+            else if (collision.gameObject.layer == TagAndLayer.PLAYER_OBJECTS)
+            {
+                this.HP -= collision.gameObject.GetComponent<Character>().Damage;
+            }
+        }
+
+        virtual public void OnTriggerEnter2D(Collider2D collider)
+        {
+            if (collider.gameObject.tag == TagAndLayer.BASE)
+            {
+                collider.gameObject.GetComponent<Base>().HP -= this.Damage;
+                this.Die();
             }
         }
     }

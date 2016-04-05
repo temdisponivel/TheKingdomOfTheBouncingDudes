@@ -8,17 +8,7 @@ namespace BounceDudes
     /// </summary>
     public class Base : MonoBehaviour
     {
-        static public Base Instance = null;
-
         public int _hp = 10;
         public int HP { get { return _hp; } set { _hp = value; if (_hp <= 0) { GameManager.Instance.GameOver(); } } }
-
-        virtual public void Start()
-        {
-            if (Base.Instance == null)
-            {
-                Base.Instance = this;
-            }
-        }
     }
 }
