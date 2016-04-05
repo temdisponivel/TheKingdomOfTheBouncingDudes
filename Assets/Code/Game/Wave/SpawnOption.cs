@@ -12,7 +12,9 @@ namespace BounceDudes
     [Serializable]
     public class SpawnOption
     {
-        public GameObject _objectToSpawn = null;
+        public GameObject _toSpawn = null;
+        public GameObject _shootPoint = null;
+        public GameObject _target = null;
         public float _timeToNextSpawn = 1f;
     }
 }

@@ -13,7 +13,7 @@ namespace BounceDudes
 
         public void OnTriggerEnter2D(Collider2D collider)
         {
-            if (this._otherEnd.LastTransported != collider.gameObject && collider.gameObject.layer != TagAndLayer.NOT_TRANSPORTABLE)
+            if (this._otherEnd.LastTransported != collider.gameObject)
             {
                 this.LastTransported = collider.gameObject;
                 collider.gameObject.transform.position = this._otherEnd.transform.position;

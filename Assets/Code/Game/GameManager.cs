@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace BounceDudes
 {
@@ -10,6 +11,10 @@ namespace BounceDudes
     {
         static protected GameManager _instance = null;
         static public GameManager Instance { get { return GameManager._instance; } }
+
+        public List<GameObject> _allSoldiers = null;
+        public List<int> _availableSoldiersId = null;
+        protected List<GameObject> AvailableSoldiers = null;
         
         public void Start()
         {
@@ -17,6 +22,25 @@ namespace BounceDudes
             {
                 GameManager._instance = this;
             }
+        }
+
+        public List<GameObject> GetAvailableSoldiers()
+        {
+            this.AvailableSoldiers = new List<GameObject>();
+            foreach (var soldier in this._allSoldiers)
+            {
+
+                if (this._availableSoldiersId.Contains(soldier.GetComponent<Character>()._id))
+                {
+                    this.AvailableSoldiers.Add(soldier);
+                }
+            }
+            return this.AvailableSoldiers;
+        }
+
+        public void GameOver()
+        {
+            Debug.Log("GAME OVER");
         }
     }
 }

@@ -12,9 +12,8 @@ namespace BounceDudes
         static public Weapon Instance = null;
 
         public Camera _camera = null;
-
-        [Header("Shooting settings")]
-        public List<GameObject> _projectiles = new List<GameObject>();
+        
+        protected List<GameObject> _projectiles = new List<GameObject>();
 
         [Tooltip("Multiplier (in seconds) for the weapon.")]
         public float _forceShootMultiplier = 1f;
@@ -37,6 +36,7 @@ namespace BounceDudes
             {
                 Weapon.Instance = this;
             }
+            this._projectiles = GameManager.Instance.GetAvailableSoldiers();
         }
 
         public void Update()
