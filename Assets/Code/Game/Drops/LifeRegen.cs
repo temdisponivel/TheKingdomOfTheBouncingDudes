@@ -11,12 +11,17 @@ namespace BounceDudes
         public int _regen = 1;
         public void OnCollisionEnter2D(Collision2D collision)
         {
-            Character character;
-            if ((character = collision.gameObject.GetComponent<Character>()) != null)
+            if (collision.gameObject.layer == TagAndLayer.ENEMY_OBJECTS)
             {
-                character.HP += this._regen;
+                LevelManager.Instance._enemyBase.HP -= this._regen;
                 this.Die();
             }
+            else if (collision.gameObject.layer == TagAndLayer.PLAYER_OBJECTS)
+            {
+                LevelManager.Instance._enemyBase.HP -= this._regen;
+                this.Die();
+            }
+
         }
 
         public void Die()

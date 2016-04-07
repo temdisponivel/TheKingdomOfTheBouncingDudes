@@ -62,7 +62,7 @@ namespace BounceDudes
 
         public GameObject GetRepresentationOfSoldier(int id)
         {
-            foreach (var soldier in _allSoldiers)
+            foreach (var soldier in _allSoldiersRepresentation)
             {
                 if (soldier.GetComponent<Character>()._id == id)
                 {

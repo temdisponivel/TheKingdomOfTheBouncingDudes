@@ -24,10 +24,14 @@ namespace BounceDudes
         public SpriteRenderer _ray = null;
         public int _quantityOfShownMunition = 10;
 
+        [Header("MovePoints")]
+        public List<GameObject> _movePoints = null;
+
         protected float _lastTimeShoot = 0f;
         protected float _currentForceMultiplier = 0f;
         protected bool _holding = false;
         protected int _currentProjectileIndex = 0;
+
         public int ShootCount { get; set; }
 
         public float ForceMultiplier { get { return this._currentForceMultiplier; } }
@@ -40,6 +44,7 @@ namespace BounceDudes
 
         public void Update()
         {
+            this.Move();
             this.ShootRoutine();
         }
 
@@ -97,6 +102,24 @@ namespace BounceDudes
             {
                 Gizmos.color = Color.yellow;
                 Gizmos.DrawRay(this.transform.position, (mousePosition - this.transform.position));
+            }
+        }
+
+        public void Move()
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                Vector3 clickPosition = this._camera.ScreenToWorldPoint(Input.mousePosition);
+                foreach (var movePoint in this._movePoints)
+                {
+                    if (Vector2.Distance(clickPosition, movePoint.transform.position) <= .1)
+                    {
+                        this.transform.position = movePoint.transform.position;
+                        this._lastTimeShoot = Time.time;
+                        break;
+                    }
+                }
+                
             }
         }
     }
