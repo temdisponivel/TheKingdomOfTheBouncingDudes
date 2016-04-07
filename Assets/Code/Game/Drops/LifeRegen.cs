@@ -18,10 +18,9 @@ namespace BounceDudes
             }
             else if (collision.gameObject.layer == TagAndLayer.PLAYER_OBJECTS)
             {
-                LevelManager.Instance._enemyBase.HP -= this._regen;
+                LevelManager.Instance._playerBase.HP += this._regen;
                 this.Die();
             }
-
         }
 
         public void Die()
