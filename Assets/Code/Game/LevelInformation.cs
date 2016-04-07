@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace BounceDudes
 {
@@ -13,5 +14,7 @@ namespace BounceDudes
         public int EnemiesKilled { get; set; }
         public float Score { get; set; }
         public bool Finished { get; set; }
+        public bool EarnSoldier { get; set; }
+        public GameObject Soldier { get; set; }
     }
 }

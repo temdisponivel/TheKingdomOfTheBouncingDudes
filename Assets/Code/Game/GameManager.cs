@@ -20,6 +20,8 @@ namespace BounceDudes
         public Dictionary<string, LevelInformation> LevelsInformation { get; set; }
 
         public Dictionary<int, string> SoldierNames { get; set; }
+
+        public string LastLevel { get; set; }
         
         public void Start()
         {
@@ -59,6 +61,30 @@ namespace BounceDudes
         public void GameOver()
         {
             Debug.Log("GAME OVER");
+        }
+
+        public void AddLevelInfo(string id, LevelInformation info)
+        {
+            if (this.LevelsInformation.ContainsKey(id))
+            {
+                if (!GameManager.Instance.LevelsInformation[id].Finished || GameManager.Instance.LevelsInformation[id].Score < info.Score)
+                {
+                    GameManager.Instance.LevelsInformation.Remove(id);
+                    GameManager.Instance.LevelsInformation.Add(id, info);
+                }
+            }
+            else
+            {
+                this.LevelsInformation.Add(id, info);
+            }
+            if (info.EarnSoldier)
+            {
+                Character character = info.Soldier.GetComponent<Character>();
+                if (!this._availableSoldiersId.Contains(character._id))
+                {
+                    this._availableSoldiersId.Add(character._id);
+                }
+            }
         }
     }
 }

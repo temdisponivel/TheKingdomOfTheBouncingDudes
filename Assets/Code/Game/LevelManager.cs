@@ -19,12 +19,18 @@ namespace BounceDudes
         public string CurrentLevel { get; set; }
         public float Score { get; set; }
 
+        [Header("Give Away")]
+        public float _pointsToGive = 10;
+        public bool _giveSoldier = false;
+        public GameObject _soldierToGive = null;
+
         public int EnemiesKilled { get; set; }
 
         public void Start()
         {
             LevelManager._instance = this;
             this.CurrentLevel = SceneManager.GetActiveScene().name;
+            GameManager.Instance.LastLevel = this.CurrentLevel;
             this.Score = 0;
         }
 
@@ -45,8 +51,17 @@ namespace BounceDudes
             info.Score = this.Score;
             info.EnemiesKilled = this.EnemiesKilled;
             info.Finished = win;
-            GameManager.Instance.LevelsInformation.Add(this.CurrentLevel, info);
-            SceneManager.LoadScene("LevelChooser");
+            if (this._giveSoldier && this.Score > this._pointsToGive)
+            {
+                info.EarnSoldier = true;
+                info.Soldier = this._soldierToGive;
+            }
+            else
+            {
+                info.EarnSoldier = false;
+            }
+            GameManager.Instance.AddLevelInfo(this.CurrentLevel, info);
+            SceneManager.LoadScene("EndLevel");
         }
 
         public void KillEnemy(Character enemy)
@@ -58,6 +73,7 @@ namespace BounceDudes
         public void CalculateScore()
         {
             this.Score += this._playerBase.HP + this._enemyBase.HP;
+            this.Score = Mathf.Max(0, this.Score);
         }
     }
 }
