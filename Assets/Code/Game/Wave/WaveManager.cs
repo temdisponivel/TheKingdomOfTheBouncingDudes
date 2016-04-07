@@ -40,6 +40,7 @@ namespace BounceDudes
 
                 yield return new WaitForSeconds(currentWave._timeToNextWave);
             }
+            LevelManager.Instance.FinishLevel();
         }
 
         public void StartWave()

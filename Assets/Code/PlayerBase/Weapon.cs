@@ -79,7 +79,7 @@ namespace BounceDudes
         /// </summary>
         public void Shoot()
         {
-            GameObject projectile = (GameObject)GameObject.Instantiate(this._projectiles[this._currentProjectileIndex], this.transform.position, this.transform.rotation);
+            GameObject.Instantiate(this._projectiles[this._currentProjectileIndex], this.transform.position, this.transform.rotation);
             this._currentProjectileIndex = (this._currentProjectileIndex + 1) % this._projectiles.Count;
             this._lastTimeShoot = Time.time;
         }

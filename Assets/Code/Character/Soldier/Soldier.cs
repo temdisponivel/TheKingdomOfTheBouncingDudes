@@ -8,7 +8,7 @@ namespace BounceDudes
     /// </summary>
     public class Soldier : Character
     {        
-        virtual public void Start()
+        override public void Start()
         {
             base.Start();
             this.Shoot();
@@ -41,12 +41,17 @@ namespace BounceDudes
             if (collider.gameObject.layer == TagAndLayer.ENEMY_OBJECTS)
             {
                 Character character = collider.gameObject.GetComponent<Character>();
-                this.HP -= character.Damage;
-                character.HP -= this.Damage;
+                this.HP -= 1;
+                character.HP -= 1;
+
+                if (character.HP <= 0)
+                {
+                    LevelManager.Instance.KillEnemy(character);
+                }
             }
         }
 
-        virtual public void Die()
+        override public void Die()
         {
             GameObject.Destroy(this.gameObject);
         }

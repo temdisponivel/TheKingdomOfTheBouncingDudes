@@ -17,12 +17,24 @@ namespace BounceDudes
         public List<int> _availableSoldiersId = null;
         protected List<GameObject> AvailableSoldiers = null;
         
+        public Dictionary<string, LevelInformation> LevelsInformation { get; set; }
+
+        public Dictionary<int, string> SoldierNames { get; set; }
+        
         public void Start()
         {
             if (GameManager.Instance == null)
             {
                 GameManager._instance = this;
+                GameObject.DontDestroyOnLoad(this.gameObject);
             }
+            else
+            {
+                GameObject.Destroy(this.gameObject);
+                return;
+            }
+            this.LevelsInformation = new Dictionary<string, LevelInformation>();
+            this.SoldierNames = new Dictionary<int, string>();
         }
 
         public List<GameObject> GetAvailableSoldiers()

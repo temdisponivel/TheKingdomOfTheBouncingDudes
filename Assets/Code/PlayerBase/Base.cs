@@ -9,6 +9,6 @@ namespace BounceDudes
     public class Base : MonoBehaviour
     {
         public int _hp = 10;
-        public int HP { get { return _hp; } set { _hp = value; if (_hp <= 0) { GameManager.Instance.GameOver(); } } }
+        public int HP { get { return _hp; } set { _hp = value; if (_hp <= 0) { LevelManager.Instance.GameOver(); } } }
     }
 }

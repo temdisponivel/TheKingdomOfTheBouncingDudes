@@ -9,6 +9,7 @@ namespace BounceDudes
     public class Character : MonoBehaviour
     {
         [Header("Attributes")]
+        public float _pointsWhenKilled = 5f;
         public int _id = 1;
         public bool _affectedByElement = true;
         public Color _baseColor = Color.white;
