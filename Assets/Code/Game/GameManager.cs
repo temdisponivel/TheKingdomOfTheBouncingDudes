@@ -13,6 +13,7 @@ namespace BounceDudes
         static public GameManager Instance { get { return GameManager._instance; } }
 
         public List<GameObject> _allSoldiers = null;
+        public List<GameObject> _allSoldiersRepresentation = null;
         public List<GameObject> _allMonsters = null;
         public List<int> _availableSoldiersId = null;
         protected List<GameObject> AvailableSoldiers = null;
@@ -22,6 +23,8 @@ namespace BounceDudes
         public Dictionary<int, string> SoldierNames { get; set; }
 
         public string LastLevel { get; set; }
+
+        protected Dictionary<int, GameObject> Soldiers { get; set; }
         
         public void Start()
         {
@@ -37,6 +40,11 @@ namespace BounceDudes
             }
             this.LevelsInformation = new Dictionary<string, LevelInformation>();
             this.SoldierNames = new Dictionary<int, string>();
+            this.Soldiers = new Dictionary<int, GameObject>();
+            foreach (var soldier in this._allSoldiers)
+            {
+                this.Soldiers[soldier.GetComponent<Character>()._id] = soldier;
+            }
         }
 
         public List<GameObject> GetAvailableSoldiers()
@@ -44,13 +52,24 @@ namespace BounceDudes
             this.AvailableSoldiers = new List<GameObject>();
             foreach (var soldier in this._allSoldiers)
             {
-
                 if (this._availableSoldiersId.Contains(soldier.GetComponent<Character>()._id))
                 {
                     this.AvailableSoldiers.Add(soldier);
                 }
             }
             return this.AvailableSoldiers;
+        }
+
+        public GameObject GetRepresentationOfSoldier(int id)
+        {
+            foreach (var soldier in _allSoldiers)
+            {
+                if (soldier.GetComponent<Character>()._id == id)
+                {
+                    return soldier;
+                }
+            }
+            return null;
         }
 
         public List<GameObject> GetAllMonsters()
@@ -79,10 +98,9 @@ namespace BounceDudes
             }
             if (info.EarnSoldier)
             {
-                Character character = info.Soldier.GetComponent<Character>();
-                if (!this._availableSoldiersId.Contains(character._id))
+                if (!this._availableSoldiersId.Contains(info.SoldierId))
                 {
-                    this._availableSoldiersId.Add(character._id);
+                    this._availableSoldiersId.Add(info.SoldierId);
                 }
             }
         }

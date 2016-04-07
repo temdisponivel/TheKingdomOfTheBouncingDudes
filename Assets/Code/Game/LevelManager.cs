@@ -22,7 +22,7 @@ namespace BounceDudes
         [Header("Give Away")]
         public float _pointsToGive = 10;
         public bool _giveSoldier = false;
-        public GameObject _soldierToGive = null;
+        public int _soldierToGive = 0;
 
         public int EnemiesKilled { get; set; }
 
@@ -51,10 +51,11 @@ namespace BounceDudes
             info.Score = this.Score;
             info.EnemiesKilled = this.EnemiesKilled;
             info.Finished = win;
+            info.ShootCount = Weapon.Instance.ShootCount;
             if (this._giveSoldier && this.Score > this._pointsToGive)
             {
                 info.EarnSoldier = true;
-                info.Soldier = this._soldierToGive;
+                info.SoldierId = this._soldierToGive;
             }
             else
             {

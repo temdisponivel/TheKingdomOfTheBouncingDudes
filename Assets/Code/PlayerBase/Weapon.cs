@@ -22,20 +22,19 @@ namespace BounceDudes
 
         [Header("Visual settings")]
         public SpriteRenderer _ray = null;
+        public int _quantityOfShownMunition = 10;
 
         protected float _lastTimeShoot = 0f;
         protected float _currentForceMultiplier = 0f;
         protected bool _holding = false;
         protected int _currentProjectileIndex = 0;
+        public int ShootCount { get; set; }
 
         public float ForceMultiplier { get { return this._currentForceMultiplier; } }
 
         public void Start()
         {
-            if (Weapon.Instance == null)
-            {
-                Weapon.Instance = this;
-            }
+            Weapon.Instance = this;
             this._projectiles = GameManager.Instance.GetAvailableSoldiers();
         }
 
@@ -82,6 +81,7 @@ namespace BounceDudes
             GameObject.Instantiate(this._projectiles[this._currentProjectileIndex], this.transform.position, this.transform.rotation);
             this._currentProjectileIndex = (this._currentProjectileIndex + 1) % this._projectiles.Count;
             this._lastTimeShoot = Time.time;
+            this.ShootCount++;
         }
 
         protected void RotateTowardsMouse()

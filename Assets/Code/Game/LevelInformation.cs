@@ -13,8 +13,9 @@ namespace BounceDudes
     {
         public int EnemiesKilled { get; set; }
         public float Score { get; set; }
+        public int ShootCount { get; set; }
         public bool Finished { get; set; }
         public bool EarnSoldier { get; set; }
-        public GameObject Soldier { get; set; }
+        public int SoldierId { get; set; }
     }
 }

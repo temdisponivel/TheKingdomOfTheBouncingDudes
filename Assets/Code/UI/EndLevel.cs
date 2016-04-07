@@ -15,6 +15,7 @@ namespace BounceDudes
         public string _messageLose = "";
         public Text _scoreText = null;
         public Text _enemiesKilled = null;
+        public Text _shootCountText = null;
         public Text _messageText = null;
 
         public void Start()
@@ -22,10 +23,11 @@ namespace BounceDudes
             LevelInformation info = GameManager.Instance.LevelsInformation[GameManager.Instance.LastLevel];
             if (info.EarnSoldier)
             {
-                GameObject.Instantiate(info.Soldier, this._positionToCreateSoldierEarned.position, this._positionToCreateSoldierEarned.rotation);
+                GameObject.Instantiate(GameManager.Instance.GetRepresentationOfSoldier(info.SoldierId), this._positionToCreateSoldierEarned.position, this._positionToCreateSoldierEarned.rotation);
             }
             this._scoreText.text = info.Score.ToString(".2");
             this._enemiesKilled.text = info.EnemiesKilled.ToString();
+            this._shootCountText.text = info.ShootCount.ToString();
             this._messageText.text = info.Finished ? this._messageWin : this._messageLose;
         }
 

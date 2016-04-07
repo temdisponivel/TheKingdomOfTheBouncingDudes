@@ -33,6 +33,8 @@ namespace BounceDudes
                 builder.AppendLine(GameManager.Instance.LevelsInformation[levelInfo.name].Finished ? "Yes" : "No");
                 builder.Append("Score: ");
                 builder.AppendLine(GameManager.Instance.LevelsInformation[levelInfo.name].Score.ToString(".2"));
+                builder.Append("Shoots: ");
+                builder.Append(GameManager.Instance.LevelsInformation[levelInfo.name].ShootCount);
                 builder.Append("Enemies Kill: ");
                 builder.Append(GameManager.Instance.LevelsInformation[levelInfo.name].EnemiesKilled);
                 text.text = builder.ToString();
