@@ -55,10 +55,11 @@ namespace BounceDudes
                 GameObject target = this._targets[this._currentIndexTarget % this._targets.Length];
 
                 GameObject soldier = (GameObject)GameObject.Instantiate(this._toShoot, this._shootPoint.transform.position,
-                    Quaternion.LookRotation(Vector3.forward, (target.transform.position - this._shootPoint.transform.position).normalized));
+                    Quaternion.LookRotation(Vector3.forward, diff = (target.transform.position - this._shootPoint.transform.position).normalized));
 
                 soldier.transform.localScale = soldier.transform.localScale / this._quantShoot;
                 this._inside.transform.localScale = this._insideScaleBkp - ((this._insideScaleBkp / this._quantShoot) * (this._currentShootCount + 1));
+
                 this._lastTimeShoot = Time.time;
                 this._currentShootCount++;
                 this._currentIndexTarget++;
@@ -95,6 +96,13 @@ namespace BounceDudes
                 this._shootPoint = this._shootPointEnemy;
                 this._toShoot = GameManager.Instance.Monsters[gameObject.GetComponent<Character>()._id];
             }
+        }
+
+
+        public void OnDrawGizmos()
+        {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawRay(this.transform.position, diff);
         }
     }
 }

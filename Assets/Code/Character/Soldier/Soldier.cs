@@ -16,7 +16,7 @@ namespace BounceDudes
 
         virtual public void Shoot()
         {
-            this.RigidBody.AddForce(Weapon.Instance.transform.up * this._velocity * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
+            this.RigidBody.AddForce(this.transform.up * this._velocity * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
         }
         
         virtual public void OnCollisionEnter2D(Collision2D collision)
