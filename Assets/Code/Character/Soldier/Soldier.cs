@@ -18,15 +18,7 @@ namespace BounceDudes
         {
             this.RigidBody.AddForce(Weapon.Instance.transform.up * this._velocity * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
         }
-
-        virtual public void FixedUpdate()
-        {
-            if (this.RigidBody.velocity.magnitude <= .01)
-            {
-                this.Die();
-            }
-        }
-
+        
         virtual public void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.tag == TagAndLayer.ENEMY_BASE)

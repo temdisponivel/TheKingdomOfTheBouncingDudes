@@ -24,7 +24,8 @@ namespace BounceDudes
 
         public string LastLevel { get; set; }
 
-        protected Dictionary<int, GameObject> Soldiers { get; set; }
+        public Dictionary<int, GameObject> Soldiers { get; set; }
+        public Dictionary<int, GameObject> Monsters { get; set; }
         
         public void Start()
         {
@@ -41,9 +42,16 @@ namespace BounceDudes
             this.LevelsInformation = new Dictionary<string, LevelInformation>();
             this.SoldierNames = new Dictionary<int, string>();
             this.Soldiers = new Dictionary<int, GameObject>();
+            this.Monsters = new Dictionary<int, GameObject>();
+
             foreach (var soldier in this._allSoldiers)
             {
                 this.Soldiers[soldier.GetComponent<Character>()._id] = soldier;
+            }
+
+            foreach (var monster in this._allMonsters)
+            {
+                this.Monsters[monster.GetComponent<Character>()._id] = monster;
             }
         }
 
