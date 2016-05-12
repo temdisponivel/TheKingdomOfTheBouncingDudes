@@ -14,8 +14,10 @@ namespace BounceDudes
         public bool _affectedByElement = true;
         public Color _baseColor = Color.white;
         public int _damage = 1;
+		public float _speed = 1f;
+		public float _size = 1f; // Only for Game Design porpouses.
         public float _hp = 1;
-        public float _velocity = 1f;
+        
 
         protected Rigidbody2D _rigid = null;
         protected Animator _animator = null;
@@ -25,7 +27,7 @@ namespace BounceDudes
         public Animator Animator { get { return this._animator; } }
         public Collider2D Collider { get { return this._collider; } }
         public float HP { get { return this._hp; } set { this._hp = value; if (this._hp <= 0) { this.Die(); } } }
-        public float Velocity { get { return this._velocity; } set { this._velocity = value; } }
+        public float Speed { get { return this._speed; } set { this._speed = value; } }
         public int Damage { get { return this._damage; } set { this._damage = value; } }
         public bool AffectedByElement { get { return this._affectedByElement; } set { this._affectedByElement = value; } }
 
@@ -40,5 +42,6 @@ namespace BounceDudes
         {
             GameObject.Destroy(this.gameObject);
         }
+			
     }
 }

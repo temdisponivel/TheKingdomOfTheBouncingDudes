@@ -16,7 +16,7 @@ namespace BounceDudes
 
         virtual public void Shoot()
         {
-            this.RigidBody.AddForce(this.transform.up * this._velocity * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
+            this.RigidBody.AddForce(this.transform.up * this._speed * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
         }
         
         virtual public void OnCollisionEnter2D(Collision2D collision)
@@ -24,7 +24,8 @@ namespace BounceDudes
             if (collision.gameObject.tag == TagAndLayer.ENEMY_BASE)
             {
                 collision.gameObject.GetComponent<Base>().HP += this.Damage;
-                this.Die();
+				this.HP -= 1;
+                //this.Die();
             }
         }
 

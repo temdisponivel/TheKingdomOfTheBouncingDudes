@@ -11,7 +11,7 @@ namespace BounceDudes
         public override void Start()
         {
             base.Start();
-            this.RigidBody.AddForce(this.transform.up * this._velocity, ForceMode2D.Impulse);
+            this.RigidBody.AddForce(this.transform.up * this._speed, ForceMode2D.Impulse);
         }
 
         virtual public void OnCollisionEnter2D(Collision2D collision)

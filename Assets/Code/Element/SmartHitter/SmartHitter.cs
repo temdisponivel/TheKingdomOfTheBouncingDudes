@@ -52,11 +52,11 @@ namespace BounceDudes
                 if (hit != null)
                 {
                     Debug.Log(hit.gameObject);
-                    body.AddForce((hit.gameObject.transform.position - this.transform.position).normalized * this._object.GetComponent<Character>().Velocity * this._forceMultiplier, ForceMode2D.Impulse);
+                    body.AddForce((hit.gameObject.transform.position - this.transform.position).normalized * this._object.GetComponent<Character>().Speed * this._forceMultiplier, ForceMode2D.Impulse);
                 }
                 else
                 {
-                    body.AddForce(this._object.transform.up * this._object.GetComponent<Character>().Velocity * this._forceMultiplier, ForceMode2D.Impulse);
+                    body.AddForce(this._object.transform.up * this._object.GetComponent<Character>().Speed * this._forceMultiplier, ForceMode2D.Impulse);
                 }
             }
         }
