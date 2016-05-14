@@ -17,7 +17,7 @@ namespace BounceDudes
 		public float _speed = 1f;
 		public float _size = 1f; // Only for Game Design porpouses.
         public float _hp = 1;
-        
+
 
         protected Rigidbody2D _rigid = null;
         protected Animator _animator = null;
