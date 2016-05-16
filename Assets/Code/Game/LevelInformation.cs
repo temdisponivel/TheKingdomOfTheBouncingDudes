@@ -9,13 +9,14 @@ namespace BounceDudes
     /// <summary>
     /// Class that holds useful information about a class.
     /// </summary>
+    [Serializable]
     public class LevelInformation
     {
         public int EnemiesKilled { get; set; }
         public float Score { get; set; }
         public int ShootCount { get; set; }
         public bool Finished { get; set; }
-        public bool EarnSoldier { get; set; }
-        public int SoldierId { get; set; }
+        public int[] SoldiersEarned { get; set; }
+        public int Star { get; set; }
     }
 }

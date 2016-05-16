@@ -2,6 +2,9 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System.Linq;
+using Assets.Code.Game;
 
 namespace BounceDudes
 {
@@ -19,12 +22,14 @@ namespace BounceDudes
         public string CurrentLevel { get; set; }
         public float Score { get; set; }
 
-        [Header("Give Away")]
-        public float _pointsToGive = 10;
-        public bool _giveSoldier = false;
-        public int _soldierToGive = 0;
+        [Header("Give Away")] 
+        public int[] StarByScore;
+
+        public SoldiersDictionaryHack[] SoldiersToGiveByStar;
 
         public int EnemiesKilled { get; set; }
+
+        protected Dictionary<int, int[]> SoldierByStar;
 
         public void Start()
         {
@@ -32,6 +37,11 @@ namespace BounceDudes
             this.CurrentLevel = SceneManager.GetActiveScene().name;
             GameManager.Instance.LastLevel = this.CurrentLevel;
             this.Score = 0;
+            this.SoldierByStar = new Dictionary<int, int[]>();
+            foreach (var soldierByStar in this.SoldiersToGiveByStar)
+            {
+                this.SoldierByStar[soldierByStar.Star] = soldierByStar.SoldierToGive;
+            }
         }
 
         public void GameOver()
@@ -52,14 +62,14 @@ namespace BounceDudes
             info.EnemiesKilled = this.EnemiesKilled;
             info.Finished = win;
             info.ShootCount = Weapon.Instance.ShootCount;
-            if (this._giveSoldier && this.Score > this._pointsToGive)
+            info.Star = this.StarByScore.Where(s => s >= this.Score).Count();
+            info.SoldiersEarned = new int[this.SoldierByStar[info.Star].Length];
+            if (this.SoldierByStar.ContainsKey(info.Star))
             {
-                info.EarnSoldier = true;
-                info.SoldierId = this._soldierToGive;
-            }
-            else
-            {
-                info.EarnSoldier = false;
+                for (int i = 0, soldierId = 0; i < this.SoldierByStar[info.Star].Length; soldierId = this.SoldierByStar[info.Star][i++])
+                {
+                    info.SoldiersEarned[i] = soldierId;
+                }   
             }
             GameManager.Instance.AddLevelInfo(this.CurrentLevel, info);
             SceneManager.LoadScene("EndLevel");

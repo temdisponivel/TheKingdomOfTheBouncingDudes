@@ -41,6 +41,7 @@ namespace BounceDudes
 
         public void Return()
         {
+            GameManager.Instance.SaveGame();
             SceneManager.LoadScene("LevelChooser");
         }
 

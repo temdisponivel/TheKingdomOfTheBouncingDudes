@@ -1,6 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using Assets.Code.Game;
 
 namespace BounceDudes
 {
@@ -12,12 +17,18 @@ namespace BounceDudes
         static protected GameManager _instance = null;
         static public GameManager Instance { get { return GameManager._instance; } }
 
+        public string SaveFileName = "boucedudes.save";
+
+        public string SaveFilePath { get { return String.Format("{0}{1}{2}", Application.persistentDataPath, Path.PathSeparator, SaveFileName); } }
+
+        public List<GameObject> _specialProjectiles = null;
+
         public List<GameObject> _allSoldiers = null;
         public List<GameObject> _allSoldiersRepresentation = null;
         public List<GameObject> _allMonsters = null;
         public List<int> _availableSoldiersId = null;
         protected List<GameObject> AvailableSoldiers = null;
-        
+
         public Dictionary<string, LevelInformation> LevelsInformation { get; set; }
 
         public Dictionary<int, string> SoldierNames { get; set; }
@@ -26,7 +37,7 @@ namespace BounceDudes
 
         public Dictionary<int, GameObject> Soldiers { get; set; }
         public Dictionary<int, GameObject> Monsters { get; set; }
-        
+
         public void Start()
         {
             if (GameManager.Instance == null)
@@ -87,6 +98,7 @@ namespace BounceDudes
 
         public void GameOver()
         {
+            this.SaveGame();
             Debug.Log("GAME OVER");
         }
 
@@ -104,13 +116,50 @@ namespace BounceDudes
             {
                 this.LevelsInformation.Add(id, info);
             }
-            if (info.EarnSoldier)
+            foreach (var soldierId in info.SoldiersEarned)
             {
-                if (!this._availableSoldiersId.Contains(info.SoldierId))
+                if (!this._availableSoldiersId.Contains(soldierId))
                 {
-                    this._availableSoldiersId.Add(info.SoldierId);
+                    this._availableSoldiersId.Add(soldierId);
                 }
             }
+            this.SaveGame();
+        }
+
+        public void SaveGame()
+        {
+            string info = JsonUtility.ToJson(this.UpdateToGameInfo());
+            File.WriteAllText(this.SaveFilePath, info);
+        }
+
+        public void LoadGame()
+        {
+            if (File.Exists(this.SaveFilePath))
+            {
+                GameInfomation gameInfo = JsonUtility.FromJson<GameInfomation>(File.ReadAllText(this.SaveFilePath));
+                this.UpdateFromGameInfo(gameInfo);
+            }
+            else
+            {
+                this.SaveGame();
+            }
+        }
+
+        public void UpdateFromGameInfo(GameInfomation gameInfo)
+        {
+            this.LevelsInformation = gameInfo.Levels;
+            this._availableSoldiersId = gameInfo.Soldiers.ToList();
+            this.SoldierNames = gameInfo.SoldierNames;
+        }
+
+        public GameInfomation UpdateToGameInfo()
+        {
+            return new GameInfomation()
+            {
+                Levels = this.LevelsInformation,
+                Soldiers = this._availableSoldiersId.ToArray(),
+                SoldierNames = this.SoldierNames,
+            };
         }
     }
 }

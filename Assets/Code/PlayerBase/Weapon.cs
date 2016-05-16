@@ -14,6 +14,7 @@ namespace BounceDudes
         public Camera _camera = null;
         
         protected List<GameObject> _projectiles = new List<GameObject>();
+        protected List<GameObject> _projectilesSpecial = new List<GameObject>();
 
         [Tooltip("Multiplier (in seconds) for the weapon.")]
         public float _forceShootMultiplier = 1f;
@@ -27,10 +28,18 @@ namespace BounceDudes
         [Header("MovePoints")]
         public List<GameObject> _movePoints = null;
 
+        [Header("Special")] 
+        public float _coolDownBetweenSpecials = 3f;
+        public float _specialDuration = 3f;
+
+        protected bool _special = false;
+        protected float _specialStartTime = 0;
+
         protected float _lastTimeShoot = 0f;
         protected float _currentForceMultiplier = 0f;
         protected bool _holding = false;
         protected int _currentProjectileIndex = 0;
+        protected int _currentSpecialProjectileIndex = 0;
 
         public int ShootCount { get; set; }
 
@@ -40,12 +49,25 @@ namespace BounceDudes
         {
             Weapon.Instance = this;
             this._projectiles = GameManager.Instance.GetAvailableSoldiers();
+            this._projectilesSpecial = GameManager.Instance._specialProjectiles;
+
         }
 
         public void Update()
         {
             this.Move();
             this.ShootRoutine();
+
+            if (!this._special && Input.GetButtonUp("Special") && (Time.time - (this._specialStartTime + this._specialDuration)) >= this._coolDownBetweenSpecials)
+            {
+                Debug.Log("SPECIAL");
+                this._special = true;
+                this._specialStartTime = Time.time;
+            }
+            else
+            {
+                this._special = this._special && (Time.time - this._specialStartTime) <= this._specialDuration;
+            }
         }
 
         /// <summary>
@@ -69,7 +91,12 @@ namespace BounceDudes
             }
             else if (this._holding)
             {
-                if (Time.time - this._lastTimeShoot >= this._coolDown)
+                if (this._special)
+                {
+                    this._currentForceMultiplier = this._limitForceMultiplier;
+                    this.ShootSpecial();
+                }
+                else if (Time.time - this._lastTimeShoot >= this._coolDown)
                 {
                     this.Shoot();
                 }
@@ -83,10 +110,26 @@ namespace BounceDudes
         /// </summary>
         public void Shoot()
         {
-            GameObject.Instantiate(this._projectiles[this._currentProjectileIndex], this.transform.position, this.transform.rotation);
+            this.ShootObject(this._projectiles[this._currentProjectileIndex]);
             this._currentProjectileIndex = (this._currentProjectileIndex + 1) % this._projectiles.Count;
             this._lastTimeShoot = Time.time;
             this.ShootCount++;
+        }
+
+        /// <summary>
+        /// Shoot the current projectile.
+        /// </summary>
+        public void ShootSpecial()
+        {
+            this.ShootObject(this._projectilesSpecial[this._currentSpecialProjectileIndex]);
+            this._currentSpecialProjectileIndex = (this._currentSpecialProjectileIndex + 1) % this._projectilesSpecial.Count;
+            this._lastTimeShoot = Time.time;
+            this.ShootCount++;
+        }
+
+        public void ShootObject(GameObject shoot)
+        {
+            GameObject.Instantiate(shoot, this.transform.position, this.transform.rotation);
         }
 
         protected void RotateTowardsMouse()
