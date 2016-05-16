@@ -12,6 +12,7 @@ namespace BounceDudes
         {
             base.Start();
             this.RigidBody.AddForce(this.transform.up * this._speed, ForceMode2D.Impulse);
+			this.transform.rotation = new Quaternion (0, 0, 0, 1.0f);
         }
 
         virtual public void OnCollisionEnter2D(Collision2D collision)
