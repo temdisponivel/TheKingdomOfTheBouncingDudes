@@ -10,10 +10,11 @@ namespace BounceDudes
     /// </summary>
     public class WaveManager : MonoBehaviour
     {
+		public GameObject _spawner;
         public List<Wave> _waves = null;
         public float _startDelay = 1f;
-        
-        
+
+		        
         public void Start()
         {
             this.StartCoroutine(this.WaitSeconds(this._startDelay, this.StartWave));
@@ -30,10 +31,10 @@ namespace BounceDudes
                 {
                     SpawnOption currentSpawn = currentSpaws[j];
 
-                    this.transform.position = currentSpawn._shootPoint.transform.position;
+					this._spawner.transform.position = currentSpawn._spawnPoint.transform.position;
 
-                    GameObject monster = (GameObject)GameObject.Instantiate(currentSpawn._toSpawn, this.transform.position, this.transform.rotation);
-                    monster.transform.rotation = this.transform.rotation = Quaternion.LookRotation(Vector3.forward, (currentSpawn._target.transform.position - this.transform.position).normalized);
+					GameObject monster = (GameObject)GameObject.Instantiate(currentSpawn._toSpawn, this._spawner.transform.position, this._spawner.transform.rotation);
+					monster.transform.rotation = this._spawner.transform.rotation = Quaternion.LookRotation(Vector3.forward, (currentSpawn._target.transform.position - this._spawner.transform.position).normalized);
 
                     yield return new WaitForSeconds(currentSpawn._timeToNextSpawn);
                 }
