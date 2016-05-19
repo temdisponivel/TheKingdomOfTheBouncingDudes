@@ -21,12 +21,16 @@ namespace BounceDudes
         public float _coolDown = 1f;
         public float _limitForceMultiplier = 10f;
 
+		[Header("Minor Cog Object")]
+		public GameObject _cogObject;
+
         [Header("Visual settings")]
-        public SpriteRenderer _ray = null;
+        //public SpriteRenderer _ray = null;
         public int _quantityOfShownMunition = 10;
 
         [Header("MovePoints")]
         public List<GameObject> _movePoints = null;
+
 
         [Header("Special")] 
         public float _coolDownBetweenSpecials = 3f;
@@ -50,12 +54,11 @@ namespace BounceDudes
             Weapon.Instance = this;
             this._projectiles = GameManager.Instance.GetAvailableSoldiers();
             this._projectilesSpecial = GameManager.Instance._specialProjectiles;
-
         }
 
         public void Update()
         {
-            this.Move();
+            //this.Move();
             this.ShootRoutine();
 
             if (!this._special && Input.GetButtonUp("Special") && (Time.time - (this._specialStartTime + this._specialDuration)) >= this._coolDownBetweenSpecials)
@@ -79,7 +82,7 @@ namespace BounceDudes
             {
                 if (!this._holding)
                 {
-                    this._ray.enabled = true;
+                    //this._ray.enabled = true;
                     this._holding = true;
                     this._currentForceMultiplier = 0;
                 }
@@ -100,7 +103,7 @@ namespace BounceDudes
                 {
                     this.Shoot();
                 }
-                this._ray.enabled = false;
+                //this._ray.enabled = false;
                 this._holding = false;
             }
         }
@@ -136,6 +139,7 @@ namespace BounceDudes
         {
             Vector3 mousePosition = this._camera.ScreenToWorldPoint(Input.mousePosition);
             this.transform.rotation = Quaternion.LookRotation(Vector3.forward, (mousePosition - this.transform.position).normalized);
+			_cogObject.transform.rotation = Quaternion.Inverse (this.transform.rotation * this.transform.rotation);
         }
 
         public void OnDrawGizmos()
@@ -148,6 +152,7 @@ namespace BounceDudes
             }
         }
 
+		/*
         public void Move()
         {
             if (Input.GetMouseButtonUp(0))
@@ -165,5 +170,6 @@ namespace BounceDudes
                 
             }
         }
+        */
     }
 }

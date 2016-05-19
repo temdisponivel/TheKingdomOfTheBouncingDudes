@@ -8,6 +8,7 @@ namespace BounceDudes
     /// </summary>
     public class Soldier : Character
     {        
+		
         override public void Start()
         {
             base.Start();
@@ -17,6 +18,7 @@ namespace BounceDudes
         virtual public void Shoot()
         {
             this.RigidBody.AddForce(this.transform.up * this._speed * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
+			_sprite.sortingOrder = 3;
         }
         
         virtual public void OnCollisionEnter2D(Collision2D collision)
