@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,6 +12,8 @@ namespace BounceDudes
     {
         static public Weapon Instance = null;
 
+		public Text _textAngle = null;
+
         public Camera _camera = null;
         
         protected List<GameObject> _projectiles = new List<GameObject>();
@@ -21,8 +24,9 @@ namespace BounceDudes
         public float _coolDown = 1f;
         public float _limitForceMultiplier = 10f;
 
-		[Header("Minor Cog Object")]
-		public GameObject _cogObject;
+		[Header("Objects")]
+		public GameObject _shootPoint = null;
+		public GameObject _cogObject = null;
 
         [Header("Visual settings")]
         //public SpriteRenderer _ray = null;
@@ -45,6 +49,8 @@ namespace BounceDudes
         protected int _currentProjectileIndex = 0;
         protected int _currentSpecialProjectileIndex = 0;
 
+		protected Animator _weaponAnimator = null;
+
         public int ShootCount { get; set; }
 
         public float ForceMultiplier { get { return this._currentForceMultiplier; } }
@@ -54,6 +60,8 @@ namespace BounceDudes
             Weapon.Instance = this;
             this._projectiles = GameManager.Instance.GetAvailableSoldiers();
             this._projectilesSpecial = GameManager.Instance._specialProjectiles;
+
+			this._weaponAnimator = this.GetComponentInParent<Animator> ();
         }
 
         public void Update()
@@ -113,6 +121,8 @@ namespace BounceDudes
         /// </summary>
         public void Shoot()
         {
+			this._weaponAnimator.SetTrigger ("Shooting");
+
             this.ShootObject(this._projectiles[this._currentProjectileIndex]);
             this._currentProjectileIndex = (this._currentProjectileIndex + 1) % this._projectiles.Count;
             this._lastTimeShoot = Time.time;
@@ -132,7 +142,7 @@ namespace BounceDudes
 
         public void ShootObject(GameObject shoot)
         {
-            GameObject.Instantiate(shoot, this.transform.position, this.transform.rotation);
+			GameObject.Instantiate(shoot, this._shootPoint.transform.position, this.transform.rotation);
         }
 
         protected void RotateTowardsMouse()
@@ -140,6 +150,8 @@ namespace BounceDudes
             Vector3 mousePosition = this._camera.ScreenToWorldPoint(Input.mousePosition);
             this.transform.rotation = Quaternion.LookRotation(Vector3.forward, (mousePosition - this.transform.position).normalized);
 			_cogObject.transform.rotation = Quaternion.Inverse (this.transform.rotation * this.transform.rotation);
+
+			_textAngle.text = "" + this.transform.rotation.eulerAngles + "º";
         }
 
         public void OnDrawGizmos()

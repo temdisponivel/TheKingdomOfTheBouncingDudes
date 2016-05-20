@@ -16,6 +16,7 @@ namespace BounceDudes
             Character character;
             if ((character = collision.gameObject.GetComponent<Character>()) != null)
             {
+				character.HP -= 1;
                 this._hp -= character.Damage;
                 if (this._hp <= 0)
                 {

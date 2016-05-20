@@ -38,6 +38,8 @@ namespace BounceDudes
         public Dictionary<int, GameObject> Soldiers { get; set; }
         public Dictionary<int, GameObject> Monsters { get; set; }
 
+		public GameObject _shadowEffectPrefab = null;
+
         public void Start()
         {
             if (GameManager.Instance == null)

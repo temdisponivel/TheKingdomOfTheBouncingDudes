@@ -22,10 +22,11 @@ namespace BounceDudes
 
         public void OnTriggerEnter2D(Collider2D collider)
         {
-            if (this._object != null || (collider.gameObject.layer != TagAndLayer.ENEMY_OBJECTS && collider.gameObject.layer != TagAndLayer.PLAYER_OBJECTS))
+            if (this._object != null || (collider.gameObject.layer != TagAndLayer.ENEMY_OBJECTS && collider.gameObject.layer == TagAndLayer.PLAYER_OBJECTS))
             {
                 return;
             }
+			/*
             if (collider.gameObject.layer == TagAndLayer.PLAYER_OBJECTS)
             {
                 this.layer = TagAndLayer.ENEMY_OBJECTS;
@@ -34,6 +35,7 @@ namespace BounceDudes
             {
                 this.layer = TagAndLayer.PLAYER_OBJECTS;
             }
+            */
             this._object = collider.gameObject;
             this._object.GetComponent<Rigidbody2D>().isKinematic = true;
             this._object.transform.position = this.transform.position;
@@ -56,7 +58,7 @@ namespace BounceDudes
                 }
                 else
                 {
-                    body.AddForce(this._object.transform.up * this._object.GetComponent<Character>().Speed * this._forceMultiplier, ForceMode2D.Impulse);
+					body.AddForce(this._object.transform.up * this._object.GetComponent<Character>().Speed * this._forceMultiplier, ForceMode2D.Impulse);
                 }
             }
         }
@@ -72,7 +74,7 @@ namespace BounceDudes
         public void OnDrawGizmos()
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawSphere(this.transform.position, this._radius);
+            //Gizmos.DrawSphere(this.transform.position, this._radius);
         }
     }
 }

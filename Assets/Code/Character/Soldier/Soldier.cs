@@ -8,7 +8,9 @@ namespace BounceDudes
     /// </summary>
     public class Soldier : Character
     {        
-		
+
+		protected int _sortOrderBefore = 13, _sortOrderAfter = 1;
+
         override public void Start()
         {
             base.Start();
@@ -18,11 +20,14 @@ namespace BounceDudes
         virtual public void Shoot()
         {
             this.RigidBody.AddForce(this.transform.up * this._speed * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
-			_sprite.sortingOrder = 3;
+			_sprite.sortingOrder = this._sortOrderBefore;
         }
         
         virtual public void OnCollisionEnter2D(Collision2D collision)
         {
+
+			_sprite.sortingOrder = this._sortOrderAfter;
+
             if (collision.gameObject.tag == TagAndLayer.ENEMY_BASE)
             {
                 collision.gameObject.GetComponent<Base>().HP += this.Damage;

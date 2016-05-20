@@ -60,6 +60,7 @@ namespace BounceDudes
                 soldier.transform.localScale = soldier.transform.localScale / this._quantShoot;
                 this._inside.transform.localScale = this._insideScaleBkp - ((this._insideScaleBkp / this._quantShoot) * (this._currentShootCount + 1));
 
+				soldier.GetComponent<Soldier> ().HP = 1; // Clones only have 1 life.
                 this._lastTimeShoot = Time.time;
                 this._currentShootCount++;
                 this._currentIndexTarget++;

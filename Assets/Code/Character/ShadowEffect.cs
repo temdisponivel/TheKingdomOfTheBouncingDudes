@@ -10,6 +10,7 @@ public class ShadowEffect : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		_trueRotation = new Quaternion(0f, 0f, 0f, 1.0f);
+		this.GetComponent<SpriteRenderer> ().sortingOrder = 1;
 	}
 		
 	// Update is called once per frame
