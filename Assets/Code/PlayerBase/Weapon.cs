@@ -61,7 +61,7 @@ namespace BounceDudes
             this._projectiles = GameManager.Instance.GetAvailableSoldiers();
             this._projectilesSpecial = GameManager.Instance._specialProjectiles;
 
-			this._weaponAnimator = this.GetComponentInParent<Animator> ();
+			this._weaponAnimator = this.GetComponent<Animator> ();
         }
 
         public void Update()
@@ -93,7 +93,9 @@ namespace BounceDudes
                     //this._ray.enabled = true;
                     this._holding = true;
                     this._currentForceMultiplier = 0;
+					this._weaponAnimator.SetTrigger ("Holding");
                 }
+
                 this.RotateTowardsMouse();
                 if (this._currentForceMultiplier <= this._limitForceMultiplier)
                 {
@@ -109,7 +111,9 @@ namespace BounceDudes
                 }
                 else if (Time.time - this._lastTimeShoot >= this._coolDown)
                 {
-                    this.Shoot();
+					this._weaponAnimator.SetTrigger ("Shooting");
+                    //this.Shoot();
+
                 }
                 //this._ray.enabled = false;
                 this._holding = false;
@@ -121,8 +125,7 @@ namespace BounceDudes
         /// </summary>
         public void Shoot()
         {
-			this._weaponAnimator.SetTrigger ("Shooting");
-
+			
             this.ShootObject(this._projectiles[this._currentProjectileIndex]);
             this._currentProjectileIndex = (this._currentProjectileIndex + 1) % this._projectiles.Count;
             this._lastTimeShoot = Time.time;

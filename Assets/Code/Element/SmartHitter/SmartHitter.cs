@@ -18,7 +18,12 @@ namespace BounceDudes
         public float _forceMultiplier = 1f;
 
         protected GameObject _object = null;
+		protected Animator _animator = null;
         protected int layer = 0;
+
+		void Start(){
+			_animator = GetComponent<Animator> ();
+		}
 
         public void OnTriggerEnter2D(Collider2D collider)
         {
@@ -36,6 +41,7 @@ namespace BounceDudes
                 this.layer = TagAndLayer.PLAYER_OBJECTS;
             }
             */
+			this._animator.SetTrigger ("Close");
             this._object = collider.gameObject;
             this._object.GetComponent<Rigidbody2D>().isKinematic = true;
             this._object.transform.position = this.transform.position;
@@ -58,6 +64,7 @@ namespace BounceDudes
                 }
                 else
                 {
+					this._animator.SetTrigger ("Open");
 					body.AddForce(this._object.transform.up * this._object.GetComponent<Character>().Speed * this._forceMultiplier, ForceMode2D.Impulse);
                 }
             }

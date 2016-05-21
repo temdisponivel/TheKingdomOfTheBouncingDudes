@@ -38,8 +38,6 @@ namespace BounceDudes
         public Dictionary<int, GameObject> Soldiers { get; set; }
         public Dictionary<int, GameObject> Monsters { get; set; }
 
-		public GameObject _shadowEffectPrefab = null;
-
         public void Start()
         {
             if (GameManager.Instance == null)
@@ -52,6 +50,7 @@ namespace BounceDudes
                 GameObject.Destroy(this.gameObject);
                 return;
             }
+
             this.LevelsInformation = new Dictionary<string, LevelInformation>();
             this.SoldierNames = new Dictionary<int, string>();
             this.Soldiers = new Dictionary<int, GameObject>();

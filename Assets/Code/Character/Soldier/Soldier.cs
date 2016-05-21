@@ -30,10 +30,16 @@ namespace BounceDudes
 
             if (collision.gameObject.tag == TagAndLayer.ENEMY_BASE)
             {
+				EffectManager.Instance.CreateDieEffect (this.transform);
+
                 collision.gameObject.GetComponent<Base>().HP += this.Damage;
 				this.HP -= 1;
                 //this.Die();
             }
+			else if (collision.gameObject.tag == TagAndLayer.WALL)
+			{
+				EffectManager.Instance.CreateWallHitEffect (this.transform);
+			}
         }
 
         virtual public void OnTriggerEnter2D(Collider2D collider)
@@ -44,8 +50,12 @@ namespace BounceDudes
                 this.HP -= 1;
                 character.HP -= 1;
 
+				EffectManager.Instance.CreateHitEffect (character.transform);
+
                 if (character.HP <= 0)
                 {
+					EffectManager.Instance.CreateDieEffect (character.transform);
+					EffectManager.Instance.CreateSmokeEffect (character.transform);
                     LevelManager.Instance.KillEnemy(character);
                 }
             }
