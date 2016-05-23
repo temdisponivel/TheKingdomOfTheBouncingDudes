@@ -7,15 +7,15 @@ using UnityEngine;
 namespace BounceDudes
 {
     /// <summary>
-    /// Class that represents a defence tower.
+    /// Class that represents a shiny tower.
     /// </summary>
-    public class DefenceTower : Tower
+    public class ShinyTower : Tower
     {
-        public float _regenerationMultiplier = 2f;
-
         override public void AffectObject(GameObject affected)
         {
-            affected.GetComponent<Character>().HP += this._regenerationMultiplier * Time.deltaTime;
+			if(affected.GetComponentInChildren<ParticleSystem>() == null){
+				EffectManager.Instance.AttachShinyEffect (affected.transform);
+			}
         }
     }
 }

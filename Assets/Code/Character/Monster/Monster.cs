@@ -8,12 +8,22 @@ namespace BounceDudes
     /// </summary>
     public class Monster : Character
     {
+		protected Quaternion _fixedRotation;
+
         public override void Start()
         {
             base.Start();
             this.RigidBody.AddForce(this.transform.up * this._speed, ForceMode2D.Impulse);
-			this.transform.rotation = new Quaternion (0, 0, 0, 1.0f);
+			this._fixedRotation = new Quaternion (0, 0, 0, 1.0f);
+			this.transform.rotation = _fixedRotation;
         }
+
+		public void LateUpdate(){
+
+			if (this.transform.rotation != _fixedRotation) {
+				this.transform.rotation = _fixedRotation;
+			}
+		}
 
         virtual public void OnCollisionEnter2D(Collision2D collision)
         {

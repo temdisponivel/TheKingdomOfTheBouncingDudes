@@ -11,10 +11,11 @@ public class EffectManager : MonoBehaviour {
 	public ParticleSystem _smokeEffect = null;
 	public ParticleSystem _dieEffect = null;
 	public ParticleSystem _wallHitEffect = null;
+	public ParticleSystem _shinyEffect = null;
 
 	[Header("Object Effects")]
-	public GameObject _shadowEffectPrefab = null;
-	public GameObject _slimeEffectPrefab = null;
+	public GameObject _shadowEffect = null;
+	public GameObject _slimeEffect = null;
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +29,25 @@ public class EffectManager : MonoBehaviour {
 			GameObject.Destroy(this.gameObject);
 			return;
 		}
+	}
+
+	public void AttachShinyEffect(Transform target){
+		this.AttachEffect (_shinyEffect, target);
+	}
+
+	public GameObject AttachSlimeEffect(Transform target){
+		return this.AttachEffect (_slimeEffect, target);
+	}
+
+	protected void AttachEffect(ParticleSystem particleEffect, Transform target){
+		ParticleSystem particleToAttach = (ParticleSystem)ParticleSystem.Instantiate(particleEffect, target.position, target.rotation);
+		particleToAttach.transform.parent = target;
+	}
+
+	protected GameObject AttachEffect(GameObject objectEffect, Transform target){
+		GameObject objectToAttach = (GameObject)GameObject.Instantiate(objectEffect, target.position, target.rotation);
+		objectToAttach.transform.parent = target;
+		return objectToAttach;
 	}
 		
 	public void CreateHitEffect(Transform target){
@@ -46,7 +66,7 @@ public class EffectManager : MonoBehaviour {
 		this.CreateEffect (_wallHitEffect, target);
 	}
 
-	protected void CreateEffect(ParticleSystem particle, Transform target){
-		Instantiate(particle, target.position, target.rotation);
+	protected void CreateEffect(ParticleSystem particleEffect, Transform target){
+		Instantiate(particleEffect, target.position, target.rotation);
 	}
 }

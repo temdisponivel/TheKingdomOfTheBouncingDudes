@@ -16,6 +16,9 @@ namespace BounceDudes
             Character character;
             if ((character = collision.gameObject.GetComponent<Character>()) != null)
             {
+				EffectManager.Instance.CreateWallHitEffect (this.transform);
+				EffectManager.Instance.CreateDieEffect (character.transform);
+
 				character.HP -= 1;
                 this._hp -= character.Damage;
                 if (this._hp <= 0)
@@ -27,6 +30,7 @@ namespace BounceDudes
 
         public void Die()
         {
+			EffectManager.Instance.CreateSmokeEffect (this.transform);
             GameObject.Instantiate(this._toDrop, this.transform.position, this.transform.rotation);
             GameObject.Destroy(this.gameObject);
         }

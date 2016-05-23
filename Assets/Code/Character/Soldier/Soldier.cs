@@ -26,15 +26,16 @@ namespace BounceDudes
         virtual public void OnCollisionEnter2D(Collision2D collision)
         {
 			_sprite.sortingOrder = this._sortOrderAfter;
+			string collTag = collision.gameObject.tag;
 
-            if (collision.gameObject.tag == TagAndLayer.ENEMY_BASE)
+			if (collTag == TagAndLayer.ENEMY_BASE)
             {
 				EffectManager.Instance.CreateDieEffect (this.transform);
                 collision.gameObject.GetComponent<Base>().HP -= this.Damage;
 				this.HP -= 1;
                 //this.Die();
             }
-			else if (collision.gameObject.tag == TagAndLayer.WALL)
+			else if (collTag == TagAndLayer.WALL || collTag == TagAndLayer.BASE)
 			{
 				EffectManager.Instance.CreateWallHitEffect (this.transform);
 			}
