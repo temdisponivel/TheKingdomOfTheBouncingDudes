@@ -77,7 +77,7 @@ namespace BounceDudes
 
         public void KillEnemy(Character enemy)
         {
-            this.Score += enemy._pointsWhenKilled;
+            this.Score += (enemy._pointsWhenKilled * ComboManager.Instance.CurrentPointsMultiplier);
             this.EnemiesKilled++;
         }
 

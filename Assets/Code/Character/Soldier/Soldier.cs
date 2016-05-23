@@ -7,9 +7,9 @@ namespace BounceDudes
     /// Base class for all soldiers.
     /// </summary>
     public class Soldier : Character
-    {        
-
+    {   
 		protected int _sortOrderBefore = 13, _sortOrderAfter = 1;
+        protected bool _elementHit = false;
 
         override public void Start()
         {
@@ -25,7 +25,6 @@ namespace BounceDudes
         
         virtual public void OnCollisionEnter2D(Collision2D collision)
         {
-
 			_sprite.sortingOrder = this._sortOrderAfter;
 
             if (collision.gameObject.tag == TagAndLayer.ENEMY_BASE)
@@ -40,6 +39,11 @@ namespace BounceDudes
 			{
 				EffectManager.Instance.CreateWallHitEffect (this.transform);
 			}
+            
+            if (collision.gameObject.layer == TagAndLayer.GAME_OBJECTS)
+            {
+                this._elementHit = true;
+            }
         }
 
         virtual public void OnTriggerEnter2D(Collider2D collider)
@@ -54,10 +58,21 @@ namespace BounceDudes
 
                 if (character.HP <= 0)
                 {
-					EffectManager.Instance.CreateDieEffect (character.transform);
-					EffectManager.Instance.CreateSmokeEffect (character.transform);
+                    EffectManager.Instance.CreateDieEffect(character.transform);
+                    EffectManager.Instance.CreateSmokeEffect(character.transform);
                     LevelManager.Instance.KillEnemy(character);
+                    ComboManager.Instance.AddKill();
+                    ComboManager.Instance.AddElementKill();
                 }
+                else
+                {
+                    ComboManager.Instance.AddHit();
+                }
+            }
+
+            if (collider.gameObject.layer == TagAndLayer.GAME_OBJECTS)
+            {
+                this._elementHit = true;
             }
         }
 
