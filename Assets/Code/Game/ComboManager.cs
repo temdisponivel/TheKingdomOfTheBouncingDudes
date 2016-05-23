@@ -32,6 +32,8 @@ public class ComboManager : MonoBehaviour
     protected float _lastKillTime = 0f;
     protected float _lastHitTime = 0f;
     protected float _lastElementKillTime = 0f;
+
+    public int MaxHitComboCount { get; set; }
     
     private void Start()
     {
@@ -69,6 +71,11 @@ public class ComboManager : MonoBehaviour
     {
         this._hitCount++;
         this._lastKillTime = Time.time;
+
+        if (this.MaxHitComboCount < this._hitCount)
+        {
+            this.MaxHitComboCount = this._hitCount;
+        }
     }
 
     public void AddElementKill()

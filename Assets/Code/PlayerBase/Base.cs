@@ -10,5 +10,11 @@ namespace BounceDudes
     {
         public int _hp = 10;
         public int HP { get { return _hp; } set { _hp = value; if (_hp <= 0) { LevelManager.Instance.GameOver(); } } }
+        public int _startedHp;
+
+        public void Start()
+        {
+            this._startedHp = this._hp;
+        }
     }
 }

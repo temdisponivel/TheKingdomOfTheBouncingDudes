@@ -30,8 +30,7 @@ namespace BounceDudes
             if (collision.gameObject.tag == TagAndLayer.ENEMY_BASE)
             {
 				EffectManager.Instance.CreateDieEffect (this.transform);
-
-                collision.gameObject.GetComponent<Base>().HP += this.Damage;
+                collision.gameObject.GetComponent<Base>().HP -= this.Damage;
 				this.HP -= 1;
                 //this.Die();
             }

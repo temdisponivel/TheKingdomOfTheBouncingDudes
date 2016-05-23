@@ -25,11 +25,11 @@ namespace BounceDudes
         [Header("Give Away")] 
         public int[] StarByScore;
 
-        public SoldiersDictionaryHack[] SoldiersToGiveByStar;
+        public SoldierByChallengeDicionaryHack[] SoldiersByChallengeHack;
 
         public int EnemiesKilled { get; set; }
 
-        protected Dictionary<int, int[]> SoldierByStar;
+        protected Dictionary<Challenge, int[]> SoldierByChallenge;
 
         public void Start()
         {
@@ -37,10 +37,10 @@ namespace BounceDudes
             this.CurrentLevel = SceneManager.GetActiveScene().name;
             GameManager.Instance.LastLevel = this.CurrentLevel;
             this.Score = 0;
-            this.SoldierByStar = new Dictionary<int, int[]>();
-            foreach (var soldierByStar in this.SoldiersToGiveByStar)
+            this.SoldierByChallenge = new Dictionary<Challenge, int[]>();
+            foreach (var soldierByStar in this.SoldiersByChallengeHack)
             {
-                this.SoldierByStar[soldierByStar.Star] = soldierByStar.SoldierToGive;
+                this.SoldierByChallenge[soldierByStar._challenge] = soldierByStar._soldierToGive;
             }
         }
 
@@ -63,14 +63,15 @@ namespace BounceDudes
             info.Finished = win;
             info.ShootCount = Weapon.Instance.ShootCount;
             info.Star = this.StarByScore.Where(s => s >= this.Score).Count();
-            info.SoldiersEarned = new int[this.SoldierByStar[info.Star].Length];
-            if (this.SoldierByStar.ContainsKey(info.Star))
+            List<int> soldiersEarned = new List<int>();
+            foreach (var challenge in this.SoldierByChallenge)
             {
-                for (int i = 0, soldierId = 0; i < this.SoldierByStar[info.Star].Length; soldierId = this.SoldierByStar[info.Star][i++])
+                if (ChallengeManager.ValidateCompletion(challenge.Key))
                 {
-                    info.SoldiersEarned[i] = soldierId;
-                }   
+                    soldiersEarned.AddRange(challenge.Value);
+                }
             }
+            info.SoldiersEarned = soldiersEarned.Distinct().ToArray();
             GameManager.Instance.AddLevelInfo(this.CurrentLevel, info);
             SceneManager.LoadScene("EndLevel");
         }
