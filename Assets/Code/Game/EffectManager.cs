@@ -42,6 +42,7 @@ public class EffectManager : MonoBehaviour {
 	protected void AttachEffect(ParticleSystem particleEffect, Transform target){
 		ParticleSystem particleToAttach = (ParticleSystem)ParticleSystem.Instantiate(particleEffect, target.position, target.rotation);
 		particleToAttach.transform.parent = target;
+		particleToAttach.transform.localScale = target.localScale;
 	}
 
 	protected GameObject AttachEffect(GameObject objectEffect, Transform target){

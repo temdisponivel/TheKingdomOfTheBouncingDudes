@@ -9,7 +9,7 @@ public class ShadowEffect : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		_trueRotation = new Quaternion(0f, 0f, 0f, 1.0f);
+		_trueRotation = Quaternion.identity;
 		this.GetComponent<SpriteRenderer> ().sortingOrder = 1;
 	}
 		
