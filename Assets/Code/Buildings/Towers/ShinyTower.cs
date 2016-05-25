@@ -13,7 +13,7 @@ namespace BounceDudes
     {
         override public void AffectObject(GameObject affected)
         {
-			if(affected.GetComponentInChildren<ParticleSystem>() == null){
+			if(!affected.GetComponent<Character>().IsShinyAttached){
 				EffectManager.Instance.AttachShinyEffect (affected.transform);
 			}
         }

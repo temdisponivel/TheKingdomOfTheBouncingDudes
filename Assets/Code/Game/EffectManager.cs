@@ -35,9 +35,14 @@ public class EffectManager : MonoBehaviour {
 		this.AttachEffect (_shinyEffect, target);
 	}
 
+	public GameObject AttachShadowEffect(Transform target){
+		return this.AttachEffect (_shadowEffect, target);
+	}
+
 	public GameObject AttachSlimeEffect(Transform target){
 		return this.AttachEffect (_slimeEffect, target);
 	}
+
 
 	protected void AttachEffect(ParticleSystem particleEffect, Transform target){
 		ParticleSystem particleToAttach = (ParticleSystem)ParticleSystem.Instantiate(particleEffect, target.position, target.rotation);

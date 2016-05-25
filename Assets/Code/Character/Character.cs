@@ -13,10 +13,15 @@ namespace BounceDudes
         public int _id = 1;
         public bool _affectedByElement = true;
         public Color _baseColor = Color.white;
-        public int _damage = 1;
+
+		[Header("Stats")]
+		protected int _damage = 1;
 		public float _speed = 1f;
 		public float _size = 1f; // Only for Game Design porpouses.
-        public float _hp = 1;
+        public float _hp = 1f;
+
+		[Header("Effects")]
+		protected bool _isShinyAttached = false;
 
         protected Rigidbody2D _rigid = null;
         protected Animator _animator = null;
@@ -32,18 +37,24 @@ namespace BounceDudes
         public int Damage { get { return this._damage; } set { this._damage = value; } }
         public bool AffectedByElement { get { return this._affectedByElement; } set { this._affectedByElement = value; } }
 
+		public bool IsShinyAttached { get { return this._isShinyAttached; } set { this._isShinyAttached = value; } }
+
         virtual public void Start()
         {
             this._rigid = this.GetComponent<Rigidbody2D>();
             this._animator = this.GetComponent<Animator>();
             this._collider = this.GetComponent<Collider2D>();
 			this._sprite = this.GetComponent<SpriteRenderer>();
+
         }
 
         virtual public void Die()
         {
             GameObject.Destroy(this.gameObject);
         }
+
+
+
 			
     }
 }

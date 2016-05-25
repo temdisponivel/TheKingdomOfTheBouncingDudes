@@ -9,9 +9,11 @@ namespace BounceDudes
     /// </summary>
     public class CellDivider : MonoBehaviour
     {
-
+		[Header("Copies Slime Ball")]
 		public GameObject _slimeObject = null;
+		public float _slimeScaleMultiplier = 1.3f;
 
+		[Header("Cell Divider Settings")]
         [Tooltip("Point from which the player objects will be shooted.")]
         public GameObject _shootPointPlayer = null;
 
@@ -77,7 +79,7 @@ namespace BounceDudes
 			GameObject cellSlime = EffectManager.Instance.AttachSlimeEffect (character.transform);
 
 			character.transform.localScale = character.transform.localScale / this._maxShoots;
-			cellSlime.transform.localScale = character.transform.localScale * 1.2f;
+			cellSlime.transform.localScale = character.transform.localScale * _slimeScaleMultiplier;
 
 			this._inside.transform.localScale = this._insideScaleBkp - ((this._insideScaleBkp / this._maxShoots) * (this._currentShootCount + 1));
 

@@ -8,7 +8,7 @@ namespace BounceDudes
     /// </summary>
     public class Soldier : Character
     {   
-		protected int _sortOrderBefore = 13, _sortOrderAfter = 1;
+		protected int _sortOrderBefore = 13, _sortOrderAfter = 2;
         protected bool _elementHit = false;
 
         override public void Start()
@@ -50,17 +50,17 @@ namespace BounceDudes
         {
             if (collider.gameObject.layer == TagAndLayer.ENEMY_OBJECTS)
             {
-                Character character = collider.gameObject.GetComponent<Character>();
+				Character monster = collider.gameObject.GetComponent<Character>();
                 this.HP -= 1;
-                character.HP -= 1;
+                monster.HP -= 1;
 
-				EffectManager.Instance.CreateHitEffect (character.transform);
+				EffectManager.Instance.CreateHitEffect (monster.transform);
 
-                if (character.HP <= 0)
+                if (monster.HP <= 0)
                 {
-                    EffectManager.Instance.CreateDieEffect(character.transform);
-                    EffectManager.Instance.CreateSmokeEffect(character.transform);
-                    LevelManager.Instance.KillEnemy(character);
+                    EffectManager.Instance.CreateDieEffect(monster.transform);
+                    EffectManager.Instance.CreateSmokeEffect(monster.transform);
+                    LevelManager.Instance.KillEnemy(monster);
                     ComboManager.Instance.AddKill();
                     ComboManager.Instance.AddElementKill();
                 }
