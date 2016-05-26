@@ -19,7 +19,8 @@ namespace BounceDudes
 
         virtual public void Shoot()
         {
-            this.RigidBody.AddForce(this.transform.up * this._speed * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
+			this.RigidBody.AddForce(this.transform.up * this._maxSpeed * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
+			Debug.Log (this.RigidBody.velocity);
 			_sprite.sortingOrder = this._sortOrderBefore;
         }
         

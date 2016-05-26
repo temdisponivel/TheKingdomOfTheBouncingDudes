@@ -13,12 +13,17 @@ namespace BounceDudes
         public override void Start()
         {
             base.Start();
-            this.RigidBody.AddForce(this.transform.up * this._speed, ForceMode2D.Impulse);
+			this.RigidBody.AddForce(this.transform.up * this._maxSpeed * 0.8f, ForceMode2D.Impulse);
 			this._fixedRotation = Quaternion.identity;
 			this.transform.rotation = _fixedRotation;
+
+			_maxSpeed /= 4;
+			_minSpeed /= 4;
         }
 
-		public void LateUpdate(){
+		public override void LateUpdate(){
+
+			base.LateUpdate ();
 
 			if (this.transform.rotation != _fixedRotation) {
 				this.transform.rotation = _fixedRotation;

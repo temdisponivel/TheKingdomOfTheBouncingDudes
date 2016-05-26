@@ -20,6 +20,9 @@ namespace BounceDudes
 		public float _size = 1f; // Only for Game Design porpouses.
         public float _hp = 1f;
 
+		protected float _maxSpeed = 1f;
+		protected float _minSpeed = 1f;
+
 		[Header("Effects")]
 		protected bool _isShinyAttached = false;
 
@@ -46,6 +49,9 @@ namespace BounceDudes
             this._collider = this.GetComponent<Collider2D>();
 			this._sprite = this.GetComponent<SpriteRenderer>();
 
+
+			this.ConvertSpeed ();
+
         }
 
         virtual public void Die()
@@ -53,6 +59,25 @@ namespace BounceDudes
             GameObject.Destroy(this.gameObject);
         }
 
+		virtual public void LateUpdate(){
+
+			if (_rigid.velocity.magnitude > _maxSpeed){
+				_rigid.velocity = _rigid.velocity.normalized * _maxSpeed;
+			}
+			else if (_rigid.velocity.magnitude < _minSpeed){
+				_rigid.velocity = _rigid.velocity.normalized * _minSpeed;
+			}
+				
+
+		}
+
+		/// <summary>
+		/// Converts the Stat Speed in Physics Speed.
+		/// </summary>
+		public void ConvertSpeed(){
+			_maxSpeed = _speed * 2f;
+			_minSpeed = _speed / 2f;
+		}
 
 
 			

@@ -19,10 +19,10 @@ namespace BounceDudes
         protected List<GameObject> _projectiles = new List<GameObject>();
         protected List<GameObject> _projectilesSpecial = new List<GameObject>();
 
-        [Tooltip("Multiplier (in seconds) for the weapon.")]
-        public float _forceShootMultiplier = 1f;
+		protected float _minShootMultiplier = 0.45f;
+		protected float _maxShootMultiplier = 0.8f;
         public float _coolDown = 1f;
-        public float _limitForceMultiplier = 10f;
+
 
 		[Header("Objects")]
 		public GameObject _shootPoint = null;
@@ -97,16 +97,19 @@ namespace BounceDudes
                 }
 
                 this.RotateTowardsMouse();
-                if (this._currentForceMultiplier <= this._limitForceMultiplier)
+                if (this._currentForceMultiplier <= this._maxShootMultiplier)
                 {
-                    this._currentForceMultiplier += this._forceShootMultiplier * Time.deltaTime;
+					if (this._currentForceMultiplier >= this._minShootMultiplier)
+						this._currentForceMultiplier += Time.deltaTime;
+					else
+						this._currentForceMultiplier = this._minShootMultiplier;
                 }
             }
             else if (this._holding)
             {
                 if (this._special)
                 {
-                    this._currentForceMultiplier = this._limitForceMultiplier;
+                    this._currentForceMultiplier = this._maxShootMultiplier;
                     this.ShootSpecial();
                 }
                 else if (Time.time - this._lastTimeShoot >= this._coolDown)
@@ -125,7 +128,6 @@ namespace BounceDudes
         /// </summary>
         public void Shoot()
         {
-			
             this.ShootObject(this._projectiles[this._currentProjectileIndex]);
             this._currentProjectileIndex = (this._currentProjectileIndex + 1) % this._projectiles.Count;
             this._lastTimeShoot = Time.time;
@@ -133,7 +135,7 @@ namespace BounceDudes
         }
 
         /// <summary>
-        /// Shoot the current projectile.
+        /// Shoot the specials projectiles.
         /// </summary>
         public void ShootSpecial()
         {

@@ -13,8 +13,10 @@ namespace BounceDudes
     {
         override public void AffectObject(GameObject affected)
         {
-			if(!affected.GetComponent<Character>().IsShinyAttached){
+			Character character = affected.GetComponent<Character> ();
+			if(!character.IsShinyAttached){
 				EffectManager.Instance.AttachShinyEffect (affected.transform);
+				character.IsShinyAttached = true;
 			}
         }
     }
