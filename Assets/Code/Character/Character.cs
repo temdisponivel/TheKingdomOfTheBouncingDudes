@@ -49,7 +49,6 @@ namespace BounceDudes
             this._collider = this.GetComponent<Collider2D>();
 			this._sprite = this.GetComponent<SpriteRenderer>();
 
-
 			this.ConvertSpeed ();
 
         }
