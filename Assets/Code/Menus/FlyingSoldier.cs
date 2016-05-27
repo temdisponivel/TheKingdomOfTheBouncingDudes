@@ -19,7 +19,9 @@ namespace BounceDudes{
 				randomSoldierSprite = (_soldierArray [Random.Range (0, _soldierArray.Length)]).GetComponent<SpriteRenderer>().sprite;
 			} while (randomSoldierSprite == flyingSoldierSprite);
 
-			_flyingSoldier.GetComponent<SpriteRenderer>().sprite = randomSoldierSprite; 
+			_flyingSoldier.GetComponent<SpriteRenderer>().sprite = randomSoldierSprite;
+			_flyingSoldier
+
 
 		}
 
