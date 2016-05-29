@@ -20,7 +20,6 @@ namespace BounceDudes{
 			} while (randomSoldierSprite == flyingSoldierSprite);
 
 			_flyingSoldier.GetComponent<SpriteRenderer>().sprite = randomSoldierSprite;
-			_flyingSoldier
 
 
 		}
