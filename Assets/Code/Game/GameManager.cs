@@ -38,7 +38,7 @@ namespace BounceDudes
         public Dictionary<int, GameObject> Soldiers { get; set; }
         public Dictionary<int, GameObject> Monsters { get; set; }
 
-        public void Start()
+        public void Awake()
         {
             if (GameManager.Instance == null)
             {

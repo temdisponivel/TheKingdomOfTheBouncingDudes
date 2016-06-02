@@ -35,7 +35,7 @@ public class ComboManager : MonoBehaviour
 
     public int MaxHitComboCount { get; set; }
     
-    private void Start()
+    private void Awake()
     {
         ComboManager.Instance = this;
     }

@@ -20,7 +20,7 @@ namespace BounceDudes{
 		public GameObject _slimeEffect = null;
 
 		// Use this for initialization
-		void Start () {
+		void Awake () {
 			if (EffectManager.Instance == null)
 			{
 				EffectManager._instance = this;

@@ -8,25 +8,52 @@ namespace BounceDudes
     /// </summary>
     public class Soldier : Character
     {   
-		protected int _sortOrderBefore = 13, _sortOrderAfter = 2;
+
+		protected int _ammunitionPosition = -1;
+		protected int _spriteSortOrderBeforeShoot = 16, _spriteSortOrderAfterShoot = 2;
         protected bool _elementHit = false;
+		protected bool _isSpecial = false;
+		public bool _shootDone = false;
 
-        override public void Start()
-        {
-            base.Start();
-            this.Shoot();
-        }
+		public int AmmunitionPosition { get { return this._ammunitionPosition; } set { this._ammunitionPosition = value; } }
+		public int SpriteOrderAfterShoot { get { return _spriteSortOrderAfterShoot; } }
+		public int SpriteOrderBeforeShoot { get { return _spriteSortOrderBeforeShoot; } }
+		public bool IsSpecial { get { return _isSpecial; } set { _isSpecial = value; } }
 
-        virtual public void Shoot()
+
+		public override void Start(){
+			
+			base.Start ();
+
+			this.SetSortOrderBeforeShoot ();
+
+			if (IsSpecial) {
+				this.Shoot ();
+			}
+		}
+
+        public void Shoot()
         {
+			this.transform.rotation = Weapon.Instance.WeaponRotation;
+			this.TurnIntoTransition ();
 			this.RigidBody.AddForce(this.transform.up * this._maxSpeed * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
-			//Debug.Log (this.RigidBody.velocity);
-			_sprite.sortingOrder = this._sortOrderBefore;
+
         }
-        
+			       
+		public void Update(){
+
+			// Passed the cannon shoot point, turn into a projectile.
+			if (this.transform.position.y >= AmmunitionClip.Instance._changeToProjectilePoint.transform.position.y) {
+				this.SetSortOrderAfterShoot ();
+				this.TurnIntoProjectile ();
+			}
+
+		}
+			
+
         virtual public void OnCollisionEnter2D(Collision2D collision)
         {
-			_sprite.sortingOrder = this._sortOrderAfter;
+
 			string collTag = collision.gameObject.tag;
 
 			if (collTag == TagAndLayer.ENEMY_BASE)
@@ -34,7 +61,6 @@ namespace BounceDudes
 				EffectManager.Instance.CreateDieEffect (this.transform);
                 collision.gameObject.GetComponent<Base>().HP -= this.Damage;
 				this.HP -= 1;
-                //this.Die();
             }
 			else if (collTag == TagAndLayer.WALL || collTag == TagAndLayer.BASE)
 			{
@@ -79,7 +105,18 @@ namespace BounceDudes
 
         override public void Die()
         {
+			if (!_isSpecial)
+				AmmunitionClip.Instance.AddAmmunition (this.OriginalGameObject);
             GameObject.Destroy(this.gameObject);
         }
+
+
+		public void SetSortOrderBeforeShoot(){
+			this.Sprite.sortingOrder = this._spriteSortOrderBeforeShoot;
+		}
+
+		public void SetSortOrderAfterShoot(){
+			this.Sprite.sortingOrder = this._spriteSortOrderAfterShoot;
+		}
     }
 }

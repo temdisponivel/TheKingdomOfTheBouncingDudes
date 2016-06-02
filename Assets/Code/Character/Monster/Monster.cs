@@ -12,7 +12,10 @@ namespace BounceDudes
 
         public override void Start()
         {
-            base.Start();
+			base.Start();
+
+			this.TurnIntoProjectile ();
+
 			this.RigidBody.AddForce(this.transform.up * this._maxSpeed * 0.8f, ForceMode2D.Impulse);
 			this._fixedRotation = Quaternion.identity;
 			this.transform.rotation = _fixedRotation;
