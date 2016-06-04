@@ -15,14 +15,14 @@ namespace BounceDudes
     {
         static protected LevelManager _instance = null;
         static public LevelManager Instance { get { return LevelManager._instance; } }
-        
+
         public Base _playerBase = null;
         public Base _enemyBase = null;
 
         public string CurrentLevel { get; set; }
         public float Score { get; set; }
 
-        [Header("Give Away")] 
+        [Header("Give Away")]
         public int[] StarByScore;
 
         public SoldierByChallengeDicionaryHack[] SoldiersByChallengeHack;

@@ -10,14 +10,15 @@ namespace BounceDudes
     {   
 
 		protected int _ammunitionPosition = -1;
-		protected int _spriteSortOrderBeforeShoot = 16, _spriteSortOrderAfterShoot = 2;
+		protected int _spriteOrderOnAmmunition = 9, _spriteOrderOnBarrel = 16, _spriteOrderOnField = 2;
         protected bool _elementHit = false;
 		protected bool _isSpecial = false;
-		public bool _shootDone = false;
+		protected bool _turnedIntoProjectile = false;
 
 		public int AmmunitionPosition { get { return this._ammunitionPosition; } set { this._ammunitionPosition = value; } }
-		public int SpriteOrderAfterShoot { get { return _spriteSortOrderAfterShoot; } }
-		public int SpriteOrderBeforeShoot { get { return _spriteSortOrderBeforeShoot; } }
+		public int SpriteOrderOnField { get { return _spriteOrderOnField; } }
+		public int SpriteOrderOnBarrel { get { return _spriteOrderOnBarrel; } }
+		public int SpriteOrderOnAmmunition { get { return _spriteOrderOnAmmunition; } }
 		public bool IsSpecial { get { return _isSpecial; } set { _isSpecial = value; } }
 
 
@@ -25,7 +26,7 @@ namespace BounceDudes
 			
 			base.Start ();
 
-			this.SetSortOrderBeforeShoot ();
+			this.CurrentSortingOrder = this._spriteOrderOnAmmunition;
 
 			if (IsSpecial) {
 				this.Shoot ();
@@ -34,18 +35,26 @@ namespace BounceDudes
 
         public void Shoot()
         {
+			this.transform.parent = null;
 			this.transform.rotation = Weapon.Instance.WeaponRotation;
 			this.TurnIntoTransition ();
 			this.RigidBody.AddForce(this.transform.up * this._maxSpeed * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
 
         }
 			       
-		public void Update(){
+		public override void Update(){
 
-			// Passed the cannon shoot point, turn into a projectile.
-			if (this.transform.position.y >= AmmunitionClip.Instance._changeToProjectilePoint.transform.position.y) {
-				this.SetSortOrderAfterShoot ();
+			base.Update ();
+
+			// Passed the cannon shoot point, turn it into a projectile.
+			if (this.transform.position.y >= AmmunitionClip.Instance._changeToProjectilePoint.transform.position.y && !_turnedIntoProjectile) {
+
 				this.TurnIntoProjectile ();
+				_turnedIntoProjectile = true;
+			}
+			if (this.transform.position.y >= AmmunitionClip.Instance._changeToFieldOrderPoint.transform.position.y){
+				if (this.CurrentSortingOrder != this.SpriteOrderOnField)
+					this.CurrentSortingOrder = this._spriteOrderOnField;
 			}
 
 		}
@@ -107,16 +116,13 @@ namespace BounceDudes
         {
 			if (!_isSpecial)
 				AmmunitionClip.Instance.AddAmmunition (this.OriginalGameObject);
+			
             GameObject.Destroy(this.gameObject);
         }
 
-
-		public void SetSortOrderBeforeShoot(){
-			this.Sprite.sortingOrder = this._spriteSortOrderBeforeShoot;
+		public void OnBarrel(){
+			this.CurrentSortingOrder = this._spriteOrderOnBarrel;
 		}
 
-		public void SetSortOrderAfterShoot(){
-			this.Sprite.sortingOrder = this._spriteSortOrderAfterShoot;
-		}
     }
 }

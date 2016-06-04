@@ -9,11 +9,14 @@ namespace BounceDudes{
 		static public AmmunitionClip Instance = null;
 
 		[Header("Ammunitions Points")]
-		public GameObject _onBarrelPoint;
+		public GameObject _nextPoint;
 		public GameObject _secondPoint;
 		public GameObject _thirdPoint;
 		public GameObject _othersPoint;
 		public GameObject _changeToProjectilePoint;
+		public GameObject _onBarrelPoint;
+		public GameObject _launcherObject;
+		public GameObject _changeToFieldOrderPoint;
 
 		protected bool _isOutOfAmmo = true;
 		protected List<GameObject> _ammunitionClip = new List<GameObject> ();
@@ -32,7 +35,7 @@ namespace BounceDudes{
 
 		protected void FillAmmunitionClip(){
 
-			List<GameObject> formationList = GameManager.Instance.GetAvailableSoldiers (); // TEMPORARY. Will be players input
+			List<GameObject> formationList = GameManager.Instance.GetAvailableSoldiers (); //TODO: TEMPORARY. Will be player input
 
 			foreach (GameObject ammo in formationList){
 				this.AddAmmunition (ammo);
@@ -42,25 +45,24 @@ namespace BounceDudes{
 
 		public void AddAmmunition(GameObject ammunition){
 
-			Transform newPoint = GetAmmunitionPositionOnWorld (this._ammunitionClip.Count);
-			GameObject ammoInstance = (GameObject)GameObject.Instantiate(ammunition, newPoint.position, newPoint.rotation);
+			Transform ammoNewPoint = GetAmmunitionPositionOnWorld (-1); // Position out of bounds
+			GameObject ammoInstance = (GameObject)GameObject.Instantiate(ammunition, ammoNewPoint.position, ammoNewPoint.rotation);
 
-			// Change the new instance
+			// change the new instance of ammunition
 			Soldier ammoSoldier = ammoInstance.GetComponent<Soldier> ();
 			ammoSoldier.OriginalGameObject = ammunition;
 			ammoSoldier.AmmunitionPosition = this._ammunitionClip.Count;
-			ammoSoldier.Sprite.sortingOrder = 16;	
-
+			ammoSoldier.StartMoveAnimation (this.GetAmmunitionPositionOnWorld (ammoSoldier.AmmunitionPosition).position, 2.0f);
 
 			this._ammunitionClip.Add (ammoInstance);
-			// --- Call Animation to arriving position here ---
+			// --- call animation to arriving position here ---
 			this._isOutOfAmmo = false; // Put this when ammo animation ends
 		}
 
 		public void ShootNextAmmunition(){
 
 			if (this._ammunitionClip.Count == 0) {
-				// -- Call action when out of Ammo --
+				// -- call action when out of Ammo --
 				this._isOutOfAmmo = true;
 				return;
 			}
@@ -71,11 +73,23 @@ namespace BounceDudes{
 
 			foreach (GameObject ammo in this._ammunitionClip) {
 				Soldier ammoSoldier = ammo.GetComponent<Soldier> ();
-				// --- Call Animation to change position here --
+				// --- call Animation to change position here --
 				ammoSoldier.AmmunitionPosition--;
-				ammo.transform.position = this.GetAmmunitionPositionOnWorld (ammoSoldier.AmmunitionPosition).position;
+				ammoSoldier.StartMoveAnimation (this.GetAmmunitionPositionOnWorld (ammoSoldier.AmmunitionPosition).position, 3.0f);
 
 			}
+
+		}
+
+		public void PrepareNextAmmunition(){
+			// --- call this in the Reload Animation
+			Soldier ammoSoldier = NextAmmunition.GetComponent<Soldier> ();
+			ammoSoldier.CurrentSortingOrder = ammoSoldier.SpriteOrderOnBarrel;
+
+			ammoSoldier.StartMoveAnimation (this._onBarrelPoint.transform.position, 5.0f);
+			//this.NextAmmunition.transform.position = this._onBarrelPoint.transform.position;
+			this.NextAmmunition.transform.rotation = Weapon.Instance.WeaponRotation;
+			this.NextAmmunition.transform.parent = this._launcherObject.transform;
 
 		}
 
@@ -85,7 +99,7 @@ namespace BounceDudes{
 
 			switch (indexInList) {
 			case 0:
-				aux = _onBarrelPoint.transform;
+				aux = _nextPoint.transform;
 				break;
 			case 1:
 				aux = _secondPoint.transform;

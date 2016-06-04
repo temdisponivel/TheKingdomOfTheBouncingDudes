@@ -1,9 +1,10 @@
 fileFormatVersion: 2
 guid: e202d8e1daafeba47bd78be0f2c601b8
-timeCreated: 1463600699
+timeCreated: 1465017129
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Cannon_5_bottom_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -49,7 +50,22 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Cannon_5_bottom_0
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 489
+        width: 282
+        height: 676
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 116, y: -338}
+        - {x: 116, y: 338}
+        - {x: -141, y: 338}
+        - {x: -141, y: -338}
     outline: []
   spritePackingTag: 
   userData: 

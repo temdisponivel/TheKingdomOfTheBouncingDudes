@@ -27,7 +27,7 @@ namespace BounceDudes
 
 		[Header("Objects")]
 		public GameObject _idlePoint = null;
-		public GameObject _shootPoint = null;
+		public GameObject _specialShootPoint = null;
 		public GameObject _minorCogObject = null;
 
 
@@ -60,6 +60,8 @@ namespace BounceDudes
             this._projectilesSpecial = GameManager.Instance._specialProjectiles;
 
 			this._weaponAnimator = this.GetComponent<Animator> ();
+
+
         }
 
         public void Update()
@@ -88,7 +90,6 @@ namespace BounceDudes
             {
                 if (!this._holding)
                 {
-                    //this._ray.enabled = true;
                     this._holding = true;
                     this._currentForceMultiplier = 0;
 					this._weaponAnimator.SetTrigger ("Holding");
@@ -118,6 +119,14 @@ namespace BounceDudes
             }
         }
 
+		public void CallReloadAnimation(){
+			this._weaponAnimator.SetTrigger ("Reloading"); // Calls PrepareAmmunition() in mid animation
+		}
+
+		public void CallPrepareAmmunition(){
+			AmmunitionClip.Instance.PrepareNextAmmunition ();
+		}
+
         /// <summary>
         /// Shoot the current projectile.
         /// </summary>
@@ -140,7 +149,7 @@ namespace BounceDudes
         }
 
 		public void ShootSpecialObject(GameObject shootObject){
-			GameObject shoot = (GameObject)GameObject.Instantiate(shootObject, this._shootPoint.transform.position, this.transform.rotation);
+			GameObject shoot = (GameObject)GameObject.Instantiate(shootObject, this._specialShootPoint.transform.position, this.transform.rotation);
 			Soldier shootSoldier = shoot.GetComponent<Soldier> ();
 			shootSoldier.IsSpecial = true;
 		}
