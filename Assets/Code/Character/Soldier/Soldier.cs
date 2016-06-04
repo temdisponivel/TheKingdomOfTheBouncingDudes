@@ -28,7 +28,7 @@ namespace BounceDudes
 
 			this.CurrentSortingOrder = this._spriteOrderOnAmmunition;
 
-			if (IsSpecial) {
+			if (this.IsSpecial || this.tag == TagAndLayer.SOLDIER_CELL_COPY) {
 				this.Shoot ();
 			}
 		}
@@ -114,7 +114,7 @@ namespace BounceDudes
 
         override public void Die()
         {
-			if (!_isSpecial)
+			if (!this._isSpecial && this.tag != TagAndLayer.SOLDIER_CELL_COPY)
 				AmmunitionClip.Instance.AddAmmunition (this.OriginalGameObject);
 			
             GameObject.Destroy(this.gameObject);

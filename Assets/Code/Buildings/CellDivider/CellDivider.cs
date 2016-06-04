@@ -56,8 +56,11 @@ namespace BounceDudes
         {
 			if (this._currentShootCount == this._maxShoots || this._inside == null)
             {
+				if (this._inside != null){
+					this._inside.GetComponent<Character> ().Die ();
+				}
                 this._free = true;
-                GameObject.Destroy(this._inside);
+				//GameObject.Destroy (this._inside);
                 this._toShoot = null;
 				this._animator.SetBool ("Shooting", false); // Para animação de atirando
             }
@@ -84,7 +87,8 @@ namespace BounceDudes
 			this._inside.transform.localScale = this._insideScaleBkp - ((this._insideScaleBkp / this._maxShoots) * (this._currentShootCount + 1));
 
 
-			character.GetComponent<Character> ().HP = 1; // Clones can only have 1 life.
+			Character charScript = character.GetComponent<Character> ();
+			charScript.HP = 1;// Clones can only have 1 life.
 			this._lastTimeShoot = Time.time;
 			this._currentShootCount++;
 			this._currentIndexTarget++;
@@ -115,7 +119,8 @@ namespace BounceDudes
             {
                 this._targets = this._targetsPlayer; 
                 this._shootPoint = this._shootPointPlayer;
-                this._toShoot = GameManager.Instance.Soldiers[gameObject.GetComponent<Character>()._id];
+				this._toShoot = gameObject.GetComponent<Soldier> ().OriginalGameObject;
+                //this._toShoot = GameManager.Instance.Soldiers[gameObject.GetComponent<Character>()._id];
             }
             else
             {

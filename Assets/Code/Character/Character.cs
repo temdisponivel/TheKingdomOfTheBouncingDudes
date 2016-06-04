@@ -157,7 +157,7 @@ namespace BounceDudes
             this._rigid.isKinematic = false;
             this._collider.enabled = false;
         }
-
+			
 
     }
 }

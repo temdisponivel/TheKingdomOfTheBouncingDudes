@@ -52,10 +52,9 @@ namespace BounceDudes{
 			Soldier ammoSoldier = ammoInstance.GetComponent<Soldier> ();
 			ammoSoldier.OriginalGameObject = ammunition;
 			ammoSoldier.AmmunitionPosition = this._ammunitionClip.Count;
-			ammoSoldier.StartMoveAnimation (this.GetAmmunitionPositionOnWorld (ammoSoldier.AmmunitionPosition).position, 2.0f);
-
+			ammoSoldier.StartMoveAnimation (this.GetAmmunitionPositionOnWorld (ammoSoldier.AmmunitionPosition).position, 5.0f);
+	
 			this._ammunitionClip.Add (ammoInstance);
-			// --- call animation to arriving position here ---
 			this._isOutOfAmmo = false; // Put this when ammo animation ends
 		}
 
@@ -73,9 +72,9 @@ namespace BounceDudes{
 
 			foreach (GameObject ammo in this._ammunitionClip) {
 				Soldier ammoSoldier = ammo.GetComponent<Soldier> ();
-				// --- call Animation to change position here --
 				ammoSoldier.AmmunitionPosition--;
-				ammoSoldier.StartMoveAnimation (this.GetAmmunitionPositionOnWorld (ammoSoldier.AmmunitionPosition).position, 3.0f);
+
+				ammoSoldier.StartMoveAnimation (this.GetAmmunitionPositionOnWorld (ammoSoldier.AmmunitionPosition).position, 4.0f);
 
 			}
 
@@ -85,9 +84,8 @@ namespace BounceDudes{
 			// --- call this in the Reload Animation
 			Soldier ammoSoldier = NextAmmunition.GetComponent<Soldier> ();
 			ammoSoldier.CurrentSortingOrder = ammoSoldier.SpriteOrderOnBarrel;
-
 			ammoSoldier.StartMoveAnimation (this._onBarrelPoint.transform.position, 5.0f);
-			//this.NextAmmunition.transform.position = this._onBarrelPoint.transform.position;
+
 			this.NextAmmunition.transform.rotation = Weapon.Instance.WeaponRotation;
 			this.NextAmmunition.transform.parent = this._launcherObject.transform;
 
