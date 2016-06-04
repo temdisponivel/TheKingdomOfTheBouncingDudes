@@ -87,7 +87,7 @@ namespace BounceDudes{
 			ammoSoldier.StartMoveAnimation (this._onBarrelPoint.transform.position, 5.0f);
 
 			this.NextAmmunition.transform.rotation = Weapon.Instance.WeaponRotation;
-			this.NextAmmunition.transform.parent = this._launcherObject.transform;
+			this.NextAmmunition.transform.SetParent (this._launcherObject.transform);
 
 		}
 
