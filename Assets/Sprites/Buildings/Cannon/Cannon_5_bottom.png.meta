@@ -8,7 +8,7 @@ TextureImporter:
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -28,9 +28,9 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 2048
+  maxTextureSize: 1024
   textureSettings:
-    filterMode: -1
+    filterMode: 1
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -48,7 +48,12 @@ TextureImporter:
   spritePixelsToUnits: 600
   alphaIsTransparency: 1
   textureType: 8
-  buildTargetSettings: []
+  buildTargetSettings:
+  - buildTarget: Android
+    maxTextureSize: 512
+    textureFormat: -1
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
   spriteSheet:
     sprites:
     - name: Cannon_5_bottom_0
@@ -67,7 +72,7 @@ TextureImporter:
         - {x: -141, y: 338}
         - {x: -141, y: -338}
     outline: []
-  spritePackingTag: 
+  spritePackingTag: BounceDudesSprites
   userData: 
   assetBundleName: 
   assetBundleVariant: 

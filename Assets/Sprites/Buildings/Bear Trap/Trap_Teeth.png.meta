@@ -1,13 +1,15 @@
 fileFormatVersion: 2
 guid: 3b509c2f2f308c342ab2e8e4eb6ad6c0
-timeCreated: 1463792528
+timeCreated: 1465143111
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Trap_Teeth_0
+    21300002: Trap_Teeth_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -27,7 +29,7 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 2048
+  maxTextureSize: 1024
   textureSettings:
     filterMode: -1
     aniso: 16
@@ -47,11 +49,64 @@ TextureImporter:
   spritePixelsToUnits: 600
   alphaIsTransparency: 1
   textureType: 8
-  buildTargetSettings: []
+  buildTargetSettings:
+  - buildTarget: Android
+    maxTextureSize: 256
+    textureFormat: -1
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Trap_Teeth_0
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 60
+        width: 264
+        height: 320
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 75.58182, y: 102.045456}
+        - {x: 66.58182, y: 99.045456}
+        - {x: 35.581818, y: 101.045456}
+        - {x: 9.581818, y: 38.045456}
+        - {x: -3.4181824, y: 75.045456}
+        - {x: -43.418182, y: 90.045456}
+        - {x: -76.41818, y: 73.045456}
+        - {x: -83.41818, y: 60.045456}
+        - {x: -83.41818, y: -120.954544}
+        - {x: -81.41818, y: -121.954544}
+        - {x: -16.418182, y: -121.954544}
+        - {x: 103.58182, y: -96.954544}
+        - {x: 103.58182, y: 82.045456}
+        - {x: 90.58182, y: 102.045456}
+    - name: Trap_Teeth_1
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 79
+        width: 261
+        height: 298
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 4.875763, y: 109.28485}
+        - {x: -6.124237, y: 109.28485}
+        - {x: -14.124237, y: 105.28485}
+        - {x: -46.124237, y: 109.28485}
+        - {x: -50.124237, y: 109.28485}
+        - {x: -64.12424, y: 105.28485}
+        - {x: -101.12424, y: 103.28485}
+        - {x: -101.12424, y: -94.71515}
+        - {x: -85.12424, y: -94.71515}
+        - {x: 94.87576, y: -83.71515}
+        - {x: 94.87576, y: 22.284851}
+        - {x: 72.87576, y: 34.28485}
     outline: []
-  spritePackingTag: 
+  spritePackingTag: BounceDudesSprites
   userData: 
   assetBundleName: 
   assetBundleVariant: 
