@@ -14,8 +14,11 @@ namespace BounceDudes{
 		public Animator _mainMenuAnimator;
 		public GameObject _mainMenuContainer;
 
+		public Animator _balloonAnimator;
+
 		protected Animator _animator;
 
+		protected bool _animating = false;
 
 		public int _currentState = 0;
 		protected const int ON_SPLASH_SCREEN = 0;
@@ -39,6 +42,20 @@ namespace BounceDudes{
 			}
 		}
 
+		// --- To be called in the end of animations
+		public void ChangeStateToMainMenu(){
+			_currentState = ON_MAIN_MENU;
+			_mainMenuAnimator.ResetTrigger ("CallIntro");
+
+		}
+
+		public void ChangeStateToSplashScreen(){
+			_currentState = ON_SPLASH_SCREEN;
+			_mainMenuAnimator.ResetTrigger ("CallOutro");
+		}
+
+		//---
+
 
 		public void CallCapeBlown(){
 			this._animator.SetTrigger ("KingCapeBlown");
@@ -49,6 +66,7 @@ namespace BounceDudes{
 		}
 
 		public void CallChainsIntro(){
+			_balloonAnimator.SetTrigger ("CallOutro");
 			_mainMenuAnimator.SetTrigger ("CallIntro");
 		}
 
