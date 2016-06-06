@@ -22,6 +22,10 @@ namespace BounceDudes
         public string CurrentLevel { get; set; }
         public float Score { get; set; }
 
+        public Text _soldierNameText;
+
+        public GameObject _pausePanel = null;
+
         [Header("Give Away")]
         public int[] StarByScore;
 
@@ -31,7 +35,7 @@ namespace BounceDudes
 
         protected Dictionary<Challenge, int[]> SoldierByChallenge;
 
-        public void Start()
+        public void Awake()
         {
             LevelManager._instance = this;
             this.CurrentLevel = SceneManager.GetActiveScene().name;
@@ -42,6 +46,8 @@ namespace BounceDudes
             {
                 this.SoldierByChallenge[soldierByStar._challenge] = soldierByStar._soldierToGive;
             }
+
+            GameManager.Instance.OnStateChange += this.StateChangeCallback;
         }
 
         public void GameOver()
@@ -73,6 +79,7 @@ namespace BounceDudes
             }
             info.SoldiersEarned = soldiersEarned.Distinct().ToArray();
             GameManager.Instance.AddLevelInfo(this.CurrentLevel, info);
+            GameManager.Instance.OnStateChange -= this.StateChangeCallback;
             SceneManager.LoadScene("EndLevel");
         }
 
@@ -86,6 +93,34 @@ namespace BounceDudes
         {
             this.Score += this._playerBase.HP + this._enemyBase.HP;
             this.Score = Mathf.Max(0, this.Score);
+        }
+
+        public void StateChangeCallback()
+        {
+            if (GameManager.Instance.State == GameState.PAUSED)
+            {
+                this._pausePanel.SetActive(true);
+            }
+            else
+            {
+                this._pausePanel.SetActive(false);
+            }
+        }
+
+        public void PauseGame()
+        {
+            GameManager.Instance.State = GameState.PAUSED;
+        }
+
+        public void UnpauseGame()
+        {
+            GameManager.Instance.State = GameState.PLAYING;
+        }
+
+        public void Quit()
+        {
+            this.UnpauseGame();
+            this.GameOver();
         }
     }
 }

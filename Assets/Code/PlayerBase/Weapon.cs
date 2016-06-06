@@ -12,30 +12,38 @@ namespace BounceDudes
     {
         static public Weapon Instance = null;
 
-		public Text _textAngle = null;
+        public Text _textAngle = null;
 
         public Camera _camera = null;
-        
+
         protected List<GameObject> _projectiles = new List<GameObject>();
         protected List<GameObject> _projectilesSpecial = new List<GameObject>();
 
+        public float _minShootMultiplier = 0.45f;
+        public float _maxShootMultiplier = 0.8f;
+        public float _coolDown = 0f;
+        public float _shootMultiplierPerSeconds = 2;
 
-		protected float _minShootMultiplier = 0.45f;
-		protected float _maxShootMultiplier = 0.8f;
-        public float _coolDown = 1f;
+        [Tooltip("Max angle in relation to right. When pointing at right, the angle is zero; when pointing to left is 180.")]
+        public float _maxRotationAngle;
+
+        [Tooltip("Min angle in relation to right. When pointing at right, the angle is zero; when pointing to left is 180.")]
+        public float _minRotationAngle;
+
+        public bool _canShoot = true;
 
 
-		[Header("Objects")]
-		public GameObject _idlePoint = null;
-		public GameObject _specialShootPoint = null;
-		public GameObject _minorCogObject = null;
+        [Header("Objects")]
+        public GameObject _idlePoint = null;
+        public GameObject _specialShootPoint = null;
+        public GameObject _minorCogObject = null;
 
 
         [Header("Visual settings")]
         public int _quantityOfShownMunition = 10;
 
 
-        [Header("Special")] 
+        [Header("Special")]
         public float _coolDownBetweenSpecials = 3f;
         public float _specialDuration = 3f;
         protected bool _special = false;
@@ -47,11 +55,11 @@ namespace BounceDudes
         protected int _currentProjectileIndex = 0;
         protected int _currentSpecialProjectileIndex = 0;
 
-		protected Animator _weaponAnimator = null;
+        protected Animator _weaponAnimator = null;
 
         public int ShootCount { get; set; }
         public float ForceMultiplier { get { return this._currentForceMultiplier; } }
-		public Quaternion WeaponRotation { get { return this.transform.rotation; } }
+        public Quaternion WeaponRotation { get { return this.transform.rotation; } }
 
         public void Start()
         {
@@ -59,7 +67,7 @@ namespace BounceDudes
             this._projectiles = GameManager.Instance.GetAvailableSoldiers();
             this._projectilesSpecial = GameManager.Instance._specialProjectiles;
 
-			this._weaponAnimator = this.GetComponent<Animator> ();
+            this._weaponAnimator = this.GetComponent<Animator>();
 
 
         }
@@ -80,32 +88,55 @@ namespace BounceDudes
             }
         }
 
-
+        public float seconds;
         /// <summary>
         /// Perform the logic of shooting.
         /// </summary>
         protected void ShootRoutine()
         {
-            if (Input.GetMouseButton(0))
+            bool clicked = Input.GetMouseButton(0);
+
+            if (clicked)
             {
-                if (!this._holding)
+                var hit = Physics2D.Raycast(this._camera.ScreenToWorldPoint(Input.mousePosition), Vector3.forward, Mathf.Infinity, TagAndLayer.UI);
+
+                if (hit.collider != null)
                 {
-                    this._holding = true;
-                    this._currentForceMultiplier = 0;
-					this._weaponAnimator.SetTrigger ("Holding");
+                    return;
                 }
 
                 this.RotateTowardsMouse();
-                if (this._currentForceMultiplier <= this._maxShootMultiplier)
+
+                if (!this._canShoot)
+                    return;
+
+                if (!this._holding)
                 {
-					if (this._currentForceMultiplier >= this._minShootMultiplier)
-						this._currentForceMultiplier += Time.deltaTime;
-					else
-						this._currentForceMultiplier = this._minShootMultiplier;
+                    seconds = Time.time;
+                    this._holding = true;
+                    this._currentForceMultiplier = this._minShootMultiplier;
+                    this._weaponAnimator.SetTrigger("Holding");
                 }
+
+                if (this._currentForceMultiplier < this._maxShootMultiplier)
+                {
+                    Debug.Log("MENOR");
+                    
+                    this._currentForceMultiplier += this._shootMultiplierPerSeconds * Time.deltaTime;
+                }
+
+                Debug.Log(this._currentForceMultiplier / _maxShootMultiplier);
+
+                if (this._currentForceMultiplier >= this._maxShootMultiplier)
+                    this._weaponAnimator.speed = 1;
+                else
+                    this._weaponAnimator.speed = 1/(this._maxShootMultiplier/this._shootMultiplierPerSeconds);
             }
             else if (this._holding)
             {
+                if (!this._canShoot)
+                    return;
+
                 if (this._special)
                 {
                     this._currentForceMultiplier = this._maxShootMultiplier;
@@ -113,26 +144,41 @@ namespace BounceDudes
                 }
                 else if (Time.time - this._lastTimeShoot >= this._coolDown)
                 {
-					this._weaponAnimator.SetTrigger ("Shooting"); // Calls Shoot() on the animation clip.
+                    this._weaponAnimator.SetTrigger("Shooting"); // Calls Shoot() on the animation clip.
                 }
                 this._holding = false;
             }
         }
 
-		public void CallReloadAnimation(){
-			this._weaponAnimator.SetTrigger ("Reloading"); // Calls PrepareAmmunition() in mid animation
-		}
+        public void CallReloadAnimation()
+        {
+            this._weaponAnimator.SetTrigger("Reloading"); // Calls PrepareAmmunition() in mid animation
+        }
 
-		public void CallPrepareAmmunition(){
-			AmmunitionClip.Instance.PrepareNextAmmunition ();
-		}
+        //called from animator
+        public void SetCanShoot()
+        {
+            this._canShoot = true;
+        }
+
+        //called from animator
+        public void UnSetCanShoot()
+        {
+            this._canShoot = false;
+        }
+
+        public void CallPrepareAmmunition()
+        {
+            AmmunitionClip.Instance.PrepareNextAmmunition();
+            this.UpdateSoldierNameUI();
+        }
 
         /// <summary>
         /// Shoot the current projectile.
         /// </summary>
         public void Shoot()
         {
-			AmmunitionClip.Instance.ShootNextAmmunition ();
+            AmmunitionClip.Instance.ShootNextAmmunition();
             this._lastTimeShoot = Time.time;
             this.ShootCount++;
         }
@@ -148,40 +194,40 @@ namespace BounceDudes
             this.ShootCount++;
         }
 
-		public void ShootSpecialObject(GameObject shootObject){
-			GameObject shoot = (GameObject)GameObject.Instantiate(shootObject, this._specialShootPoint.transform.position, this.transform.rotation);
-			Soldier shootSoldier = shoot.GetComponent<Soldier> ();
-			shootSoldier.IsSpecial = true;
-		}
+        public void ShootSpecialObject(GameObject shootObject)
+        {
+            GameObject shoot = (GameObject)GameObject.Instantiate(shootObject, this._specialShootPoint.transform.position, this.transform.rotation);
+            Soldier shootSoldier = shoot.GetComponent<Soldier>();
+            shootSoldier.IsSpecial = true;
+        }
 
         protected void RotateTowardsMouse()
         {
-            Vector3 mousePosition = this._camera.ScreenToWorldPoint(Input.mousePosition);
-            this.transform.rotation = Quaternion.LookRotation(Vector3.forward, (mousePosition - this.transform.position).normalized);
-			this._minorCogObject.transform.rotation = Quaternion.Inverse (this.transform.rotation * this.transform.rotation);
+            Vector2 mousePosition = this._camera.ScreenToWorldPoint(Input.mousePosition);
+            var newUp = (mousePosition - (Vector2)this.transform.position).normalized;
 
-			this._textAngle.text = "" + this.transform.rotation.eulerAngles + "º";
-        }
+            if (this._textAngle != null)
+                this._textAngle.text = Vector3.Angle(newUp, Vector3.right).ToString();
 
-
-		/*
-        public void Move()
-        {
-            if (Input.GetMouseButtonUp(0))
+            var angle = Vector3.Angle(newUp, Vector3.right);
+            if (angle >= _minRotationAngle && angle <= _maxRotationAngle && Vector3.Dot(newUp, Vector3.up) > 0)
             {
-                Vector3 clickPosition = this._camera.ScreenToWorldPoint(Input.mousePosition);
-                foreach (var movePoint in this._movePoints)
-                {
-                    if (Vector2.Distance(clickPosition, movePoint.transform.position) <= .1)
-                    {
-                        this.transform.position = movePoint.transform.position;
-                        this._lastTimeShoot = Time.time;
-                        break;
-                    }
-                }
-                
+                this.transform.rotation = Quaternion.LookRotation(Vector3.forward, newUp);
+                this._minorCogObject.transform.rotation = Quaternion.Inverse(this.transform.rotation * this.transform.rotation);
             }
         }
-        */
+
+        public void UpdateSoldierNameUI()
+        {
+            if (GameManager.Instance.SoldierNames.ContainsKey(AmmunitionClip.Instance.NextAmmunition._id))
+            {
+                LevelManager.Instance._soldierNameText.text = string.Format("Shooting {0}", GameManager.Instance.SoldierNames[AmmunitionClip.Instance.NextAmmunition._id]);
+            }
+            else
+            {
+
+                LevelManager.Instance._soldierNameText.text = string.Format("Shooting {0}", "Jen do");
+            }
+        }
     }
 }

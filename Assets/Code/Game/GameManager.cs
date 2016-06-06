@@ -17,6 +17,35 @@ namespace BounceDudes
         static protected GameManager _instance = null;
         static public GameManager Instance { get { return GameManager._instance; } }
 
+        public event Action OnStateChange;
+
+        private GameState _state;
+
+        private float _timeScaleBkp;
+
+        public GameState State 
+        {
+            get
+            {
+                return _state;
+            }
+            set
+            {
+                if (_state == GameState.PLAYING && value == GameState.PAUSED)
+                {
+                    this._timeScaleBkp = Time.timeScale;
+                    Time.timeScale = 0.0001f;
+                }
+                else if (_state == GameState.PAUSED && value != GameState.PAUSED)
+                {
+                    Time.timeScale = this._timeScaleBkp;
+                }
+                _state = value;
+                if (this.OnStateChange  != null)
+                    this.OnStateChange();
+            }
+        }
+
         public string SaveFileName = "boucedudes.save";
 
         public string SaveFilePath { get { return String.Format("{0}{1}{2}", Application.persistentDataPath, Path.PathSeparator, SaveFileName); } }
@@ -37,6 +66,8 @@ namespace BounceDudes
 
         public Dictionary<int, GameObject> Soldiers { get; set; }
         public Dictionary<int, GameObject> Monsters { get; set; }
+
+        public List<GameObject> NextLevelSoldier = new List<GameObject>();
 
         public void Awake()
         {
@@ -162,5 +193,7 @@ namespace BounceDudes
                 SoldierNames = this.SoldierNames,
             };
         }
+
+        
     }
 }

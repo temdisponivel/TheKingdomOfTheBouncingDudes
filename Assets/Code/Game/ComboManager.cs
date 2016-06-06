@@ -65,6 +65,7 @@ public class ComboManager : MonoBehaviour
     {
         this._killCount++;
         this._lastKillTime = Time.time;
+        Debug.Log(string.Format("KILL {0}", this._killCount));
     }
 
     public void AddHit()
@@ -76,11 +77,15 @@ public class ComboManager : MonoBehaviour
         {
             this.MaxHitComboCount = this._hitCount;
         }
+
+        Debug.Log(string.Format("HIT {0}", this._hitCount));
     }
 
     public void AddElementKill()
     {
         this._elementKillCount++;
         this._lastElementKillTime = Time.time;
+
+        Debug.Log(string.Format("ELEMENT KILL {0}", this._elementKillCount));
     }
 }
