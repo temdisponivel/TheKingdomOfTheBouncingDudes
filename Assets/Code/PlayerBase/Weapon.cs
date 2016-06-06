@@ -15,6 +15,7 @@ namespace BounceDudes
         public Text _textAngle = null;
 
         public Camera _camera = null;
+        public Camera _cameraUi = null;
 
         protected List<GameObject> _projectiles = new List<GameObject>();
         protected List<GameObject> _projectilesSpecial = new List<GameObject>();
@@ -75,20 +76,15 @@ namespace BounceDudes
         public void Update()
         {
             this.ShootRoutine();
-
-            if (!this._special && Input.GetButtonUp("Special") && (Time.time - (this._specialStartTime + this._specialDuration)) >= this._coolDownBetweenSpecials)
-            {
-                Debug.Log("SPECIAL");
-                this._special = true;
-                this._specialStartTime = Time.time;
-            }
-            else
-            {
-                this._special = this._special && (Time.time - this._specialStartTime) <= this._specialDuration;
-            }
+            this._special = this._special && (Time.time - this._specialStartTime) <= this._specialDuration;
         }
 
-        public float seconds;
+        public void SetSpecial()
+        {
+            this._special = (Time.time - (this._specialStartTime + this._specialDuration)) >= this._coolDownBetweenSpecials;
+            this._specialStartTime = Time.time;
+        }
+
         /// <summary>
         /// Perform the logic of shooting.
         /// </summary>
@@ -98,7 +94,7 @@ namespace BounceDudes
 
             if (clicked)
             {
-                var hit = Physics2D.Raycast(this._camera.ScreenToWorldPoint(Input.mousePosition), Vector3.forward, Mathf.Infinity, TagAndLayer.UI);
+                var hit = Physics2D.Raycast(this._cameraUi.ScreenToWorldPoint(Input.mousePosition), Vector3.forward, Mathf.Infinity, 1 << LayerMask.NameToLayer("UI"));
 
                 if (hit.collider != null)
                 {
@@ -112,7 +108,6 @@ namespace BounceDudes
 
                 if (!this._holding)
                 {
-                    seconds = Time.time;
                     this._holding = true;
                     this._currentForceMultiplier = this._minShootMultiplier;
                     this._weaponAnimator.SetTrigger("Holding");
@@ -228,6 +223,11 @@ namespace BounceDudes
 
                 LevelManager.Instance._soldierNameText.text = string.Format("Shooting {0}", "Jen do");
             }
+        }
+
+        public void RetrieveAll()
+        {
+            
         }
     }
 }
