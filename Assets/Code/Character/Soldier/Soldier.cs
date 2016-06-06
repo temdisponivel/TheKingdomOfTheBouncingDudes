@@ -8,6 +8,7 @@ namespace BounceDudes
     /// </summary>
     public class Soldier : Character
     {
+        public float _timeToTravel = .5f;
 
         protected int _ammunitionPosition = -1;
         protected int _spriteOrderOnAmmunition = 9, _spriteOrderOnBarrel = 16, _spriteOrderOnField = 2;
@@ -41,7 +42,6 @@ namespace BounceDudes
             this.transform.rotation = Weapon.Instance.WeaponRotation;
             this.TurnIntoTransition();
             this.RigidBody.AddForce(this.transform.up * this._maxSpeed * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
-
         }
 
         public override void Update()
@@ -52,7 +52,6 @@ namespace BounceDudes
             // Passed the cannon shoot point, turn it into a projectile.
             if (this.transform.position.y >= AmmunitionClip.Instance._changeToProjectilePoint.transform.position.y && !_turnedIntoProjectile)
             {
-
                 this.TurnIntoProjectile();
                 _turnedIntoProjectile = true;
             }
@@ -120,9 +119,10 @@ namespace BounceDudes
         override public void Die()
         {
             if (!this._isSpecial && this.tag != TagAndLayer.SOLDIER_CELL_COPY)
-                AmmunitionClip.Instance.AddAmmunition(this.OriginalGameObject);
-
-            GameObject.Destroy(this.gameObject);
+            {
+                this.Recycle();
+                this.GoTo(AmmunitionClip.Instance._othersPoint.transform.position);
+            }
         }
 
         public void OnBarrel()
@@ -130,5 +130,25 @@ namespace BounceDudes
             this.CurrentSortingOrder = this._spriteOrderOnBarrel;
         }
 
+        public void GoToAmmunition()
+        {
+            this.GoTo(AmmunitionClip.Instance._othersPoint.transform.position);
+        }
+
+        public void GoTo(Vector3 position)
+        {
+            this.StartCoroutine(InnerGoTo(position));
+        }
+
+        private IEnumerator InnerGoTo(Vector3 position)
+        {
+            float distance = (this.transform.position - position).sqrMagnitude;
+            while ((this.transform.position - position).sqrMagnitude >= .1)
+            {
+                this.transform.position = Vector2.MoveTowards(this.transform.position, position, distance / this._timeToTravel);
+                yield return 0;
+            }
+            AmmunitionClip.Instance.RecycleAmmunition(this.gameObject);
+        }
     }
 }

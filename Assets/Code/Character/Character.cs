@@ -157,7 +157,10 @@ namespace BounceDudes
             this._rigid.isKinematic = false;
             this._collider.enabled = false;
         }
-			
 
+        public void Recycle()
+        {
+            this.Start();
+        }
     }
 }

@@ -57,25 +57,29 @@ namespace BounceDudes
         protected int _currentSpecialProjectileIndex = 0;
 
         protected Animator _weaponAnimator = null;
+        private bool _waitingForAmmo;
 
         public int ShootCount { get; set; }
         public float ForceMultiplier { get { return this._currentForceMultiplier; } }
         public Quaternion WeaponRotation { get { return this.transform.rotation; } }
 
-        public void Start()
+        public void Awake()
         {
             Weapon.Instance = this;
+            this._weaponAnimator = this.GetComponent<Animator>();
+        }
+
+        public void Start()
+        {
+            AmmunitionClip.Instance.AmmoCountChanged += this.NewAmmo;
             this._projectiles = GameManager.Instance.GetAvailableSoldiers();
             this._projectilesSpecial = GameManager.Instance._specialProjectiles;
-
-            this._weaponAnimator = this.GetComponent<Animator>();
-
-
         }
 
         public void Update()
         {
             this.ShootRoutine();
+            
             this._special = this._special && (Time.time - this._specialStartTime) <= this._specialDuration;
         }
 
@@ -101,7 +105,13 @@ namespace BounceDudes
                     return;
                 }
 
+                if (AmmunitionClip.Instance.IsOutOfAmmo)
+                    this._waitingForAmmo = true;
+
                 this.RotateTowardsMouse();
+
+                if (this._waitingForAmmo)
+                    return;
 
                 if (!this._canShoot)
                     return;
@@ -115,12 +125,8 @@ namespace BounceDudes
 
                 if (this._currentForceMultiplier < this._maxShootMultiplier)
                 {
-                    Debug.Log("MENOR");
-                    
                     this._currentForceMultiplier += this._shootMultiplierPerSeconds * Time.deltaTime;
                 }
-
-                Debug.Log(this._currentForceMultiplier / _maxShootMultiplier);
 
                 if (this._currentForceMultiplier >= this._maxShootMultiplier)
                     this._weaponAnimator.speed = 1;
@@ -227,7 +233,20 @@ namespace BounceDudes
 
         public void RetrieveAll()
         {
-            
+            for (int i = 0; i < AmmunitionClip.Instance.SoldiersInClip.Count; i++)
+            {
+                AmmunitionClip.Instance.SoldiersInClip[i].Recycle();
+                AmmunitionClip.Instance.SoldiersInClip[i].GoToAmmunition();
+            }
+        }
+
+        public void NewAmmo()
+        {
+            if (this._waitingForAmmo)
+            {
+                this._waitingForAmmo = false;
+                this.CallReloadAnimation();
+            }
         }
     }
 }

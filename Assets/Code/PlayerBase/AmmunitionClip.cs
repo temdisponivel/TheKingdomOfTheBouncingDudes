@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -21,19 +22,25 @@ namespace BounceDudes
         public GameObject _changeToFieldOrderPoint;
 
         protected bool _isOutOfAmmo = true;
-        protected List<GameObject> _ammunitionClip = new List<GameObject>();
+        protected List<Soldier> _ammunitionClip = new List<Soldier>();
+
+        protected int _positions = 0;
+        protected int _shootPosition = 0;
 
         public bool IsOutOfAmmo { get { return _isOutOfAmmo; } }
-        public Soldier NextAmmunition { get { return _ammunitionClip[0].GetComponent<Soldier>(); } }
+        public Soldier NextAmmunition { get { return _ammunitionClip[_shootPosition % _ammunitionClip.Count].GetComponent<Soldier>(); } }
+
+        public List<Soldier> SoldiersInClip { get { return _ammunitionClip; } }
+
+        public event Action AmmoCountChanged;
 
 
         // Use this for initialization
         void Start()
         {
-
             AmmunitionClip.Instance = this;
             this.FillAmmunitionClip();
-
+            this.PrepareNextAmmunition();
         }
 
         protected void FillAmmunitionClip()
@@ -56,16 +63,35 @@ namespace BounceDudes
             // change the new instance of ammunition
             Soldier ammoSoldier = ammoInstance.GetComponent<Soldier>();
             ammoSoldier.OriginalGameObject = ammunition;
-            ammoSoldier.AmmunitionPosition = this._ammunitionClip.Count;
+
+            this._ammunitionClip.Add(ammoSoldier);
+
+            this.InnerAddAmmunition(ammoInstance);
+        }
+
+        public void RecycleAmmunition(GameObject ammoInstance)
+        {
+            //ammoInstance.transform.position = ammoNewPoint.position;
+            //ammoInstance.transform.rotation = ammoNewPoint.rotation;
+
+            this.InnerAddAmmunition(ammoInstance);
+        }
+
+        protected void InnerAddAmmunition(GameObject ammoInstance)
+        {
+            // change the new instance of ammunition
+            Soldier ammoSoldier = ammoInstance.GetComponent<Soldier>();
+            ammoSoldier.AmmunitionPosition = _positions++ % this._ammunitionClip.Count;
             ammoSoldier.StartMoveAnimation(this.GetAmmunitionPositionOnWorld(ammoSoldier.AmmunitionPosition).position, 5.0f);
 
-            this._ammunitionClip.Add(ammoInstance);
+            //this._ammunitionClip.Add(ammoInstance);
             this._isOutOfAmmo = false; // Put this when ammo animation ends
+            if (this.AmmoCountChanged != null)
+                this.AmmoCountChanged();
         }
 
         public void ShootNextAmmunition()
         {
-
             if (this._ammunitionClip.Count == 0)
             {
                 // -- call action when out of Ammo --
@@ -75,15 +101,15 @@ namespace BounceDudes
 
             NextAmmunition.Shoot();
 
-            this._ammunitionClip.RemoveAt(0);
+            _shootPosition++;
 
-            foreach (GameObject ammo in this._ammunitionClip)
+            //this._ammunitionClip.RemoveAt(0);
+
+            foreach (Soldier ammo in this._ammunitionClip)
             {
-                Soldier ammoSoldier = ammo.GetComponent<Soldier>();
-                ammoSoldier.AmmunitionPosition--;
+                ammo.AmmunitionPosition = ++ammo.AmmunitionPosition % this._ammunitionClip.Count;
 
-                ammoSoldier.StartMoveAnimation(this.GetAmmunitionPositionOnWorld(ammoSoldier.AmmunitionPosition).position, 4.0f);
-
+                ammo.StartMoveAnimation(this.GetAmmunitionPositionOnWorld(ammo.AmmunitionPosition).position, 4.0f);
             }
 
         }
@@ -105,13 +131,13 @@ namespace BounceDudes
 
             switch (indexInList)
             {
-                case 0:
+                case 2:
                     aux = _nextPoint.transform;
                     break;
                 case 1:
                     aux = _secondPoint.transform;
                     break;
-                case 2:
+                case 0:
                     aux = _thirdPoint.transform;
                     break;
                 default:
