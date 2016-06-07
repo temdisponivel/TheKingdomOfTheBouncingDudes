@@ -75,6 +75,8 @@ namespace BounceDudes
             AmmunitionClip.Instance.AmmoCountChanged += this.NewAmmo;
             this._projectiles = GameManager.Instance.GetAvailableSoldiers();
             this._projectilesSpecial = GameManager.Instance._specialProjectiles;
+
+			this.CallReloadAnimation ();
         }
 
         public void Update()
@@ -129,10 +131,10 @@ namespace BounceDudes
                     this._currentForceMultiplier += this._shootMultiplierPerSeconds * Time.deltaTime;
                 }
 
-                if (this._currentForceMultiplier >= this._maxShootMultiplier)
-                    this._weaponAnimator.speed = 1;
-                else
-                    this._weaponAnimator.speed = 1/(this._maxShootMultiplier/this._shootMultiplierPerSeconds);
+				if (this._currentForceMultiplier >= this._maxShootMultiplier)
+					this._weaponAnimator.SetFloat ("Speed", 1);
+				else
+					this._weaponAnimator.SetFloat ("Speed", 1 / (this._maxShootMultiplier / this._shootMultiplierPerSeconds));
             }
             else if (this._holding)
             {
@@ -229,12 +231,11 @@ namespace BounceDudes
 
             if (GameManager.Instance.SoldierNames.ContainsKey(AmmunitionClip.Instance.NextAmmunition._id))
             {
-                LevelManager.Instance._soldierNameText.text = string.Format("Shooting {0}", GameManager.Instance.SoldierNames[AmmunitionClip.Instance.NextAmmunition._id]);
+                LevelManager.Instance._soldierNameText.text = string.Format("{0}", GameManager.Instance.SoldierNames[AmmunitionClip.Instance.NextAmmunition._id]);
             }
             else
-            {
-
-                LevelManager.Instance._soldierNameText.text = string.Format("Shooting {0}", "Jen do");
+			{
+                LevelManager.Instance._soldierNameText.text = string.Format("{0}", "Vicenzito");
             }
         }
 

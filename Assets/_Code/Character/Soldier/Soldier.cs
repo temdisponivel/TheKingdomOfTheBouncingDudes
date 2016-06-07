@@ -32,7 +32,7 @@ namespace BounceDudes
 
             if (this.IsSpecial || this.tag == TagAndLayer.SOLDIER_CELL_COPY)
             {
-                this.Shoot();
+                this.ShootSpecial();
             }
         }
 
@@ -43,6 +43,10 @@ namespace BounceDudes
             this.TurnIntoTransition();
             this.RigidBody.AddForce(this.transform.up * this._maxSpeed * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
         }
+
+		public void ShootSpecial(){
+			this.RigidBody.AddForce(this.transform.up * this._maxSpeed * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
+		}
 
         public override void Update()
         {
@@ -55,6 +59,7 @@ namespace BounceDudes
                 this.TurnIntoProjectile();
                 _turnedIntoProjectile = true;
             }
+
             if (this.transform.position.y >= AmmunitionClip.Instance._changeToFieldOrderPoint.transform.position.y)
             {
                 if (this.CurrentSortingOrder != this.SpriteOrderOnField)
@@ -117,12 +122,16 @@ namespace BounceDudes
 
         override public void Die()
         {
-            if (!this._isSpecial && this.tag != TagAndLayer.SOLDIER_CELL_COPY)
-            {
-                this.Recycle();
-                AmmunitionClip.Instance.AddAmmunition(this.gameObject);
-            }
+			if (!this._isSpecial && this.tag != TagAndLayer.SOLDIER_CELL_COPY) {
+				this.Recycle ();
+				this.CurrentSortingOrder = this._spriteOrderOnAmmunition;
+				AmmunitionClip.Instance.AddAmmunition (this.gameObject);
+			} 
+			else {
+				Destroy (this.gameObject);
+			}
         }
+
 
         public void OnBarrel()
         {

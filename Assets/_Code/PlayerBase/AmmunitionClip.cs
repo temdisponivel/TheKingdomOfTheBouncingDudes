@@ -20,8 +20,8 @@ namespace BounceDudes
         public GameObject _othersPoint;
         public GameObject _changeToProjectilePoint;
         public GameObject _onBarrelPoint;
-        public GameObject _launcherObject;
-        public GameObject _changeToFieldOrderPoint;
+		public GameObject _shootObject;
+		public GameObject _changeToFieldOrderPoint;
 
         protected Queue<Soldier> _ammunitionClip = new Queue<Soldier>();
         protected List<GameObject> SoldiersBkp;
@@ -48,7 +48,6 @@ namespace BounceDudes
             SoldiersBkp = GameManager.Instance.NextLevelSoldiers.ToList();
             GameManager.Instance.NextLevelSoldiers.Clear();
             this.FillAmmunitionClip();
-            this.PrepareNextAmmunition();
         }
 
         protected void FillAmmunitionClip()
@@ -98,10 +97,16 @@ namespace BounceDudes
             if (this.IsOutOfAmmo)
                 return;
 
-            NextAmmunition.transform.DOMove(this._onBarrelPoint.transform.position, NextAmmunition._timeToTravel / 2);
+			this.NextAmmunition.GetComponent<Soldier> ().OnBarrel();
+
+			NextAmmunition.transform.position = this._onBarrelPoint.transform.position;
 
             this.NextAmmunition.transform.rotation = Weapon.Instance.WeaponRotation;
-            this.NextAmmunition.transform.SetParent(this._launcherObject.transform);
+			this.NextAmmunition.transform.SetParent(this._shootObject.transform);
+			// Ensures that the shoot object will move with the platform. A way around parenting and messing up the scale of the projectile.
+			this._shootObject.GetComponent<ShootObject> ().ObjectToFollow = this._onBarrelPoint;
+
+			//NextAmmunition.transform.DOMove(this._onBarrelPoint.transform.position, NextAmmunition._timeToTravel * 2);
         }
 
         public Transform GetAmmunitionPositionOnWorld(int indexInList)
