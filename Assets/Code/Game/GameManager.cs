@@ -46,7 +46,7 @@ namespace BounceDudes
             }
         }
 
-        public string SaveFileName = "boucedudes.save";
+        public string SaveFileName = "bouncedudes.save";
 
         public string SaveFilePath { get { return String.Format("{0}{1}{2}", Application.persistentDataPath, Path.PathSeparator, SaveFileName); } }
 

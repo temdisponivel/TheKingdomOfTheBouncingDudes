@@ -46,6 +46,7 @@ namespace BounceDudes
         protected void FillAmmunitionClip()
         {
             List<GameObject> formationList = GameManager.Instance.NextLevelSoldier;
+			//List<GameObject> formationList = GameManager.Instance.GetAvailableSoldiers(); // FOR TESTS ONLY
 
             foreach (GameObject ammo in formationList)
             {
@@ -57,7 +58,7 @@ namespace BounceDudes
         
         public void AddAmmunition(GameObject ammunition)
         {
-            Transform ammoNewPoint = GetAmmunitionPositionOnWorld(-1); // Position out of bounds
+            Transform ammoNewPoint = GetAmmunitionPositionOnWorld(-1); // Position out of camera bounds
             GameObject ammoInstance = (GameObject)GameObject.Instantiate(ammunition, ammoNewPoint.position, ammoNewPoint.rotation);
 
             // change the new instance of ammunition
