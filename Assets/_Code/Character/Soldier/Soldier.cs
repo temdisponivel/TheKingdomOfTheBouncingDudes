@@ -9,18 +9,14 @@ namespace BounceDudes
     /// </summary>
     public class Soldier : Character
     {
-        public float _timeToTravel = .5f;
 
         protected int _ammunitionPosition = -1;
-        protected int _spriteOrderOnAmmunition = 9, _spriteOrderOnBarrel = 16, _spriteOrderOnField = 2;
+
         protected bool _elementHit = false;
         protected bool _isSpecial = false;
-        protected bool _turnedIntoProjectile = false;
+       
 
         public int AmmunitionPosition { get { return this._ammunitionPosition; } set { this._ammunitionPosition = value; } }
-        public int SpriteOrderOnField { get { return _spriteOrderOnField; } }
-        public int SpriteOrderOnBarrel { get { return _spriteOrderOnBarrel; } }
-        public int SpriteOrderOnAmmunition { get { return _spriteOrderOnAmmunition; } }
         public bool IsSpecial { get { return _isSpecial; } set { _isSpecial = value; } }
 
 
@@ -54,10 +50,10 @@ namespace BounceDudes
             base.Update();
 
             // Passed the cannon shoot point, turn it into a projectile.
-            if (this.transform.position.y >= AmmunitionClip.Instance._changeToProjectilePoint.transform.position.y && !_turnedIntoProjectile)
+			if (this.transform.position.y >= AmmunitionClip.Instance._changeToProjectilePoint.transform.position.y && _state == TRANSITION)
             {
                 this.TurnIntoProjectile();
-                _turnedIntoProjectile = true;
+              
             }
 
             if (this.transform.position.y >= AmmunitionClip.Instance._changeToFieldOrderPoint.transform.position.y)
@@ -123,9 +119,7 @@ namespace BounceDudes
         override public void Die()
         {
 			if (!this._isSpecial && this.tag != TagAndLayer.SOLDIER_CELL_COPY) {
-				this.Recycle ();
-				this.CurrentSortingOrder = this._spriteOrderOnAmmunition;
-				AmmunitionClip.Instance.AddAmmunition (this.gameObject);
+				this.InitRecycle ();
 			} 
 			else {
 				Destroy (this.gameObject);

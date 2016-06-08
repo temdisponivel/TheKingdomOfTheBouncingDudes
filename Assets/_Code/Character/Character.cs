@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 namespace BounceDudes
 {
@@ -20,11 +21,13 @@ namespace BounceDudes
         public float _size = 1f; // Only for Game Design porpouses.
         public float _hp = 1f;
 
+		protected float _maxHp = 0f;
         protected float _maxSpeed = 1f;
         protected float _minSpeed = 1f;
 
         [Header("Effects")]
         protected bool _isShinyAttached = false;
+		protected float _timeToTravel = .5f;
 
         protected int _currentSortingOrder = 2;
         protected bool _movingAnimation = false;
@@ -38,6 +41,13 @@ namespace BounceDudes
         protected Collider2D _collider = null;
         protected SpriteRenderer _sprite = null;
 
+		protected int _spriteOrderOnAmmunition = 9, _spriteOrderOnBarrel = 16, _spriteOrderOnField = 2;
+
+		protected int _state = 0;
+		public const int AMMUNITION = 0;
+		public const int TRANSITION = 1;
+		public const int PROJECTILE = 2;
+
         public GameObject OriginalGameObject { get { return this._originalGameObject; } set { this._originalGameObject = value; } }
         public Rigidbody2D RigidBody { get { return this._rigid; } }
         public Animator Animator { get { return this._animator; } }
@@ -47,7 +57,12 @@ namespace BounceDudes
         public float Speed { get { return this._speed; } set { this._speed = value; } }
         public int Damage { get { return this._damage; } set { this._damage = value; } }
         public bool AffectedByElement { get { return this._affectedByElements; } set { this._affectedByElements = value; } }
-        public int CurrentSortingOrder { get { return _currentSortingOrder; } set { _currentSortingOrder = value; } }
+        public int CurrentSortingOrder { get { return this._currentSortingOrder; } set { this._currentSortingOrder = value; } }
+		public float TimeToTravel { get { return this._timeToTravel; } }
+
+		public int SpriteOrderOnField { get { return _spriteOrderOnField; } }
+		public int SpriteOrderOnBarrel { get { return _spriteOrderOnBarrel; } }
+		public int SpriteOrderOnAmmunition { get { return _spriteOrderOnAmmunition; } }
 
         public bool IsShinyAttached { get { return this._isShinyAttached; } set { this._isShinyAttached = value; } }
 
@@ -65,6 +80,7 @@ namespace BounceDudes
         {
             this.ConvertSpeed();
             this.TurnIntoAmmunition();
+			this._maxHp = this._hp;
         }
 
         virtual public void Die()
@@ -109,6 +125,8 @@ namespace BounceDudes
         {
             this._rigid.isKinematic = true;
             this._collider.enabled = false;
+
+			this._state = AMMUNITION;
         }
 
         /// <summary>
@@ -118,6 +136,8 @@ namespace BounceDudes
         {
             this._rigid.isKinematic = false;
             this._collider.enabled = true;
+
+			this._state = PROJECTILE;
         }
 
         /// <summary>
@@ -127,13 +147,32 @@ namespace BounceDudes
         {
             this._rigid.isKinematic = false;
             this._collider.enabled = false;
+
+			this._state = TRANSITION;
         }
 
-        public void Recycle()
+		protected void InitRecycle()
         {
-            this.ConvertSpeed();
-            this.TurnIntoAmmunition();
-
+			this.TurnIntoAmmunition();
+			AmmunitionClip.Instance.AddAmmunition (this.gameObject, null, true);
         }
+
+		// Intelisense <Complete>
+		protected void CompleteRecycle(){
+			this.ConvertSpeed();
+			this.TurnIntoAmmunition();
+
+			this._hp = this._maxHp; // Restore HP
+			this.CurrentSortingOrder = this._spriteOrderOnAmmunition;
+		}
+
+
+		public void CallMoveToAnimation(Vector3 finalPosition){
+			this.transform.DOMove (finalPosition, this._timeToTravel / 2);
+		}
+
+		public void CallFlyToAnimation(Vector3 finalPosition){
+			this.transform.DOMove (finalPosition, this._timeToTravel / 2).OnComplete(CompleteRecycle);
+		}
     }
 }

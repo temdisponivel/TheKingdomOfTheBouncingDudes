@@ -58,17 +58,18 @@ namespace BounceDudes
             }
         }
 
-        public void AddAmmunition(GameObject ammunition, GameObject original = null)
+        public void AddAmmunition(GameObject ammunition, GameObject original = null, bool flyAnimation = false)
         {
             Soldier ammoSoldier = ammunition.GetComponent<Soldier>();
-
             ammoSoldier.OriginalGameObject = original;
-
             ammoSoldier.AmmunitionPosition = this._ammunitionClip.Count;
 
             this._ammunitionClip.Enqueue(ammoSoldier);
 
-            ammoSoldier.transform.DOMove(this.GetAmmunitionPositionOnWorld(ammoSoldier.AmmunitionPosition).position, ammoSoldier._timeToTravel / 2);
+			if (!flyAnimation)
+				ammoSoldier.CallMoveToAnimation (this.GetAmmunitionPositionOnWorld (ammoSoldier.AmmunitionPosition).position);
+			else
+				ammoSoldier.CallFlyToAnimation (this.GetAmmunitionPositionOnWorld (ammoSoldier.AmmunitionPosition).position);
 
             if (this.ShootedSoldiers.Contains(ammoSoldier))
                 this.ShootedSoldiers.Remove(ammoSoldier);
@@ -88,7 +89,7 @@ namespace BounceDudes
 
             foreach (Soldier ammo in this._ammunitionClip)
             {
-                ammo.transform.DOMove(this.GetAmmunitionPositionOnWorld(--ammo.AmmunitionPosition).position, ammo._timeToTravel / 2);
+				ammo.transform.DOMove(this.GetAmmunitionPositionOnWorld(--ammo.AmmunitionPosition).position, ammo.TimeToTravel / 2);
             }
         }
 
