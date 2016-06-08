@@ -50,7 +50,7 @@ namespace BounceDudes
             base.Update();
 
             // Passed the cannon shoot point, turn it into a projectile.
-			if (this.transform.position.y >= AmmunitionClip.Instance._changeToProjectilePoint.transform.position.y && _state == TRANSITION)
+			if (this.transform.position.y >= AmmunitionClip.Instance._changeToProjectilePoint.transform.position.y && !this._isRecyling)
             {
                 this.TurnIntoProjectile();
               

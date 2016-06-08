@@ -58,7 +58,7 @@ namespace BounceDudes
             }
         }
 
-        public void AddAmmunition(GameObject ammunition, GameObject original = null, bool flyAnimation = false)
+        public void AddAmmunition(GameObject ammunition, GameObject original = null, bool recycleAnimation = false)
         {
             Soldier ammoSoldier = ammunition.GetComponent<Soldier>();
             ammoSoldier.OriginalGameObject = original;
@@ -66,7 +66,7 @@ namespace BounceDudes
 
             this._ammunitionClip.Enqueue(ammoSoldier);
 
-			if (!flyAnimation)
+			if (!recycleAnimation)
 				ammoSoldier.CallMoveToAnimation (this.GetAmmunitionPositionOnWorld (ammoSoldier.AmmunitionPosition).position);
 			else
 				ammoSoldier.CallFlyToAnimation (this.GetAmmunitionPositionOnWorld (ammoSoldier.AmmunitionPosition).position);

@@ -103,7 +103,7 @@ namespace BounceDudes
             DOTween.Init(false, true, LogBehaviour.ErrorsOnly);
 
 
-			NextLevelSoldiers = this.GetAvailableSoldiers();
+			//NextLevelSoldiers = this.GetAvailableSoldiers(); // FOR TESTS ONLY
         }
 
         public List<GameObject> GetAvailableSoldiers()

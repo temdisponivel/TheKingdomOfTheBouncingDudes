@@ -30,11 +30,9 @@ namespace BounceDudes
 		protected float _timeToTravel = .5f;
 
         protected int _currentSortingOrder = 2;
-        protected bool _movingAnimation = false;
-        protected Vector3 _positionToMove;
-        protected float _animationSpeed = 1.0f;
+        protected bool _isRecyling = false;
 
-        protected GameObject _originalGameObject;
+		protected GameObject _originalGameObject;
 
         protected Rigidbody2D _rigid = null;
         protected Animator _animator = null;
@@ -153,6 +151,7 @@ namespace BounceDudes
 
 		protected void InitRecycle()
         {
+			this._isRecyling = true;
 			this.TurnIntoAmmunition();
 			AmmunitionClip.Instance.AddAmmunition (this.gameObject, null, true);
         }
@@ -163,7 +162,9 @@ namespace BounceDudes
 			this.TurnIntoAmmunition();
 
 			this._hp = this._maxHp; // Restore HP
+			this._isRecyling = false;
 			this.CurrentSortingOrder = this._spriteOrderOnAmmunition;
+
 		}
 
 
