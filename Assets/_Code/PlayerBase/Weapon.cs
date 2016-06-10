@@ -13,8 +13,6 @@ namespace BounceDudes
     {
         static public Weapon Instance = null;
 
-        public Text _textAngle = null;
-
         public Camera _camera = null;
         public Camera _cameraUi = null;
 
@@ -209,9 +207,6 @@ namespace BounceDudes
         {
             Vector2 mousePosition = this._camera.ScreenToWorldPoint(Input.mousePosition);
             var newUp = (mousePosition - (Vector2)this.transform.position).normalized;
-
-            if (this._textAngle != null)
-                this._textAngle.text = Vector3.Angle(newUp, Vector3.right).ToString();
 
             var angle = Vector3.Angle(newUp, Vector3.right);
             if (angle >= _minRotationAngle && angle <= _maxRotationAngle && Vector3.Dot(newUp, Vector3.up) > 0)

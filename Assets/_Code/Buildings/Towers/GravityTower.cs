@@ -11,7 +11,7 @@ namespace BounceDudes
     /// </summary>
     public class GravityTower : Tower
     {
-        public float _gravityForce = 9.8f;
+        public float _gravityForce = 0.05f;
 
         override public void AffectObject(GameObject affected)
         {

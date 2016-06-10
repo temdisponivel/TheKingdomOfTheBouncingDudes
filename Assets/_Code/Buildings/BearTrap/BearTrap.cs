@@ -31,6 +31,7 @@ namespace BounceDudes
 			EffectManager.Instance.CreateDieEffect(this.transform);
 
 			this._animator.SetTrigger ("Close");
+			this._animator.ResetTrigger ("Open");
 			this._object = collider.gameObject;
 			this._object.GetComponent<Rigidbody2D>().isKinematic = true;
 			this._object.transform.position = this.transform.position;
@@ -49,14 +50,17 @@ namespace BounceDudes
 		public IEnumerator Shoot(GameObject obj)
 		{
 			yield return new WaitForSeconds(this._holdTime);
-			if (this._object != null)
-			{
-				Rigidbody2D body = this._object.GetComponent<Rigidbody2D>();
+			if (this._object != null) {
+				Rigidbody2D body = this._object.GetComponent<Rigidbody2D> ();
 				body.isKinematic = false;
 
 				this._animator.SetTrigger ("Open");
-				body.AddForce(-this._object.transform.up * this._object.GetComponent<Character>().Speed * this._forceMultiplier, ForceMode2D.Impulse);
+				this._animator.ResetTrigger ("Close");
+				body.AddForce (-this._object.transform.up * this._object.GetComponent<Character> ().Speed * this._forceMultiplier, ForceMode2D.Impulse);
 
+			} else {
+				this._animator.SetTrigger ("Open");
+				this._animator.ResetTrigger ("Close");
 			}
 		}
 	}

@@ -29,7 +29,7 @@ namespace BounceDudes
         protected bool _isShinyAttached = false;
 		protected float _timeToTravel = .5f;
 
-        protected int _currentSortingOrder = 2;
+        protected int _currentSortingOrder = 0;
         protected bool _isRecyling = false;
 
 		protected GameObject _originalGameObject;
@@ -94,12 +94,12 @@ namespace BounceDudes
         virtual public void LateUpdate()
         {
 
-            if (this._rigid.velocity.magnitude > this._maxSpeed)
-            {
+            if (this._rigid.velocity.magnitude > this._maxSpeed){
+				
                 this._rigid.velocity = this._rigid.velocity.normalized * this._maxSpeed;
             }
-            else if (this._rigid.velocity.magnitude < this._minSpeed)
-            {
+            else if (this._rigid.velocity.magnitude < this._minSpeed){
+				
                 this._rigid.velocity = this._rigid.velocity.normalized * this._minSpeed;
             }
 
@@ -121,6 +121,8 @@ namespace BounceDudes
         /// </summary>
         public void TurnIntoAmmunition()
         {
+			this.CurrentSortingOrder = this._spriteOrderOnAmmunition;
+
             this._rigid.isKinematic = true;
             this._collider.enabled = false;
 
@@ -132,6 +134,8 @@ namespace BounceDudes
         /// </summary>
         public void TurnIntoProjectile()
         {
+			this.CurrentSortingOrder = this._spriteOrderOnField;
+
             this._rigid.isKinematic = false;
             this._collider.enabled = true;
 
@@ -143,6 +147,8 @@ namespace BounceDudes
         /// </summary>
         public void TurnIntoTransition()
         {
+			this.CurrentSortingOrder = this.SpriteOrderOnBarrel;
+
             this._rigid.isKinematic = false;
             this._collider.enabled = false;
 
@@ -156,7 +162,7 @@ namespace BounceDudes
 			AmmunitionClip.Instance.AddAmmunition (this.gameObject, null, true);
         }
 
-		// Intelisense <Complete>
+		// DOTween Intelisense Tag <Complete>
 		protected void CompleteRecycle(){
 			this.ConvertSpeed();
 			this.TurnIntoAmmunition();

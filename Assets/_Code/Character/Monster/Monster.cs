@@ -20,8 +20,10 @@ namespace BounceDudes
 			this._fixedRotation = Quaternion.identity;
 			this.transform.rotation = _fixedRotation;
 
-			_maxSpeed /= 4;
-			_minSpeed /= 4;
+			this._currentSortingOrder = 1;
+
+			_maxSpeed /= 3;
+			_minSpeed /= 3;
         }
 
 		public override void LateUpdate(){

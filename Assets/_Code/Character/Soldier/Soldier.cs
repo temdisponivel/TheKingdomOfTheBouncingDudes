@@ -15,7 +15,6 @@ namespace BounceDudes
         protected bool _elementHit = false;
         protected bool _isSpecial = false;
        
-
         public int AmmunitionPosition { get { return this._ammunitionPosition; } set { this._ammunitionPosition = value; } }
         public bool IsSpecial { get { return _isSpecial; } set { _isSpecial = value; } }
 
@@ -24,7 +23,7 @@ namespace BounceDudes
         {
             base.Start();
 
-            this.CurrentSortingOrder = this._spriteOrderOnAmmunition;
+			this.TurnIntoAmmunition ();
 
             if (this.IsSpecial || this.tag == TagAndLayer.SOLDIER_CELL_COPY)
             {
@@ -41,6 +40,8 @@ namespace BounceDudes
         }
 
 		public void ShootSpecial(){
+			this.TurnIntoProjectile ();
+			this.transform.rotation = Weapon.Instance.WeaponRotation;
 			this.RigidBody.AddForce(this.transform.up * this._maxSpeed * Weapon.Instance.ForceMultiplier, ForceMode2D.Impulse);
 		}
 
