@@ -18,6 +18,7 @@ namespace BounceDudes
         public const string TOWER = "Tower";
 		public const string SOLDIER_CELL_COPY = "SoldierCellCopy";
 		public const string BREAKABLE = "Breakable";
+        public const string CANNON = "Cannon";
 
         public const int UI = 5;
         public const int GAME_OBJECTS = 8;

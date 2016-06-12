@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using Assets.Code.Game;
 using DG.Tweening;
@@ -156,11 +157,14 @@ namespace BounceDudes
             {
                 this.LevelsInformation.Add(id, info);
             }
-            foreach (var soldierId in info.SoldiersEarned)
+            foreach (var challeng in info.ChallengesCompleted)
             {
-                if (!this._availableSoldiersId.Contains(soldierId))
+                foreach (var soldierId in challeng.Value)
                 {
-                    this._availableSoldiersId.Add(soldierId);
+                    if (!this._availableSoldiersId.Contains(soldierId))
+                    {
+                        this._availableSoldiersId.Add(soldierId);
+                    }
                 }
             }
             this.SaveGame();
@@ -169,15 +173,21 @@ namespace BounceDudes
         public void SaveGame()
         {
             FileUtil.WriteToBinaryFile(this.SaveFilePath, this.UpdateToGameInfo());
-            //File.WriteAllText(this.SaveFilePath, info);
         }
 
         public void LoadGame()
         {
             if (File.Exists(this.SaveFilePath))
             {
-                GameInfomation gameInfo = FileUtil.ReadFromBinaryFile<GameInfomation>(this.SaveFilePath);
-                this.UpdateFromGameInfo(gameInfo);
+                try
+                {
+                    GameInfomation gameInfo = FileUtil.ReadFromBinaryFile<GameInfomation>(this.SaveFilePath);
+                    this.UpdateFromGameInfo(gameInfo);
+                }
+                catch(SerializationException ex)
+                {
+                    File.Delete(this.SaveFilePath);
+                }
             }
             else
             {

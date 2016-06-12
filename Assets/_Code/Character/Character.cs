@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using DG.Tweening;
 
 namespace BounceDudes
@@ -7,12 +9,13 @@ namespace BounceDudes
     /// <summary>
     /// Base class for all characters.
     /// </summary>
-    public class Character : MonoBehaviour
+    public abstract class Character : MonoBehaviour
     {
         [Header("Attributes")]
         public float _pointsWhenKilled = 5f;
-        public int _id = 1;
+        public int _id = 0;
         public bool _affectedByElements = true;
+        public bool _shouldRecycle = true;
 
 
         [Header("Stats")]
@@ -21,31 +24,28 @@ namespace BounceDudes
         public float _size = 1f; // Only for Game Design porpouses.
         public float _hp = 1f;
 
-		protected float _maxHp = 0f;
         protected float _maxSpeed = 1f;
         protected float _minSpeed = 1f;
 
         [Header("Effects")]
         protected bool _isShinyAttached = false;
-		protected float _timeToTravel = .5f;
+        protected float _timeToTravel = .5f;
 
-        protected int _currentSortingOrder = 0;
-        protected bool _isRecyling = false;
+        private int _currentSortingOrder = 0;
 
-		protected GameObject _originalGameObject;
+        protected GameObject _originalGameObject;
 
         protected Rigidbody2D _rigid = null;
         protected Animator _animator = null;
         protected Collider2D _collider = null;
         protected SpriteRenderer _sprite = null;
 
-		protected int _spriteOrderOnAmmunition = 9, _spriteOrderOnBarrel = 16, _spriteOrderOnField = 2;
-
-		protected int _state = 0;
-		public const int AMMUNITION = 0;
-		public const int TRANSITION = 1;
-		public const int PROJECTILE = 2;
-
+        protected int _spriteOnBarrelOrder = 7, _spriteOnFieldOrder = 2;
+        
+        protected float _hpBkp = 1f;
+        protected Quaternion _rotationBkp = Quaternion.identity;
+        protected Vector3 _scaleBkp = Vector3.one;
+        
         public GameObject OriginalGameObject { get { return this._originalGameObject; } set { this._originalGameObject = value; } }
         public Rigidbody2D RigidBody { get { return this._rigid; } }
         public Animator Animator { get { return this._animator; } }
@@ -55,55 +55,72 @@ namespace BounceDudes
         public float Speed { get { return this._speed; } set { this._speed = value; } }
         public int Damage { get { return this._damage; } set { this._damage = value; } }
         public bool AffectedByElement { get { return this._affectedByElements; } set { this._affectedByElements = value; } }
-        public int CurrentSortingOrder { get { return this._currentSortingOrder; } set { this._currentSortingOrder = value; } }
-		public float TimeToTravel { get { return this._timeToTravel; } }
 
-		public int SpriteOrderOnField { get { return _spriteOrderOnField; } }
-		public int SpriteOrderOnBarrel { get { return _spriteOrderOnBarrel; } }
-		public int SpriteOrderOnAmmunition { get { return _spriteOrderOnAmmunition; } }
+        protected bool _onBarrel { get; set; }
+        public bool _isSpecial = false;
+
+        public int CurrentSortingOrder
+        {
+            get
+            {
+                return this._currentSortingOrder;
+            }
+            set
+            {
+                this._currentSortingOrder = value;
+                this.Sprite.sortingOrder = _currentSortingOrder;
+            }
+        
+        }
+        public float TimeToTravel { get { return this._timeToTravel; } }
+
+        public int SpriteOnBarrelOrder { get { return _spriteOnBarrelOrder; } }
+        public int SpriteOnFieldOrder { get { return _spriteOnFieldOrder; } }
 
         public bool IsShinyAttached { get { return this._isShinyAttached; } set { this._isShinyAttached = value; } }
 
-        virtual public void Awake()
+        public virtual void Awake()
         {
             this._rigid = this.GetComponent<Rigidbody2D>();
             this._animator = this.GetComponent<Animator>();
             this._collider = this.GetComponent<Collider2D>();
             this._sprite = this.GetComponent<SpriteRenderer>();
 
+            this._hpBkp = this._hp;
+            this._rotationBkp = this.transform.rotation;
+            this._scaleBkp = this.transform.localScale;
+
+            this.ConvertSpeed();
+
             this._originalGameObject = this.gameObject;
         }
 
-        virtual public void Start()
+        public virtual void Start()
         {
             this.ConvertSpeed();
-            this.TurnIntoAmmunition();
-			this._maxHp = this._hp;
         }
 
-        virtual public void Die()
+        public virtual void Die()
         {
-            GameObject.Destroy(this.gameObject);
+            if (this.OnDie != null)
+                this.OnDie(this);
+
+            if (this._shouldRecycle)
+                this.Recycle();
+            else
+                GameObject.Destroy(this.gameObject);
         }
 
-        virtual public void Update()
+        public virtual void LateUpdate()
         {
-            this.Sprite.sortingOrder = _currentSortingOrder;
-        }
-
-        virtual public void LateUpdate()
-        {
-
-            if (this._rigid.velocity.magnitude > this._maxSpeed){
-				
+            if (this._rigid.velocity.magnitude > this._maxSpeed)
+            {
                 this._rigid.velocity = this._rigid.velocity.normalized * this._maxSpeed;
             }
-            else if (this._rigid.velocity.magnitude < this._minSpeed){
-				
+            else if (this._rigid.velocity.magnitude < this._minSpeed)
+            {
                 this._rigid.velocity = this._rigid.velocity.normalized * this._minSpeed;
             }
-
-            //this._sprite.sortingOrder = 16;
         }
 
         /// <summary>
@@ -121,12 +138,12 @@ namespace BounceDudes
         /// </summary>
         public void TurnIntoAmmunition()
         {
-			this.CurrentSortingOrder = this._spriteOrderOnAmmunition;
+            this.StartCoroutine(this.WaitSecondsAndCall(.5f, () => this.CurrentSortingOrder = this._spriteOnFieldOrder));
+            
+            this._onBarrel = false;
 
             this._rigid.isKinematic = true;
             this._collider.enabled = false;
-
-			this._state = AMMUNITION;
         }
 
         /// <summary>
@@ -134,52 +151,23 @@ namespace BounceDudes
         /// </summary>
         public void TurnIntoProjectile()
         {
-			this.CurrentSortingOrder = this._spriteOrderOnField;
+            this.StartCoroutine(this.WaitSecondsAndCall(.5f, () => this.CurrentSortingOrder = this._spriteOnFieldOrder));
+
+            this._onBarrel = false;
 
             this._rigid.isKinematic = false;
             this._collider.enabled = true;
-
-			this._state = PROJECTILE;
         }
 
-        /// <summary>
-        /// Turn the Ammunition character, which is out of the field, to a Transitioning character, which is in between.
-        /// </summary>
-        public void TurnIntoTransition()
+        public abstract void Recycle();
+        public abstract void Shoot();
+
+        public event Action<Character> OnDie;
+
+        public IEnumerator WaitSecondsAndCall(float seconds, Action callback)
         {
-			this.CurrentSortingOrder = this.SpriteOrderOnBarrel;
-
-            this._rigid.isKinematic = false;
-            this._collider.enabled = false;
-
-			this._state = TRANSITION;
+            yield return new WaitForSeconds(seconds);
+            callback();
         }
-
-		protected void InitRecycle()
-        {
-			this._isRecyling = true;
-			this.TurnIntoAmmunition();
-			AmmunitionClip.Instance.AddAmmunition (this.gameObject, null, true);
-        }
-
-		// DOTween Intelisense Tag <Complete>
-		protected void CompleteRecycle(){
-			this.ConvertSpeed();
-			this.TurnIntoAmmunition();
-
-			this._hp = this._maxHp; // Restore HP
-			this._isRecyling = false;
-			this.CurrentSortingOrder = this._spriteOrderOnAmmunition;
-
-		}
-
-
-		public void CallMoveToAnimation(Vector3 finalPosition){
-			this.transform.DOMove (finalPosition, this._timeToTravel / 2);
-		}
-
-		public void CallFlyToAnimation(Vector3 finalPosition){
-			this.transform.DOMove (finalPosition, this._timeToTravel / 2).OnComplete(CompleteRecycle);
-		}
     }
 }

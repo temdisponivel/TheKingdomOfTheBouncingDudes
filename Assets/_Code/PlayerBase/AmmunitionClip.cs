@@ -61,15 +61,13 @@ namespace BounceDudes
         public void AddAmmunition(GameObject ammunition, GameObject original = null, bool recycleAnimation = false)
         {
             Soldier ammoSoldier = ammunition.GetComponent<Soldier>();
-            ammoSoldier.OriginalGameObject = original;
+            if (original != null)
+                ammoSoldier.OriginalGameObject = original;
             ammoSoldier.AmmunitionPosition = this._ammunitionClip.Count;
 
             this._ammunitionClip.Enqueue(ammoSoldier);
-
-			if (!recycleAnimation)
-				ammoSoldier.CallMoveToAnimation (this.GetAmmunitionPositionOnWorld (ammoSoldier.AmmunitionPosition).position);
-			else
-				ammoSoldier.CallFlyToAnimation (this.GetAmmunitionPositionOnWorld (ammoSoldier.AmmunitionPosition).position);
+            
+            ammoSoldier.transform.DOMove(this.GetAmmunitionPositionOnWorld(ammoSoldier.AmmunitionPosition).position, ammoSoldier.TimeToTravel / 2);
 
             if (this.ShootedSoldiers.Contains(ammoSoldier))
                 this.ShootedSoldiers.Remove(ammoSoldier);
@@ -83,9 +81,10 @@ namespace BounceDudes
             if (this.IsOutOfAmmo)
                 return;
 
-            NextAmmunition.Shoot();
-
-            this.ShootedSoldiers.Add(_ammunitionClip.Dequeue());
+            Soldier shooted;
+            this.ShootedSoldiers.Add(shooted = _ammunitionClip.Dequeue());
+            
+            shooted.Shoot();
 
             foreach (Soldier ammo in this._ammunitionClip)
             {
@@ -98,16 +97,9 @@ namespace BounceDudes
             if (this.IsOutOfAmmo)
                 return;
 
-			this.NextAmmunition.GetComponent<Soldier> ().OnBarrel();
+			this.NextAmmunition.GetComponent<Soldier>().OnBarrel();
 
 			NextAmmunition.transform.position = this._onBarrelPoint.transform.position;
-
-            this.NextAmmunition.transform.rotation = Weapon.Instance.WeaponRotation;
-			this.NextAmmunition.transform.SetParent(this._shootObject.transform);
-			// Ensures that the shoot object will move with the platform. A way around parenting and messing up the scale of the projectile.
-			this._shootObject.GetComponent<ShootObject> ().ObjectToFollow = this._onBarrelPoint;
-
-			//NextAmmunition.transform.DOMove(this._onBarrelPoint.transform.position, NextAmmunition._timeToTravel * 2);
         }
 
         public Transform GetAmmunitionPositionOnWorld(int indexInList)

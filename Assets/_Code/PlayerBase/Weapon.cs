@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using Assets.Code.Game;
 
 namespace BounceDudes
 {
@@ -45,6 +47,7 @@ namespace BounceDudes
 
         [Header("Special")]
         public float _coolDownBetweenSpecials = 3f;
+        public float _coolDownBetweenSpecialShoot = .3f;
         public float _specialDuration = 3f;
         protected bool _special = false;
         protected float _specialStartTime = 0;
@@ -74,20 +77,24 @@ namespace BounceDudes
             this._projectiles = GameManager.Instance.GetAvailableSoldiers();
             this._projectilesSpecial = GameManager.Instance._specialProjectiles;
 
-			this.CallReloadAnimation ();
+            this.CallReloadAnimation();
         }
 
         public void Update()
         {
             this.ShootRoutine();
-            
+
             this._special = this._special && (Time.time - this._specialStartTime) <= this._specialDuration;
         }
 
         public void SetSpecial()
         {
             this._special = (Time.time - (this._specialStartTime + this._specialDuration)) >= this._coolDownBetweenSpecials;
-            this._specialStartTime = Time.time;
+
+            if (_special)
+            {
+                this._specialStartTime = Time.time;
+            }
         }
 
         /// <summary>
@@ -95,6 +102,19 @@ namespace BounceDudes
         /// </summary>
         protected void ShootRoutine()
         {
+            if (GameManager.Instance.State == GameState.PAUSED)
+                return;
+
+            if (_special)
+            {
+                if (Time.time - _lastTimeShoot >= this._coolDownBetweenSpecialShoot)
+                    this.ShootSpecial();
+
+                this.RotateTowardsMouse();
+
+                return;
+            }
+
             bool clicked = Input.GetMouseButton(0);
 
             if (clicked)
@@ -129,31 +149,33 @@ namespace BounceDudes
                     this._currentForceMultiplier += this._shootMultiplierPerSeconds * Time.deltaTime;
                 }
 
-				if (this._currentForceMultiplier >= this._maxShootMultiplier)
-					this._weaponAnimator.SetFloat ("Speed", 1);
-				else
-					this._weaponAnimator.SetFloat ("Speed", 1 / (this._maxShootMultiplier / this._shootMultiplierPerSeconds));
+                if (this._currentForceMultiplier >= this._maxShootMultiplier)
+                    this._weaponAnimator.SetFloat("Speed", 1);
+                else
+                    this._weaponAnimator.SetFloat("Speed", 1 / (this._maxShootMultiplier / this._shootMultiplierPerSeconds));
             }
             else if (this._holding)
             {
                 if (!this._canShoot)
                     return;
 
-                if (this._special)
-                {
-                    this._currentForceMultiplier = this._maxShootMultiplier;
-                    this.ShootSpecial();
-                }
-                else if (Time.time - this._lastTimeShoot >= this._coolDown)
+                if (Time.time - this._lastTimeShoot >= this._coolDown)
                 {
                     this._weaponAnimator.SetTrigger("Shooting"); // Calls Shoot() on the animation clip.
                 }
+
                 this._holding = false;
             }
         }
 
         public void CallReloadAnimation()
         {
+            if (AmmunitionClip.Instance.IsOutOfAmmo)
+                this._waitingForAmmo = true;
+
+            if (this._waitingForAmmo)
+                return;
+
             this._weaponAnimator.SetTrigger("Reloading"); // Calls PrepareAmmunition() in mid animation
         }
 
@@ -190,17 +212,19 @@ namespace BounceDudes
         /// </summary>
         public void ShootSpecial()
         {
-            this.ShootSpecialObject(this._projectilesSpecial[this._currentSpecialProjectileIndex]);
+            this.StartCoroutine(this.ShootSpecialObject(this._projectilesSpecial[this._currentSpecialProjectileIndex]));
             this._currentSpecialProjectileIndex = (this._currentSpecialProjectileIndex + 1) % this._projectilesSpecial.Count;
             this._lastTimeShoot = Time.time;
             this.ShootCount++;
         }
 
-        public void ShootSpecialObject(GameObject shootObject)
+        public IEnumerator ShootSpecialObject(GameObject shootObject)
         {
             GameObject shoot = (GameObject)GameObject.Instantiate(shootObject, this._specialShootPoint.transform.position, this.transform.rotation);
             Soldier shootSoldier = shoot.GetComponent<Soldier>();
-            shootSoldier.IsSpecial = true;
+            shootSoldier._shouldRecycle = false;
+            yield return 0;
+            shootSoldier.Shoot();
         }
 
         protected void RotateTowardsMouse()
@@ -229,7 +253,7 @@ namespace BounceDudes
                 LevelManager.Instance._soldierNameText.text = string.Format("{0}", GameManager.Instance.SoldierNames[AmmunitionClip.Instance.NextAmmunition._id]);
             }
             else
-			{
+            {
                 LevelManager.Instance._soldierNameText.text = string.Format("{0}", "Vicenzito");
             }
         }

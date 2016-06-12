@@ -23,9 +23,13 @@ namespace BounceDudes
         public void Start()
         {
             LevelInformation info = GameManager.Instance.LevelsInformation[GameManager.Instance.LastLevel];
-            for (int i = 0, soldierId = 0; i < info.SoldiersEarned.Length; soldierId = info.SoldiersEarned[i++])
+            foreach (var challeng in info.ChallengesCompleted)
             {
-                GameObject.Instantiate(GameManager.Instance.GetRepresentationOfSoldier(soldierId), this._positionToCreateSoldierEarned.position, this._positionToCreateSoldierEarned.rotation);
+                foreach (var soldierId in challeng.Value)
+                {
+                    GameObject.Instantiate(GameManager.Instance.GetRepresentationOfSoldier(soldierId),
+                        this._positionToCreateSoldierEarned.position, this._positionToCreateSoldierEarned.rotation);
+                }
             }
             this._scoreText.text = info.Score.ToString(".2");
             this._starText.text = info.Star.ToString();

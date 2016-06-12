@@ -7,7 +7,7 @@ using UnityEngine;
 namespace BounceDudes
 {
     [Serializable]
-    public class SoldierByChallengeDicionaryHack
+    public class SoldierByChallengeDictionaryHack
     {
         [Tooltip("Challenge to complete")]
         public Challenge _challenge;

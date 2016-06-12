@@ -29,7 +29,7 @@ namespace BounceDudes
         [Header("Give Away")]
         public int[] StarByScore;
 
-        public SoldierByChallengeDicionaryHack[] SoldiersByChallengeHack;
+        public SoldierByChallengeDictionaryHack[] SoldiersByChallengeHack;
 
         public int EnemiesKilled { get; set; }
 
@@ -69,15 +69,15 @@ namespace BounceDudes
             info.Finished = win;
             info.ShootCount = Weapon.Instance.ShootCount;
             info.Star = this.StarByScore.Where(s => s >= this.Score).Count();
-            List<int> soldiersEarned = new List<int>();
+            Dictionary<Challenge, int[]> soldiersEarned = new Dictionary<Challenge, int[]>();
             foreach (var challenge in this.SoldierByChallenge)
             {
                 if (ChallengeManager.ValidateCompletion(challenge.Key))
                 {
-                    soldiersEarned.AddRange(challenge.Value);
+                    soldiersEarned.Add(challenge.Key, challenge.Value);
                 }
             }
-            info.SoldiersEarned = soldiersEarned.Distinct().ToArray();
+            info.ChallengesCompleted = soldiersEarned;
             GameManager.Instance.AddLevelInfo(this.CurrentLevel, info);
             GameManager.Instance.OnStateChange -= this.StateChangeCallback;
             SceneManager.LoadScene("EndLevel");

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace BounceDudes
 {
@@ -8,34 +7,25 @@ namespace BounceDudes
     /// </summary>
     public class Monster : Character
     {
-		protected Quaternion _fixedRotation;
-
         public override void Start()
         {
-			base.Start();
+            base.Start();
 
-			this.TurnIntoProjectile ();
+            //this.transform.rotation = Quaternion.identity;
+            //this.transform.position = Vector3.zero;
 
-			this.RigidBody.AddForce(this.transform.up * this._maxSpeed * 0.8f, ForceMode2D.Impulse);
-			this._fixedRotation = Quaternion.identity;
-			this.transform.rotation = _fixedRotation;
+            //this.CurrentSortingOrder = 1;
 
-			this._currentSortingOrder = 1;
-
-			_maxSpeed /= 3;
-			_minSpeed /= 3;
+            _maxSpeed /= 3;
+            _minSpeed /= 3;
         }
 
-		public override void LateUpdate(){
+        public override void Shoot()
+        {
+            this.RigidBody.AddForce(this.transform.up * this._maxSpeed * 0.8f, ForceMode2D.Impulse);
+        }
 
-			base.LateUpdate ();
-
-			if (this.transform.rotation != _fixedRotation) {
-				this.transform.rotation = _fixedRotation;
-			}
-		}
-
-        virtual public void OnCollisionEnter2D(Collision2D collision)
+        public virtual void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.tag == TagAndLayer.BASE)
             {
@@ -44,13 +34,18 @@ namespace BounceDudes
             }
         }
 
-        virtual public void OnTriggerEnter2D(Collider2D collider)
+        public virtual void OnTriggerEnter2D(Collider2D collider)
         {
             if (collider.gameObject.tag == TagAndLayer.BASE)
             {
                 collider.gameObject.GetComponent<Base>().HP -= this.Damage;
                 this.Die();
             }
+        }
+
+        public override void Recycle()
+        {
+            this.Start();
         }
     }
 }

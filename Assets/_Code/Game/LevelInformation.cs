@@ -16,7 +16,7 @@ namespace BounceDudes
         public float Score { get; set; }
         public int ShootCount { get; set; }
         public bool Finished { get; set; }
-        public int[] SoldiersEarned { get; set; }
+        public Dictionary<Challenge, int[]> ChallengesCompleted { get; set; }
         public int Star { get; set; }
     }
 }
