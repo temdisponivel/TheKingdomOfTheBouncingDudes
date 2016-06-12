@@ -63,7 +63,7 @@ namespace BounceDudes
 
                 this._animator.SetTrigger("Open");
                 this._animator.ResetTrigger("Close");
-                body.AddForce(this._object.transform.up * this._object.GetComponent<Character>().Speed * this._forceMultiplier, ForceMode2D.Impulse);
+                body.AddForce(this._object.transform.up * this._object.GetComponent<Character>().Speed * -this._forceMultiplier, ForceMode2D.Impulse);
 
             }
             else

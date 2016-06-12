@@ -16,7 +16,7 @@ namespace BounceDudes
         public class SoldierInfo
         {
             public int Id;
-            public string ClassName;
+            public string SoldierName;
             public int Velocity;
             public int HP;
             public GameObject SoldierRepresentation;
@@ -62,7 +62,7 @@ namespace BounceDudes
                     builder.AppendLine();
                 }
                 builder.AppendLine();
-                builder.Append(soldierInfo.ClassName);
+                builder.Append(soldierInfo.SoldierName);
                 builder.AppendLine();
                 builder.Append("HP: ");
                 builder.Append(soldierInfo.HP);

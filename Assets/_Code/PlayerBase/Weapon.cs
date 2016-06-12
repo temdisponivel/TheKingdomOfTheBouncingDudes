@@ -47,7 +47,7 @@ namespace BounceDudes
 
         [Header("Special")]
         public float _coolDownBetweenSpecials = 3f;
-        public float _coolDownBetweenSpecialShoot = .3f;
+        public float _coolDownShoot = .3f;
         public float _specialDuration = 3f;
         protected bool _special = false;
         protected float _specialStartTime = 0;
@@ -107,7 +107,7 @@ namespace BounceDudes
 
             if (_special)
             {
-                if (Time.time - _lastTimeShoot >= this._coolDownBetweenSpecialShoot)
+                if (Time.time - _lastTimeShoot >= this._coolDownShoot)
                     this.ShootSpecial();
 
                 this.RotateTowardsMouse();
@@ -223,6 +223,7 @@ namespace BounceDudes
             GameObject shoot = (GameObject)GameObject.Instantiate(shootObject, this._specialShootPoint.transform.position, this.transform.rotation);
             Soldier shootSoldier = shoot.GetComponent<Soldier>();
             shootSoldier._shouldRecycle = false;
+			shootSoldier._isSpecial = true;
             yield return 0;
             shootSoldier.Shoot();
         }

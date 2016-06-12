@@ -7,6 +7,8 @@ namespace BounceDudes
     /// </summary>
     public class Soldier : Character
     {
+		public string _soldierName = "Vicenzito";
+
         protected int _ammunitionPosition = -1;
 
         public int AmmunitionPosition { get { return this._ammunitionPosition; } set { this._ammunitionPosition = value; } }
