@@ -26,6 +26,7 @@ namespace BounceDudes
 
         public GameObject ConfigPanel;
 
+		public GameObject _shade;
         public GameObject ConfigShownPosition;
         public GameObject ConfigHiddenPosition;
 
@@ -99,12 +100,14 @@ namespace BounceDudes
 
         public void ShowSetting()
         {
-            this.ConfigPanel.transform.DOMove(this.ConfigShownPosition.transform.position, 1);
+			this._shade.transform.DOScale (1, 0.2f);
+            this.ConfigPanel.transform.DOMove(this.ConfigShownPosition.transform.position, 0.5f);
         }
 
         public void HideSetting()
         {
-            this.ConfigPanel.transform.DOMove(this.ConfigHiddenPosition.transform.position, 1);
+			this._shade.transform.DOScale (0, 0.2f);
+            this.ConfigPanel.transform.DOMove(this.ConfigHiddenPosition.transform.position, 0.5f);
         }
 
         public void Music(bool mute)

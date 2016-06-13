@@ -15,6 +15,9 @@ namespace BounceDudes
     /// 
     public class DiaryController : MonoBehaviour
     {
+
+		public GameObject _shade;
+
         public GameObject _shownPosition;
         public GameObject _hidenPosition;
         public Image _levelImage;
@@ -35,13 +38,23 @@ namespace BounceDudes
 
         public void Show()
         {
-            this.transform.DOMove(this._shownPosition.transform.position, 1);
+			this._shade.transform.DOScale(1, 0.2f);
+			this.transform.DORotate (new Vector3 (0, 0, 0), 0.4f, RotateMode.Fast).OnComplete (this.toggleShadeComplete);
+            //this.transform.DOMove(this._shownPosition.transform.position, 0.5f);
         }
 
         public void Hide()
         {
-            this.transform.DOMove(this._hidenPosition.transform.position, 1);
+			this._shade.transform.DOScale(0, 0.2f);
+			this.transform.DORotate (new Vector3 (0, 0, -90), 0.4f, RotateMode.Fast).OnComplete (this.toggleShadeComplete);
+            //this.transform.DOMove(this._hidenPosition.transform.position, 0.5f);
         }
+
+		// DOTween intelisense <Complete>
+		protected void toggleShadeComplete(){
+			Color fadeColor = new Color (1,1,1,255/140);
+			DOTween.To (() => fadeColor, x => fadeColor = x, fadeColor, 1).SetOptions (true);
+		}
 
         public void UpdateInfo(LevelId levelId)
         {
