@@ -1,4 +1,5 @@
 ﻿using System;
+using BounceDudes;
 using UnityEngine.EventSystems;
 
 namespace UnityEngine.UI.Extensions
@@ -7,6 +8,8 @@ namespace UnityEngine.UI.Extensions
     [AddComponentMenu("UI/Extensions/Horizontal Scroll Snap")]
     public class HorizontalScrollSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
     {
+        public static HorizontalScrollSnap Instance;
+
         private Transform _screensContainer;
 
         private int _screens = 1;
@@ -64,7 +67,7 @@ namespace UnityEngine.UI.Extensions
 
             _scroll_rect.horizontalNormalizedPosition = (float)(_startingScreen - 1) / (float)(_screens - 1);
 
-            _containerSize = (int)_screensContainer.gameObject.GetComponent<RectTransform>().offsetMax.x;
+            _containerSize = 12*_screens;//(int)_screensContainer.gameObject.GetComponent<RectTransform>().offsetMax.x;
 
             ChangeBulletsInfo(CurrentScreen());
 
@@ -73,16 +76,31 @@ namespace UnityEngine.UI.Extensions
 
             if (PrevButton)
                 PrevButton.GetComponent<Button>().onClick.AddListener(() => { PreviousScreen(); });
+
+            if (OnChangeSoldier != null)
+                OnChangeSoldier(_screensContainer.GetChild(CurrentScreen()).GetComponent<Soldier>());
         }
+
+        public void Awake()
+        {
+            Instance = this;
+        }
+
+        public event Action<Soldier> OnChangeSoldier;
 
         void Update()
         {
             if (_lerp)
             {
-                _screensContainer.localPosition = Vector3.Lerp(_screensContainer.localPosition, _lerp_target, _velocity * Time.deltaTime);
-                if (Vector3.Distance(_screensContainer.localPosition, _lerp_target) < 0.005f)
+                _screensContainer.localPosition = Vector3.MoveTowards(_screensContainer.localPosition, _lerp_target, _velocity * Time.deltaTime);
+                if (Vector3.Distance(_screensContainer.localPosition, _lerp_target) < 0.05f)
                 {
                     _lerp = false;
+
+                    this.GetComponent<ScrollRect>().velocity = Vector2.zero;
+
+                    if (OnChangeSoldier != null)
+                        OnChangeSoldier(_screensContainer.GetChild(CurrentScreen() - 1).GetComponent<Soldier>());
                 }
 
                 //change the info bullets at the bottom of the screen. Just for visual effect
@@ -96,7 +114,6 @@ namespace UnityEngine.UI.Extensions
             {
                 _fastSwipeCounter++;
             }
-
         }
 
         private bool fastSwipe = false; //to determine if a fast swipe was performed

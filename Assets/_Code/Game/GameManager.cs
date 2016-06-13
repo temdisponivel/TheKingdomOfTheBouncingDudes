@@ -108,8 +108,8 @@ namespace BounceDudes
 
             if (this._availableSoldierInstanceIdById.Count == 0)
             {
-                this._availableSoldierInstanceIdById[0] = new List<int>() {0};
-                this.AddNameToSoldier(_allSoldiers[0].GetComponent<Soldier>()._soldierName, 0, 0);
+                this._availableSoldierInstanceIdById[1] = new List<int>() {0};
+                this.AddNameToSoldier(_allSoldiers[0].GetComponent<Soldier>()._soldierName, 1, 0);
                 this.SaveGame();
             }
 
@@ -247,6 +247,11 @@ namespace BounceDudes
             if (this.SoldierNames.ContainsKey(soldierId))
             {
                 this.SoldierNames[soldierId][instanceId] = name;
+            }
+            else
+            {
+                this.SoldierNames[soldierId] = new List<string>();
+                this.SoldierNames[soldierId].Add(name);
             }
         }
 

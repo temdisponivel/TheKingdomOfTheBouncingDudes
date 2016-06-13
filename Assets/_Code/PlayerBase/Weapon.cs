@@ -249,14 +249,7 @@ namespace BounceDudes
                 return;
             }
 
-            if (GameManager.Instance.SoldierNames.ContainsKey(AmmunitionClip.Instance.NextAmmunition._id))
-            {
-                LevelManager.Instance._soldierNameText.text = string.Format("{0}", GameManager.Instance.SoldierNames[AmmunitionClip.Instance.NextAmmunition._id]);
-            }
-            else
-            {
-                LevelManager.Instance._soldierNameText.text = string.Format("{0}", "Vicenzito");
-            }
+            LevelManager.Instance._soldierNameText.text = AmmunitionClip.Instance.NextAmmunition._soldierName;
         }
 
         public void RetrieveAll()
