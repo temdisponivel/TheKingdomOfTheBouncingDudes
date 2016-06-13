@@ -10,7 +10,7 @@ namespace BounceDudes
 		public string _soldierName = "Vicenzito";
 
         protected int _ammunitionPosition = -1;
-
+        
         public int AmmunitionPosition { get { return this._ammunitionPosition; } set { this._ammunitionPosition = value; } }
 
         private bool _shooted = false;
@@ -27,6 +27,8 @@ namespace BounceDudes
         {
             if (!this._isSpecial)
                 this.transform.rotation = Weapon.Instance.WeaponRotation;
+
+            _transitioning = false;
 
             this.ConvertSpeed();
 
@@ -60,6 +62,9 @@ namespace BounceDudes
         {
             if (collider.gameObject.layer == TagAndLayer.ENEMY_OBJECTS)
             {
+                if (this._onBarrel || _transitioning)
+                    return;
+
                 Character monster = collider.gameObject.GetComponent<Character>();
                 this.HP -= 1;
                 monster.HP -= 1;
@@ -102,6 +107,7 @@ namespace BounceDudes
         {
             Debug.Log("RECYCLE");
             this._shooted = false;
+            this._transitioning = true;
             this.Start();
             this._hp = _hpBkp;
             this.transform.rotation = _rotationBkp;

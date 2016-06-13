@@ -22,7 +22,7 @@ namespace BounceDudes
 
         public void Start()
         {
-            LevelInformation info = GameManager.Instance.LevelsInformation[GameManager.Instance.LastLevel];
+            LevelInformation info = GameManager.Instance.LevelsInformation[GameManager.Instance.LastLevel.Id];
             foreach (var challeng in info.ChallengesCompleted)
             {
                 foreach (var soldierId in challeng.Value)
@@ -40,7 +40,7 @@ namespace BounceDudes
 
         public void PlayAgain()
         {
-            SceneManager.LoadScene(GameManager.Instance.LastLevel);
+            SceneManager.LoadScene(GameManager.Instance.LastLevel.SceneName);
         }
 
         public void Continue()

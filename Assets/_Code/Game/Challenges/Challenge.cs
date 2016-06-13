@@ -12,8 +12,12 @@ namespace BounceDudes
     [Serializable]
     public class Challenge
     {
+        public int Id;
+
         [Tooltip("Type of the challenge")]
         public ChallengeType _type;
+
+        public string Description;
 
         [Tooltip("_x to validate the challenge. For example: Kill _x enemies, where _x is the number of enemies")]
         public int _x;

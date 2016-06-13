@@ -215,7 +215,7 @@ namespace BounceDudes
             this.StartCoroutine(this.ShootSpecialObject(this._projectilesSpecial[this._currentSpecialProjectileIndex]));
             this._currentSpecialProjectileIndex = (this._currentSpecialProjectileIndex + 1) % this._projectilesSpecial.Count;
             this._lastTimeShoot = Time.time;
-            this.ShootCount++;
+            //this.ShootCount++;
         }
 
         public IEnumerator ShootSpecialObject(GameObject shootObject)

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using Assets.Code.Game;
+using Assets._Code.Game;
 using DG.Tweening;
 
 namespace BounceDudes
@@ -25,7 +26,7 @@ namespace BounceDudes
 
         private float _timeScaleBkp;
 
-        public GameState State 
+        public GameState State
         {
             get
             {
@@ -43,7 +44,7 @@ namespace BounceDudes
                     Time.timeScale = this._timeScaleBkp;
                 }
                 _state = value;
-                if (this.OnStateChange  != null)
+                if (this.OnStateChange != null)
                     this.OnStateChange();
             }
         }
@@ -56,20 +57,36 @@ namespace BounceDudes
 
         public List<GameObject> _allSoldiers = null;
         public List<GameObject> _allSoldiersRepresentation = null;
+
         public List<GameObject> _allMonsters = null;
-        public List<int> _availableSoldiersId = null;
+
         protected List<GameObject> AvailableSoldiers = null;
 
-        public Dictionary<string, LevelInformation> LevelsInformation { get; set; }
+        public Dictionary<int, List<int>> _availableSoldierInstanceIdById = new Dictionary<int, List<int>>();
 
-        public Dictionary<int, string> SoldierNames { get; set; }
+        public Dictionary<LevelId, LevelInformation> LevelsInformation { get; set; }
 
-        public string LastLevel { get; set; }
+        public Dictionary<int, List<string>> SoldierNames { get; set; }
 
-        public Dictionary<int, GameObject> Soldiers { get; set; }
         public Dictionary<int, GameObject> Monsters { get; set; }
 
+        public Level LastLevel { get; set; }
+
         public List<GameObject> NextLevelSoldiers = new List<GameObject>();
+
+        public List<Level> Levels = new List<Level>();
+
+        public Level CurrentLevel { get; set; }
+
+        public Dictionary<LevelId, Level> LevelsById = new Dictionary<LevelId, Level>();
+
+        public List<int> ChallengesComplete = new List<int>();
+        public List<AchivmentId> UnlockedAchivments = new List<AchivmentId>();
+
+        public List<Achivment> Achivments = new List<Achivment>();
+
+        public int MusicVolume = 1;
+        public int SoundVolume = 1;
 
         public void Awake()
         {
@@ -84,27 +101,31 @@ namespace BounceDudes
                 return;
             }
 
-            this.LevelsInformation = new Dictionary<string, LevelInformation>();;
-            this.SoldierNames = new Dictionary<int, string>();
-            this.Soldiers = new Dictionary<int, GameObject>();
-            this.Monsters = new Dictionary<int, GameObject>();
+            this.LevelsInformation = new Dictionary<LevelId, LevelInformation>(); ;
+            this.SoldierNames = new Dictionary<int, List<string>>();
 
             this.LoadGame();
 
-            foreach (var soldier in this._allSoldiers)
+            if (this._availableSoldierInstanceIdById.Count == 0)
             {
-                this.Soldiers[soldier.GetComponent<Character>()._id] = soldier;
+                this._availableSoldierInstanceIdById[0] = new List<int>() {0};
+                this.AddNameToSoldier(_allSoldiers[0].GetComponent<Soldier>()._soldierName, 0, 0);
+                this.SaveGame();
             }
 
-            foreach (var monster in this._allMonsters)
+            this.Monsters = new Dictionary<int, GameObject>();
+
+            foreach (var monster in _allMonsters)
             {
                 this.Monsters[monster.GetComponent<Character>()._id] = monster;
             }
 
+            foreach (var level in Levels)
+            {
+                LevelsById[level.Id] = level;
+            }
+
             DOTween.Init(false, true, LogBehaviour.ErrorsOnly);
-
-
-			//NextLevelSoldiers = this.GetAvailableSoldiers(); // FOR TESTS ONLY
         }
 
         public List<GameObject> GetAvailableSoldiers()
@@ -112,9 +133,15 @@ namespace BounceDudes
             this.AvailableSoldiers = new List<GameObject>();
             foreach (var soldier in this._allSoldiers)
             {
-                if (this._availableSoldiersId.Contains(soldier.GetComponent<Character>()._id))
+                if (this._availableSoldierInstanceIdById.ContainsKey(soldier.GetComponent<Character>()._id))
                 {
-                    this.AvailableSoldiers.Add(soldier);
+                    int index = 0;
+                    foreach (var soldiers in this._availableSoldierInstanceIdById[soldier.GetComponent<Character>()._id])
+                    {
+                        soldier.GetComponent<Soldier>()._soldierName =
+                            SoldierNames[soldier.GetComponent<Character>()._id][index++];
+                        this.AvailableSoldiers.Add(soldier);
+                    }
                 }
             }
             return this.AvailableSoldiers;
@@ -143,7 +170,7 @@ namespace BounceDudes
             Debug.Log("GAME OVER");
         }
 
-        public void AddLevelInfo(string id, LevelInformation info)
+        public void AddLevelInfo(LevelId id, LevelInformation info)
         {
             if (this.LevelsInformation.ContainsKey(id))
             {
@@ -161,10 +188,11 @@ namespace BounceDudes
             {
                 foreach (var soldierId in challeng.Value)
                 {
-                    if (!this._availableSoldiersId.Contains(soldierId))
-                    {
-                        this._availableSoldiersId.Add(soldierId);
-                    }
+                    if (this._availableSoldierInstanceIdById.ContainsKey(soldierId))
+                        this._availableSoldierInstanceIdById[soldierId].Add(this._availableSoldierInstanceIdById[soldierId].Count + 1);
+                    else
+                        this._availableSoldierInstanceIdById[soldierId] = new List<int>() { 0 };
+                    this.AddNameToSoldier(_allSoldiers.FirstOrDefault(g => g.GetComponent<Soldier>()._id == soldierId).GetComponent<Soldier>()._soldierName, soldierId, this._availableSoldierInstanceIdById[soldierId].Count);
                 }
             }
             this.SaveGame();
@@ -184,7 +212,7 @@ namespace BounceDudes
                     GameInfomation gameInfo = FileUtil.ReadFromBinaryFile<GameInfomation>(this.SaveFilePath);
                     this.UpdateFromGameInfo(gameInfo);
                 }
-                catch(SerializationException ex)
+                catch (SerializationException ex)
                 {
                     File.Delete(this.SaveFilePath);
                 }
@@ -198,8 +226,9 @@ namespace BounceDudes
         public void UpdateFromGameInfo(GameInfomation gameInfo)
         {
             this.LevelsInformation = gameInfo.Levels;
-            this._availableSoldiersId = gameInfo.Soldiers.ToList();
+            this._availableSoldierInstanceIdById = gameInfo.AvailableSoldierInstanceIdById;
             this.SoldierNames = gameInfo.SoldierNames;
+            this.UnlockedAchivments = gameInfo.UnleckedAchivments;
         }
 
         public GameInfomation UpdateToGameInfo()
@@ -207,11 +236,28 @@ namespace BounceDudes
             return new GameInfomation()
             {
                 Levels = this.LevelsInformation,
-                Soldiers = this._availableSoldiersId.ToArray(),
+                AvailableSoldierInstanceIdById = this._availableSoldierInstanceIdById,
                 SoldierNames = this.SoldierNames,
+                UnleckedAchivments = UnlockedAchivments,
             };
         }
 
-        
+        public void AddNameToSoldier(string name, int soldierId, int instanceId)
+        {
+            if (this.SoldierNames.ContainsKey(soldierId))
+            {
+                this.SoldierNames[soldierId][instanceId] = name;
+            }
+        }
+
+        public void MuteSound()
+        {
+            this.SoundVolume = 0;
+        }
+
+        public void MuteMusic()
+        {
+            this.MusicVolume = 0;
+        }
     }
 }

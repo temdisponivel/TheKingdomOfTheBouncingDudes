@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Text;
 using System;
+using System.Collections.Generic;
 
 namespace BounceDudes
 {
@@ -35,7 +36,9 @@ namespace BounceDudes
             {
                 GameManager.Instance.SoldierNames.Remove(id);
             }
-            GameManager.Instance.SoldierNames.Add(id, newName);
+            else
+                GameManager.Instance.SoldierNames[id] = new List<string>();
+            GameManager.Instance.SoldierNames[id].Add(newName);
             this.UpdateSoldiersInfo();
         }
 
@@ -47,30 +50,7 @@ namespace BounceDudes
 
         protected void UpdateSoldiersInfo()
         {
-            foreach (var soldierInfo in this._soldiersInfo)
-            {
-                if (!GameManager.Instance._availableSoldiersId.Contains(soldierInfo.Id))
-                {
-                    soldierInfo.SoldierRepresentation.SetActive(false);
-                    continue;
-                }
-                Text text = soldierInfo.SoldierRepresentation.GetComponentInChildren<Text>();
-                StringBuilder builder = new StringBuilder();
-                if (GameManager.Instance.SoldierNames.ContainsKey(soldierInfo.Id))
-                {
-                    builder.AppendLine(GameManager.Instance.SoldierNames[soldierInfo.Id]);
-                    builder.AppendLine();
-                }
-                builder.AppendLine();
-                builder.Append(soldierInfo.SoldierName);
-                builder.AppendLine();
-                builder.Append("HP: ");
-                builder.Append(soldierInfo.HP);
-                builder.AppendLine();
-                builder.Append("Velocity: ");
-                builder.Append(soldierInfo.Velocity);
-                text.text = builder.ToString();
-            }
+            
         }
     }
 }

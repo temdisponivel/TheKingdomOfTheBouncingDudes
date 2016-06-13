@@ -58,6 +58,7 @@ namespace BounceDudes
 
         protected bool _onBarrel { get; set; }
         public bool _isSpecial = false;
+        protected bool _transitioning { get; set; }
 
         public int CurrentSortingOrder
         {
@@ -138,7 +139,12 @@ namespace BounceDudes
         /// </summary>
         public void TurnIntoAmmunition()
         {
-            this.StartCoroutine(this.WaitSecondsAndCall(.5f, () => this.CurrentSortingOrder = this._spriteOnFieldOrder));
+            _transitioning = true;
+            this.StartCoroutine(this.WaitSecondsAndCall(.5f, () =>
+            {
+                this.CurrentSortingOrder = this._spriteOnFieldOrder;
+                _transitioning = false;
+            }));
             
             this._onBarrel = false;
 
@@ -151,7 +157,11 @@ namespace BounceDudes
         /// </summary>
         public void TurnIntoProjectile()
         {
-            this.StartCoroutine(this.WaitSecondsAndCall(.5f, () => this.CurrentSortingOrder = this._spriteOnFieldOrder));
+            this.StartCoroutine(this.WaitSecondsAndCall(.5f, () =>
+            {
+                this.CurrentSortingOrder = this._spriteOnFieldOrder;
+                _transitioning = false;
+            }));
 
             this._onBarrel = false;
 

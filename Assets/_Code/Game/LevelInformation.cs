@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets._Code.Game;
 using UnityEngine;
 
 namespace BounceDudes
@@ -12,6 +13,7 @@ namespace BounceDudes
     [Serializable]
     public class LevelInformation
     {
+        public LevelId LevelId;
         public int EnemiesKilled { get; set; }
         public float Score { get; set; }
         public int ShootCount { get; set; }

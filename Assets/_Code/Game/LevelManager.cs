@@ -19,34 +19,18 @@ namespace BounceDudes
         public Base _playerBase = null;
         public Base _enemyBase = null;
 
-        public string CurrentLevel { get; set; }
         public float Score { get; set; }
 
         public Text _soldierNameText;
 
         public GameObject _pausePanel = null;
 
-        [Header("Give Away")]
-        public int[] StarByScore;
-
-        public SoldierByChallengeDictionaryHack[] SoldiersByChallengeHack;
-
         public int EnemiesKilled { get; set; }
-
-        protected Dictionary<Challenge, int[]> SoldierByChallenge;
 
         public void Awake()
         {
             LevelManager._instance = this;
-            this.CurrentLevel = SceneManager.GetActiveScene().name;
-            GameManager.Instance.LastLevel = this.CurrentLevel;
             this.Score = 0;
-            this.SoldierByChallenge = new Dictionary<Challenge, int[]>();
-            foreach (var soldierByStar in this.SoldiersByChallengeHack)
-            {
-                this.SoldierByChallenge[soldierByStar._challenge] = soldierByStar._soldierToGive;
-            }
-
             GameManager.Instance.OnStateChange += this.StateChangeCallback;
         }
 
@@ -68,17 +52,29 @@ namespace BounceDudes
             info.EnemiesKilled = this.EnemiesKilled;
             info.Finished = win;
             info.ShootCount = Weapon.Instance.ShootCount;
-            info.Star = this.StarByScore.Where(s => s >= this.Score).Count();
+            info.Star = GameManager.Instance.CurrentLevel.StarByScore.Where(s => s >= this.Score).Count();
             Dictionary<Challenge, int[]> soldiersEarned = new Dictionary<Challenge, int[]>();
-            foreach (var challenge in this.SoldierByChallenge)
+
+            var challenge = GameManager.Instance.CurrentLevel.SoldiersByChallengeHackOne;
+            if (ChallengeManager.ValidateCompletion(challenge._challenge))
             {
-                if (ChallengeManager.ValidateCompletion(challenge.Key))
-                {
-                    soldiersEarned.Add(challenge.Key, challenge.Value);
-                }
+                soldiersEarned.Add(challenge._challenge, challenge._soldierToGive);
             }
+
+            challenge = GameManager.Instance.CurrentLevel.SoldiersByChallengeHackTwo;
+            if (ChallengeManager.ValidateCompletion(challenge._challenge))
+            {
+                soldiersEarned.Add(challenge._challenge, challenge._soldierToGive);
+            }
+
+            challenge = GameManager.Instance.CurrentLevel.SoldiersByChallengeHackThree;
+            if (ChallengeManager.ValidateCompletion(challenge._challenge))
+            {
+                soldiersEarned.Add(challenge._challenge, challenge._soldierToGive);
+            }
+
             info.ChallengesCompleted = soldiersEarned;
-            GameManager.Instance.AddLevelInfo(this.CurrentLevel, info);
+            GameManager.Instance.AddLevelInfo(GameManager.Instance.CurrentLevel.Id, info);
             GameManager.Instance.OnStateChange -= this.StateChangeCallback;
             SceneManager.LoadScene("EndLevel");
         }

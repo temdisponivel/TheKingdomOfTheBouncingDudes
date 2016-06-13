@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets._Code.Game;
 using BounceDudes;
 using UnityEngine;
 
@@ -13,8 +14,9 @@ namespace Assets.Code.Game
     [Serializable]
     public class GameInfomation
     {
-        public int[] Soldiers;
-        public Dictionary<string, LevelInformation> Levels;
-        public Dictionary<int, string> SoldierNames;
+        public Dictionary<int, List<int>> AvailableSoldierInstanceIdById = new Dictionary<int, List<int>>();
+        public Dictionary<LevelId, LevelInformation> Levels;
+        public Dictionary<int, List<string>> SoldierNames;
+        public List<AchivmentId> UnleckedAchivments;
     }
 }
