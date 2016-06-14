@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Assets.Code.Game;
+using DG.Tweening;
 
 namespace BounceDudes
 {
@@ -46,6 +47,9 @@ namespace BounceDudes
 
 
         [Header("Special")]
+		public GameObject _specialHeatEffect;
+		public GameObject _specialCover;
+		public GameObject _specialCoverPosition;
         public float _coolDownBetweenSpecials = 3f;
         public float _coolDownShoot = .3f;
         public float _specialDuration = 3f;
@@ -93,6 +97,12 @@ namespace BounceDudes
 
             if (_special)
             {
+				//Color heatColor = new Color (1, 1, 1, 1);
+				//SpriteRenderer heatRenderer = this._specialHeatEffect.GetComponent<SpriteRenderer> ();
+				//heatRenderer.DOColor (heatColor, this._specialDuration);
+
+				// TODO: Quando especial acabar, voltar para -5.6 do Y Local e Deixar Heat com alpha 0
+				this._specialCover.transform.DOLocalMoveY (0, 0.2f);
                 this._specialStartTime = Time.time;
             }
         }
@@ -224,6 +234,7 @@ namespace BounceDudes
             Soldier shootSoldier = shoot.GetComponent<Soldier>();
             shootSoldier._shouldRecycle = false;
 			shootSoldier._isSpecial = true;
+			shootSoldier.CurrentSortingOrder = shootSoldier.SpriteOnBarrelOrder;
             yield return 0;
             shootSoldier.Shoot();
         }

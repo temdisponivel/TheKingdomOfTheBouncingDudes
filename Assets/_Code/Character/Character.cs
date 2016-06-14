@@ -23,6 +23,7 @@ namespace BounceDudes
         public float _speed = 1f;
         public float _size = 1f; // Only for Game Design porpouses.
         public float _hp = 1f;
+		public float _statSpeed = 1f; // Representation porpouses.
 
         protected float _maxSpeed = 1f;
         protected float _minSpeed = 1f;
