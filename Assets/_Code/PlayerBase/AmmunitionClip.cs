@@ -45,7 +45,8 @@ namespace BounceDudes
         // Use this for initialization
         void Start()
         {
-            SoldiersBkp = GameManager.Instance.NextLevelSoldiers.ToList();
+            //SoldiersBkp = GameManager.Instance.NextLevelSoldiers.ToList();
+			SoldiersBkp = GameManager.Instance.GetAvailableSoldiers();
             this.FillAmmunitionClip();
         }
 

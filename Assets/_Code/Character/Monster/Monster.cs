@@ -56,6 +56,17 @@ namespace BounceDudes
             }
         }
 
+		public override void Die(){
+
+			EffectManager.Instance.CreateDieEffect(this.transform);
+			EffectManager.Instance.CreateSmokeEffect(this.transform);
+			LevelManager.Instance.KillEnemy(this);
+			ComboManager.Instance.AddKill();
+			ComboManager.Instance.AddElementKill();
+
+			base.Die ();
+		}
+
         public override void Recycle()
         {
             this.Start();

@@ -48,6 +48,7 @@ namespace BounceDudes
             if (collTag == TagAndLayer.BASE)
                 return;
 
+
             if (collTag == TagAndLayer.ENEMY_BASE)
             {
                 EffectManager.Instance.CreateDieEffect(this.transform);
@@ -58,6 +59,11 @@ namespace BounceDudes
             {
                 EffectManager.Instance.CreateWallHitEffect(this.transform);
             }
+			else if (collTag == TagAndLayer.BOSS){
+				EffectManager.Instance.CreateDieEffect(this.transform);
+				collision.gameObject.GetComponent<BossBehaviour>().BossHP -= this.Damage;
+				this.HP -= 1;
+			}
         }
 
         public virtual void OnTriggerEnter2D(Collider2D collider)
@@ -74,12 +80,8 @@ namespace BounceDudes
                 EffectManager.Instance.CreateHitEffect(monster.transform);
 
                 if (monster.HP <= 0)
-                {
-                    EffectManager.Instance.CreateDieEffect(monster.transform);
-                    EffectManager.Instance.CreateSmokeEffect(monster.transform);
-                    LevelManager.Instance.KillEnemy(monster);
-                    ComboManager.Instance.AddKill();
-                    ComboManager.Instance.AddElementKill();
+				{
+					monster.Die ();
                 }
                 else
                 {

@@ -53,7 +53,7 @@ namespace BounceDudes
 
         protected void AttachEffect(ParticleSystem effect, Transform target)
         {
-            ParticleSystem particleToAttach = ((GameObject)GameObject.Instantiate(effect, target.position, target.rotation)).GetComponent<ParticleSystem>();
+			ParticleSystem particleToAttach = ((ParticleSystem)GameObject.Instantiate(effect, target.position, target.rotation));
             particleToAttach.transform.parent = target;
             particleToAttach.transform.localScale = target.localScale;
         }
