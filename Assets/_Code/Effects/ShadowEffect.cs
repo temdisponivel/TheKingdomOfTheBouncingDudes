@@ -23,7 +23,6 @@ namespace BounceDudes
 
         void LateUpdate()
         {
-
             Vector3 p = this.transform.position;
             Vector3 truePosition = new Vector3(p.x, p.y + _offsetY, p.z);
             this._shadowObject.transform.position = truePosition;

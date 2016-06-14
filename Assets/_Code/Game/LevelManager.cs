@@ -19,7 +19,7 @@ namespace BounceDudes
         public Base _playerBase = null;
         public Base _enemyBase = null;
 
-        public float Score { get; set; }
+        public float _baseHpBakp { get; set; }
 
         public Text _soldierNameText;
 
@@ -30,7 +30,7 @@ namespace BounceDudes
         public void Awake()
         {
             LevelManager._instance = this;
-            this.Score = 0;
+            this._baseHpBakp = this._playerBase.HP;
             GameManager.Instance.OnStateChange += this.StateChangeCallback;
         }
 
@@ -46,13 +46,21 @@ namespace BounceDudes
 
         protected void EndLevel(bool win)
         {
-            this.CalculateScore();
             LevelInformation info = new LevelInformation();
-            info.Score = this.Score;
             info.EnemiesKilled = this.EnemiesKilled;
             info.Finished = win;
             info.ShootCount = Weapon.Instance.ShootCount;
-            info.Star = GameManager.Instance.CurrentLevel.StarByScore.Where(s => s >= this.Score).Count();
+            info.LevelId = GameManager.Instance.CurrentLevel.Id;
+
+            int biggest = 0;
+            for (int i = 0; i < GameManager.Instance.StarsPercent.Count; i++)
+            {
+                if (this._playerBase.HP/this._baseHpBakp >= GameManager.Instance.StarsPercent[i])
+                    biggest = i + 1;
+            }
+
+            info.Star = biggest;
+
             Dictionary<Challenge, int[]> soldiersEarned = new Dictionary<Challenge, int[]>();
 
             var challenge = GameManager.Instance.CurrentLevel.SoldiersByChallengeHackOne;
@@ -76,19 +84,12 @@ namespace BounceDudes
             info.ChallengesCompleted = soldiersEarned;
             GameManager.Instance.AddLevelInfo(GameManager.Instance.CurrentLevel.Id, info);
             GameManager.Instance.OnStateChange -= this.StateChangeCallback;
-            SceneManager.LoadScene("EndLevel");
+            SceneManager.LoadScene("TitleScreen");
         }
 
         public void KillEnemy(Character enemy)
         {
-            this.Score += (enemy._pointsWhenKilled * ComboManager.Instance.CurrentPointsMultiplier);
             this.EnemiesKilled++;
-        }
-
-        public void CalculateScore()
-        {
-            this.Score += this._playerBase.HP + this._enemyBase.HP;
-            this.Score = Mathf.Max(0, this.Score);
         }
 
         public void StateChangeCallback()

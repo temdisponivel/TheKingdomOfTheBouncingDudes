@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using BounceDudes;
 using UnityEngine.EventSystems;
 
@@ -44,8 +46,9 @@ namespace UnityEngine.UI.Extensions
         private int _currentScreen;
 
         // Use this for initialization
-        void Start()
+        IEnumerator Start()
         {
+            yield return new WaitForEndOfFrame();
             _scroll_rect = gameObject.GetComponent<ScrollRect>();
             _screensContainer = _scroll_rect.content;
             DistributePages();
@@ -67,7 +70,7 @@ namespace UnityEngine.UI.Extensions
 
             _scroll_rect.horizontalNormalizedPosition = (float)(_startingScreen - 1) / (float)(_screens - 1);
 
-            _containerSize = 12*_screens;//(int)_screensContainer.gameObject.GetComponent<RectTransform>().offsetMax.x;
+            _containerSize = (int)_screensContainer.gameObject.GetComponent<RectTransform>().sizeDelta.x; // _screensContainer.gameObject.GetComponent<RectTransform>().offsetMax.x; ;//(int)_screensContainer.gameObject.GetComponent<RectTransform>().offsetMax.x;
 
             ChangeBulletsInfo(CurrentScreen());
 
@@ -76,9 +79,6 @@ namespace UnityEngine.UI.Extensions
 
             if (PrevButton)
                 PrevButton.GetComponent<Button>().onClick.AddListener(() => { PreviousScreen(); });
-
-            if (OnChangeSoldier != null)
-                OnChangeSoldier(_screensContainer.GetChild(CurrentScreen()).GetComponent<Soldier>());
         }
 
         public void Awake()
@@ -100,7 +100,9 @@ namespace UnityEngine.UI.Extensions
                     this.GetComponent<ScrollRect>().velocity = Vector2.zero;
 
                     if (OnChangeSoldier != null)
-                        OnChangeSoldier(_screensContainer.GetChild(CurrentScreen() - 1).GetComponent<Soldier>());
+                    {
+                        OnChangeSoldier(_screensContainer.GetChild(_currentScreen).GetComponent<Soldier>());
+                    }
                 }
 
                 //change the info bullets at the bottom of the screen. Just for visual effect
@@ -122,10 +124,10 @@ namespace UnityEngine.UI.Extensions
         //Function for switching screens with buttons
         public void NextScreen()
         {
-            if (CurrentScreen() < _screens - 1)
+            if (_currentScreen < _screens - 1)
             {
                 _lerp = true;
-                _lerp_target = _positions[CurrentScreen() + 1];
+                _lerp_target = _positions[++_currentScreen];
 
                 ChangeBulletsInfo(CurrentScreen() + 1);
             }
@@ -134,10 +136,10 @@ namespace UnityEngine.UI.Extensions
         //Function for switching screens with buttons
         public void PreviousScreen()
         {
-            if (CurrentScreen() > 0)
+            if (_currentScreen > 0)
             {
                 _lerp = true;
-                _lerp_target = _positions[CurrentScreen() - 1];
+                _lerp_target = _positions[--_currentScreen];
 
                 ChangeBulletsInfo(CurrentScreen() - 1);
             }
@@ -190,7 +192,7 @@ namespace UnityEngine.UI.Extensions
         //returns the current screen that the is seeing
         public int CurrentScreen()
         {
-            float absPoz = Math.Abs(_screensContainer.gameObject.GetComponent<RectTransform>().offsetMin.x);
+            float absPoz = Math.Abs(_screensContainer.GetComponent<RectTransform>().anchoredPosition.x);
 
             absPoz = Mathf.Clamp(absPoz, 1, _containerSize - 1);
 
@@ -236,6 +238,7 @@ namespace UnityEngine.UI.Extensions
         #region Interfaces
         public void OnBeginDrag(PointerEventData eventData)
         {
+            return;
             _startPosition = _screensContainer.localPosition;
             _fastSwipeCounter = 0;
             _fastSwipeTimer = true;
@@ -244,6 +247,7 @@ namespace UnityEngine.UI.Extensions
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            return;
             _startDrag = true;
             if (_scroll_rect.horizontal)
             {
@@ -285,6 +289,7 @@ namespace UnityEngine.UI.Extensions
 
         public void OnDrag(PointerEventData eventData)
         {
+            return;
             _lerp = false;
             if (_startDrag)
             {

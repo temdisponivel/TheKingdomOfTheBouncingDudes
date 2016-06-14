@@ -20,13 +20,16 @@ namespace BounceDudes
         public void Start()
         {
             LevelNode[] nodes = this.GetComponentsInChildren<LevelNode>();
-            LevelId[] levelsUnlocked = GameManager.Instance.LevelsInformation.Keys.ToArray();
+            LevelInformation[] levelsUnlocked = GameManager.Instance.LevelsInformation.Values.ToArray();
 
-            levelsUnlocked.OrderBy(l => (int) l);
+            levelsUnlocked.OrderBy(l => (int) l.LevelId);
             int lastLevel = -1; //-1 to sum 0 below
 
             if (levelsUnlocked.Length > 0)
-                lastLevel = (int) levelsUnlocked[levelsUnlocked.Length - 1];
+            {
+                if (levelsUnlocked[levelsUnlocked.Length - 1].Finished)
+                    lastLevel = (int)levelsUnlocked[levelsUnlocked.Length - 1].LevelId;
+            }
 
             foreach (var node in nodes)
             {

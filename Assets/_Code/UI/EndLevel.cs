@@ -31,7 +31,6 @@ namespace BounceDudes
                         this._positionToCreateSoldierEarned.position, this._positionToCreateSoldierEarned.rotation);
                 }
             }
-            this._scoreText.text = info.Score.ToString(".2");
             this._starText.text = info.Star.ToString();
             this._enemiesKilled.text = info.EnemiesKilled.ToString();
             this._shootCountText.text = info.ShootCount.ToString();

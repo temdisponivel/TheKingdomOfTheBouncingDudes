@@ -80,7 +80,24 @@ namespace BounceDudes
 
         public Dictionary<LevelId, Level> LevelsById = new Dictionary<LevelId, Level>();
 
-        public List<int> ChallengesComplete = new List<int>();
+        public List<float> StarsPercent = new List<float>();
+
+        public List<int> ChallengesComplete
+        {
+            get
+            {
+                var result = new List<int>();
+                var levelsInfo = LevelsInformation.ToList();
+                for (int i = 0; i < levelsInfo.Count; i++)
+                {
+                    if (levelsInfo[i].Value.Finished)
+                    {
+                        result.AddRange(levelsInfo[i].Value.ChallengesCompleted.Keys.Select(k => k.Id));
+                    }
+                }
+                return result;
+            }
+        }
         public List<AchivmentId> UnlockedAchivments = new List<AchivmentId>();
 
         public List<Achivment> Achivments = new List<Achivment>();
@@ -138,9 +155,10 @@ namespace BounceDudes
                     int index = 0;
                     foreach (var soldiers in this._availableSoldierInstanceIdById[soldier.GetComponent<Character>()._id])
                     {
-                        soldier.GetComponent<Soldier>()._soldierName =
+                        var soldierCopy = Instantiate(soldier);
+                        soldierCopy.GetComponent<Soldier>()._soldierName =
                             SoldierNames[soldier.GetComponent<Character>()._id][index++];
-                        this.AvailableSoldiers.Add(soldier);
+                        this.AvailableSoldiers.Add(soldierCopy);
                     }
                 }
             }
@@ -172,29 +190,65 @@ namespace BounceDudes
 
         public void AddLevelInfo(LevelId id, LevelInformation info)
         {
+            if (!info.Finished)
+                return;
+
+            var challengesComplete = this.ChallengesComplete;
+
             if (this.LevelsInformation.ContainsKey(id))
             {
-                if (!GameManager.Instance.LevelsInformation[id].Finished || GameManager.Instance.LevelsInformation[id].Score < info.Score)
+                var currencLevelInfo = this.LevelsInformation[id];
+
+                currencLevelInfo.Star = Mathf.Max(info.Star, currencLevelInfo.Star);
+                currencLevelInfo.EnemiesKilled = Mathf.Max(info.EnemiesKilled, currencLevelInfo.EnemiesKilled);
+                currencLevelInfo.ShootCount = Mathf.Max(info.ShootCount, currencLevelInfo.ShootCount);
+
+                var currentChallengs = currencLevelInfo.ChallengesCompleted.ToList();
+                var newChallengs = info.ChallengesCompleted.ToList();
+
+                var keys = newChallengs.Select(e => e.Key.Id);
+                for (int i = 0; i < currentChallengs.Count; i++)
                 {
-                    GameManager.Instance.LevelsInformation.Remove(id);
-                    GameManager.Instance.LevelsInformation.Add(id, info);
+                    if (!keys.Contains(currentChallengs[i].Key.Id))
+                    {
+                        newChallengs.Add(currentChallengs[i]);
+                    }
                 }
+
+                info.ChallengesCompleted.Clear();
+                foreach (var challeng in newChallengs)
+                {
+                    info.ChallengesCompleted.Add(challeng.Key, challeng.Value);   
+                }
+
+                GameManager.Instance.LevelsInformation.Remove(id);
+                GameManager.Instance.LevelsInformation.Add(id, info);
             }
             else
             {
                 this.LevelsInformation.Add(id, info);
             }
+
             foreach (var challeng in info.ChallengesCompleted)
             {
+                if (challengesComplete.Contains(challeng.Key.Id))
+                    continue;
+
                 foreach (var soldierId in challeng.Value)
                 {
                     if (this._availableSoldierInstanceIdById.ContainsKey(soldierId))
-                        this._availableSoldierInstanceIdById[soldierId].Add(this._availableSoldierInstanceIdById[soldierId].Count + 1);
+                    {
+                        this._availableSoldierInstanceIdById[soldierId].Add(this._availableSoldierInstanceIdById[soldierId].Count);
+                    }
                     else
-                        this._availableSoldierInstanceIdById[soldierId] = new List<int>() { 0 };
-                    this.AddNameToSoldier(_allSoldiers.FirstOrDefault(g => g.GetComponent<Soldier>()._id == soldierId).GetComponent<Soldier>()._soldierName, soldierId, this._availableSoldierInstanceIdById[soldierId].Count);
+                    {
+                        this._availableSoldierInstanceIdById[soldierId] = new List<int>() {0};
+                    }
+
+                    this.AddNameToSoldier(_allSoldiers.FirstOrDefault(g => g.GetComponent<Soldier>()._id == soldierId).GetComponent<Soldier>()._soldierName, soldierId, this._availableSoldierInstanceIdById[soldierId].Count - 1);
                 }
             }
+
             this.SaveGame();
         }
 
@@ -246,7 +300,14 @@ namespace BounceDudes
         {
             if (this.SoldierNames.ContainsKey(soldierId))
             {
-                this.SoldierNames[soldierId][instanceId] = name;
+                if (this.SoldierNames[soldierId].Count > instanceId)
+                {
+                    this.SoldierNames[soldierId][instanceId] = name;
+                }
+                else
+                {
+                    this.SoldierNames[soldierId].Add(name);
+                }
             }
             else
             {

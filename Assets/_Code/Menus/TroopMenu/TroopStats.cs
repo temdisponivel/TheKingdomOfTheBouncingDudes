@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,7 @@ namespace BounceDudes
 
         public Soldier CurrentSoldier;
 
-        public void Start()
+        public IEnumerator Start()
         {
             TroopStats.Instance = this;
 
@@ -31,19 +32,23 @@ namespace BounceDudes
             {
                 this.UpdateInfo(soldier);
             });
+
+            yield return new WaitForEndOfFrame();
+
+            CurrentSoldier = SoldierArray.Instance.First;
+            this.UpdateInfo(CurrentSoldier);
         }
 
         public void UpdateInfo(Soldier soldier)
         {
-            Debug.Log("CHANGEE");
             this.CurrentSoldier = soldier;
             this.NameText.text = this.CurrentSoldier._soldierName;
             var delta = this.SizeImage.GetComponent<RectTransform>().sizeDelta;
-            this.SizeImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = 1.15f * this.CurrentSoldier._size, y = delta.y };
+            this.SizeImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = this.CurrentSoldier._size + .15f, y = delta.y };
             delta = this.SpeedImage.GetComponent<RectTransform>().sizeDelta;
-            this.SpeedImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = 1.15f * this.CurrentSoldier._speed, y = delta.y };
+            this.SpeedImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = this.CurrentSoldier._statSpeed + .15f, y = delta.y };
             delta = this.ArmorImage.GetComponent<RectTransform>().sizeDelta;
-            this.ArmorImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = 1.15f * this.CurrentSoldier._hp, y = delta.y };
+            this.ArmorImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = this.CurrentSoldier._hp + .15f, y = delta.y };
         }
 
         public void OnClickTextName()
@@ -60,6 +65,7 @@ namespace BounceDudes
             this.InputNameText.gameObject.SetActive(false);
             this.NameText.text = this.InputNameText.text;
             GameManager.Instance.AddNameToSoldier(this.NameText.text, CurrentSoldier._id, SoldierArray.Instance.GetInstanceId(CurrentSoldier));
+            CurrentSoldier._soldierName = this.InputNameText.text;
         }
 
         public void Return()

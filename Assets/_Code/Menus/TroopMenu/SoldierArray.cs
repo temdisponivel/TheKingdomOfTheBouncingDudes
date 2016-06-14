@@ -1,18 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI.Extensions;
 
 namespace BounceDudes
 {
     public class SoldierArray : MonoBehaviour
     {
         public static SoldierArray Instance;
-        private List<GameObject> Soldiers = new List<GameObject>();
+        public Dictionary<int, List<GameObject>> Soldiers = new Dictionary<int, List<GameObject>>();
+        public Soldier First;
+        
         public void Start()
         {
             Instance = this;
             var soldiers = GameManager.Instance.GetAvailableSoldiers();
-
             foreach (var soldier in soldiers)
             {
                 GameObject soldierRepresentation =
@@ -22,13 +24,21 @@ namespace BounceDudes
                 soldierRepresentation.GetComponent<Soldier>()._soldierName =
                     soldier.GetComponent<Soldier>()._soldierName;
                 soldierRepresentation.transform.SetParent(this.transform);
-                Soldiers.Add(soldierRepresentation);
+                Soldier soldierScript = soldier.GetComponent<Soldier>();
+                if (!Soldiers.ContainsKey(soldierScript._id))
+                {
+                    Soldiers.Add(soldierScript._id, new List<GameObject>());
+                }
+                Soldiers[soldier.GetComponent<Soldier>()._id].Add(soldierRepresentation);
+                if (First == null)
+                    First = soldierRepresentation.GetComponent<Soldier>();
+                Destroy(soldier);
             }
         }
 
         public int GetInstanceId(Soldier soldier)
         {
-            return Soldiers.IndexOf(soldier.gameObject);
+            return Soldiers[soldier._id].IndexOf(soldier.gameObject);
         }
     }
 }

@@ -112,14 +112,12 @@ namespace BounceDudes
 
         public void Music(bool mute)
         {
-            Debug.Log(mute);
-            GameManager.Instance.MusicVolume = mute ? 0 : 1;
+            GameManager.Instance.MusicVolume = !mute ? 0 : 1;
         }
 
         public void Sound(bool mute)
         {
-            Debug.Log(mute);
-            GameManager.Instance.SoundVolume = mute ? 0 : 1;
+            GameManager.Instance.SoundVolume = !mute ? 0 : 1;
         }
     }
 

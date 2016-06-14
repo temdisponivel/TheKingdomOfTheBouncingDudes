@@ -103,7 +103,8 @@ namespace BounceDudes
 
             Challenge currentChellenge = level.SoldiersByChallengeHackOne._challenge;
             _challengeDescOne.text = currentChellenge.Description;
-            if (GameManager.Instance.ChallengesComplete.Contains(currentChellenge.Id))
+            var challengesComplete = GameManager.Instance.ChallengesComplete;
+            if (challengesComplete.Contains(currentChellenge.Id))
             {
                 _challengeImageOne.enabled = true;
             }
@@ -114,7 +115,7 @@ namespace BounceDudes
 
             currentChellenge = level.SoldiersByChallengeHackTwo._challenge;
             _challengeDescTwo.text = currentChellenge.Description;
-            if (GameManager.Instance.ChallengesComplete.Contains(currentChellenge.Id))
+            if (challengesComplete.Contains(currentChellenge.Id))
             {
                 _challengeImageTwo.enabled = true;
             }
@@ -125,7 +126,7 @@ namespace BounceDudes
 
             currentChellenge = level.SoldiersByChallengeHackThree._challenge;
             _challengeDescThree.text = currentChellenge.Description;
-            if (GameManager.Instance.ChallengesComplete.Contains(currentChellenge.Id))
+            if (challengesComplete.Contains(currentChellenge.Id))
             {
                 _challengeImageThree.enabled = true;
             }

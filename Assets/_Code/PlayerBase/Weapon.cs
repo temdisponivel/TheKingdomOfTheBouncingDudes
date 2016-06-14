@@ -78,7 +78,6 @@ namespace BounceDudes
         public void Start()
         {
             AmmunitionClip.Instance.AmmoCountChanged += this.NewAmmo;
-            this._projectiles = GameManager.Instance.GetAvailableSoldiers();
             this._projectilesSpecial = GameManager.Instance._specialProjectiles;
 
             this.CallReloadAnimation();
@@ -93,6 +92,9 @@ namespace BounceDudes
 
         public void SetSpecial()
         {
+            if (_special)
+                return;
+
             this._special = (Time.time - (this._specialStartTime + this._specialDuration)) >= this._coolDownBetweenSpecials;
 
             if (_special)
