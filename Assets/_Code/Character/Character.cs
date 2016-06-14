@@ -47,7 +47,7 @@ namespace BounceDudes
         protected Quaternion _rotationBkp = Quaternion.identity;
         protected Vector3 _scaleBkp = Vector3.one;
         
-        public GameObject OriginalGameObject { get { return this._originalGameObject; } set { this._originalGameObject = value; } }
+        public GameObject OriginalGameObject { get { return GameManager.Instance.Soldiers[_id]; } }
         public Rigidbody2D RigidBody { get { return this._rigid; } }
         public Animator Animator { get { return this._animator; } }
         public Collider2D Collider { get { return this._collider; } }

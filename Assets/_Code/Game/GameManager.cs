@@ -60,8 +60,6 @@ namespace BounceDudes
 
         public List<GameObject> _allMonsters = null;
 
-        protected List<GameObject> AvailableSoldiers = null;
-
         public Dictionary<int, List<int>> _availableSoldierInstanceIdById = new Dictionary<int, List<int>>();
 
         public Dictionary<LevelId, LevelInformation> LevelsInformation { get; set; }
@@ -70,9 +68,28 @@ namespace BounceDudes
 
         public Dictionary<int, GameObject> Monsters { get; set; }
 
+        public Dictionary<int, GameObject> Soldiers { get; set; }
+
         public Level LastLevel { get; set; }
 
-        public List<GameObject> NextLevelSoldiers = new List<GameObject>();
+        public List<KeyValuePair<int, string>> NextLevelSoldiersDefinition = new List<KeyValuePair<int, string>>();
+
+        public List<GameObject> NextLevelSoldiers
+        {
+            get
+            {
+                var result = new List<GameObject>();
+
+                foreach (var soldier in NextLevelSoldiersDefinition)
+                {
+                    GameObject gameObject = (GameObject) Instantiate(Soldiers[soldier.Key]);
+                    gameObject.GetComponent<Soldier>()._soldierName = soldier.Value;
+                    result.Add(gameObject);
+                }
+
+                return result;
+            }
+        }
 
         public List<Level> Levels = new List<Level>();
 
@@ -105,6 +122,8 @@ namespace BounceDudes
         public int MusicVolume = 1;
         public int SoundVolume = 1;
 
+        public int MaxSoldierInLevel = 6;
+        
         public void Awake()
         {
             if (GameManager.Instance == null)
@@ -130,6 +149,13 @@ namespace BounceDudes
                 this.SaveGame();
             }
 
+            this.Soldiers = new Dictionary<int, GameObject>();
+
+            foreach (var soldier in _allSoldiers)
+            {
+                this.Soldiers[soldier.GetComponent<Character>()._id] = soldier;
+            }
+
             this.Monsters = new Dictionary<int, GameObject>();
 
             foreach (var monster in _allMonsters)
@@ -147,22 +173,55 @@ namespace BounceDudes
 
         public List<GameObject> GetAvailableSoldiers()
         {
-            this.AvailableSoldiers = new List<GameObject>();
+            var _availableSoldiers = new List<GameObject>();
             foreach (var soldier in this._allSoldiers)
             {
                 if (this._availableSoldierInstanceIdById.ContainsKey(soldier.GetComponent<Character>()._id))
                 {
+                    var soldierScript = soldier.GetComponent<Soldier>();
                     int index = 0;
-                    foreach (var soldiers in this._availableSoldierInstanceIdById[soldier.GetComponent<Character>()._id])
+
+                    foreach (var soldiers in this._availableSoldierInstanceIdById[soldierScript._id])
                     {
                         var soldierCopy = Instantiate(soldier);
-                        soldierCopy.GetComponent<Soldier>()._soldierName =
-                            SoldierNames[soldier.GetComponent<Character>()._id][index++];
-                        this.AvailableSoldiers.Add(soldierCopy);
+                        soldierCopy.GetComponent<Soldier>()._soldierName = SoldierNames[soldierScript._id][index++];
+                        _availableSoldiers.Add(soldierCopy);
                     }
                 }
             }
-            return this.AvailableSoldiers;
+            return _availableSoldiers;
+        }
+
+        public List<GameObject> GetAvailableSoldiersRepresentation()
+        {
+            var _availableSoldiers = new List<GameObject>();
+
+            foreach (var soldier in this._allSoldiers)
+            {
+                if (this._availableSoldierInstanceIdById.ContainsKey(soldier.GetComponent<Character>()._id))
+                {
+                    var soldierScript = soldier.GetComponent<Soldier>();
+                    
+                    int index = 0;
+
+                    foreach (var soldiers in this._availableSoldierInstanceIdById[soldierScript._id])
+                    {
+                        var soldierCopy = Instantiate(GetRepresentationOfSoldier(soldierScript._id));
+
+                        var soldierCopyScript = soldierCopy.GetComponent<Soldier>();
+
+                        soldierCopyScript._soldierName = SoldierNames[soldierScript._id][index++];
+
+                        soldierCopyScript._statSpeed = soldierScript._statSpeed;
+                        soldierCopyScript._hp = soldierScript._hp;
+                        soldierCopyScript._size = soldierScript._size;
+
+                        _availableSoldiers.Add(soldierCopy);
+                    }
+                }
+            }
+
+            return _availableSoldiers;
         }
 
         public GameObject GetRepresentationOfSoldier(int id)

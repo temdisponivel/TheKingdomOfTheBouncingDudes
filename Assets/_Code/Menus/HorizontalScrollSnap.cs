@@ -70,7 +70,7 @@ namespace UnityEngine.UI.Extensions
 
             _scroll_rect.horizontalNormalizedPosition = (float)(_startingScreen - 1) / (float)(_screens - 1);
 
-            _containerSize = (int)_screensContainer.gameObject.GetComponent<RectTransform>().sizeDelta.x; // _screensContainer.gameObject.GetComponent<RectTransform>().offsetMax.x; ;//(int)_screensContainer.gameObject.GetComponent<RectTransform>().offsetMax.x;
+            _containerSize = (int) _screensContainer.gameObject.GetComponent<RectTransform>().offsetMax.x; // _screensContainer.gameObject.GetComponent<RectTransform>().offsetMax.x; ;//(int)_screensContainer.gameObject.GetComponent<RectTransform>().offsetMax.x;
 
             ChangeBulletsInfo(CurrentScreen());
 
@@ -101,7 +101,7 @@ namespace UnityEngine.UI.Extensions
 
                     if (OnChangeSoldier != null)
                     {
-                        OnChangeSoldier(_screensContainer.GetChild(_currentScreen).GetComponent<Soldier>());
+                        OnChangeSoldier(_screensContainer.GetChild(CurrentScreen()).GetComponent<Soldier>());
                     }
                 }
 
@@ -124,10 +124,10 @@ namespace UnityEngine.UI.Extensions
         //Function for switching screens with buttons
         public void NextScreen()
         {
-            if (_currentScreen < _screens - 1)
+            if (CurrentScreen() < _screens - 1)
             {
                 _lerp = true;
-                _lerp_target = _positions[++_currentScreen];
+                _lerp_target = _positions[CurrentScreen() + 1];
 
                 ChangeBulletsInfo(CurrentScreen() + 1);
             }
@@ -136,10 +136,10 @@ namespace UnityEngine.UI.Extensions
         //Function for switching screens with buttons
         public void PreviousScreen()
         {
-            if (_currentScreen > 0)
+            if (CurrentScreen() > 0)
             {
                 _lerp = true;
-                _lerp_target = _positions[--_currentScreen];
+                _lerp_target = _positions[CurrentScreen() - 1];
 
                 ChangeBulletsInfo(CurrentScreen() - 1);
             }
@@ -148,24 +148,24 @@ namespace UnityEngine.UI.Extensions
         //Because the CurrentScreen function is not so reliable, these are the functions used for swipes
         private void NextScreenCommand()
         {
-            if (_currentScreen < _screens - 1)
+            if (CurrentScreen() < _screens - 1)
             {
                 _lerp = true;
                 _lerp_target = _positions[_currentScreen + 1];
 
-                ChangeBulletsInfo(_currentScreen + 1);
+                ChangeBulletsInfo(CurrentScreen() + 1);
             }
         }
 
         //Because the CurrentScreen function is not so reliable, these are the functions used for swipes
         private void PrevScreenCommand()
         {
-            if (_currentScreen > 0)
+            if (CurrentScreen() > 0)
             {
                 _lerp = true;
                 _lerp_target = _positions[_currentScreen - 1];
 
-                ChangeBulletsInfo(_currentScreen - 1);
+                ChangeBulletsInfo(CurrentScreen() - 1);
             }
         }
 
@@ -192,7 +192,7 @@ namespace UnityEngine.UI.Extensions
         //returns the current screen that the is seeing
         public int CurrentScreen()
         {
-            float absPoz = Math.Abs(_screensContainer.GetComponent<RectTransform>().anchoredPosition.x);
+            float absPoz = Math.Abs(_screensContainer.gameObject.GetComponent<RectTransform>().offsetMin.x);
 
             absPoz = Mathf.Clamp(absPoz, 1, _containerSize - 1);
 
@@ -225,7 +225,7 @@ namespace UnityEngine.UI.Extensions
             for (int i = 0; i < _screensContainer.transform.childCount; i++)
             {
                 RectTransform child = _screensContainer.transform.GetChild(i).gameObject.GetComponent<RectTransform>();
-                currentXPosition = _offset + i * 12;
+                currentXPosition = _offset + i * _step;
                 child.anchoredPosition = new Vector2(currentXPosition, 0f);
                 child.sizeDelta = new Vector2(gameObject.GetComponent<RectTransform>().sizeDelta.x, gameObject.GetComponent<RectTransform>().sizeDelta.y);
             }
@@ -238,7 +238,6 @@ namespace UnityEngine.UI.Extensions
         #region Interfaces
         public void OnBeginDrag(PointerEventData eventData)
         {
-            return;
             _startPosition = _screensContainer.localPosition;
             _fastSwipeCounter = 0;
             _fastSwipeTimer = true;
@@ -247,7 +246,6 @@ namespace UnityEngine.UI.Extensions
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            return;
             _startDrag = true;
             if (_scroll_rect.horizontal)
             {
@@ -289,7 +287,6 @@ namespace UnityEngine.UI.Extensions
 
         public void OnDrag(PointerEventData eventData)
         {
-            return;
             _lerp = false;
             if (_startDrag)
             {

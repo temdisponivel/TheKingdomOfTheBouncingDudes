@@ -14,17 +14,15 @@ namespace BounceDudes
         public void Start()
         {
             Instance = this;
-            var soldiers = GameManager.Instance.GetAvailableSoldiers();
+            var soldiers = GameManager.Instance.GetAvailableSoldiersRepresentation();
             foreach (var soldier in soldiers)
             {
-                GameObject soldierRepresentation =
-                    (GameObject)
-                        GameObject.Instantiate(
-                            GameManager.Instance.GetRepresentationOfSoldier(soldier.GetComponent<Character>()._id));
-                soldierRepresentation.GetComponent<Soldier>()._soldierName =
-                    soldier.GetComponent<Soldier>()._soldierName;
+                GameObject soldierRepresentation = soldier;
+
                 soldierRepresentation.transform.SetParent(this.transform);
+
                 Soldier soldierScript = soldier.GetComponent<Soldier>();
+
                 if (!Soldiers.ContainsKey(soldierScript._id))
                 {
                     Soldiers.Add(soldierScript._id, new List<GameObject>());
@@ -32,7 +30,6 @@ namespace BounceDudes
                 Soldiers[soldier.GetComponent<Soldier>()._id].Add(soldierRepresentation);
                 if (First == null)
                     First = soldierRepresentation.GetComponent<Soldier>();
-                Destroy(soldier);
             }
         }
 

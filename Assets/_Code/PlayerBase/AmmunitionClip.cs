@@ -46,7 +46,6 @@ namespace BounceDudes
         void Start()
         {
             SoldiersBkp = GameManager.Instance.NextLevelSoldiers.ToList();
-            GameManager.Instance.NextLevelSoldiers.Clear();
             this.FillAmmunitionClip();
         }
 
@@ -54,15 +53,14 @@ namespace BounceDudes
         {
             foreach (GameObject ammo in SoldiersBkp)
             {
-                this.AddAmmunition((GameObject)GameObject.Instantiate(ammo, this._othersPoint.transform.position, this._othersPoint.transform.rotation), ammo);
+                this.AddAmmunition(ammo);
             }
         }
 
-        public void AddAmmunition(GameObject ammunition, GameObject original = null, bool recycleAnimation = false)
+        public void AddAmmunition(GameObject ammunition, bool recycleAnimation = false)
         {
             Soldier ammoSoldier = ammunition.GetComponent<Soldier>();
-            if (original != null)
-                ammoSoldier.OriginalGameObject = original;
+            
             ammoSoldier.AmmunitionPosition = this._ammunitionClip.Count;
 
             this._ammunitionClip.Enqueue(ammoSoldier);

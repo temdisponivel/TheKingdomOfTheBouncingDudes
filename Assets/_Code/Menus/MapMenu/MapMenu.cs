@@ -62,7 +62,8 @@ namespace BounceDudes
         public void PlayNode()
         {
             GameManager.Instance.CurrentLevel = GameManager.Instance.LevelsById[_lastNode.LevelId];
-            SceneManager.LoadScene(GameManager.Instance.LevelsById[_lastNode.LevelId].SceneName);
+            SceneManager.LoadScene("FormationMenu");
+            //SceneManager.LoadScene(GameManager.Instance.LevelsById[_lastNode.LevelId].SceneName);
         }
     }
 

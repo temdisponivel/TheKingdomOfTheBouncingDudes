@@ -114,7 +114,7 @@ namespace BounceDudes
             this._hp = _hpBkp;
             this.transform.rotation = _rotationBkp;
             this.transform.localScale = _scaleBkp;
-            AmmunitionClip.Instance.AddAmmunition(this.gameObject, null, true);
+            AmmunitionClip.Instance.AddAmmunition(this.gameObject, true);
         }
     }
 }
