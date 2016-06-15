@@ -23,6 +23,7 @@ namespace BounceDudes
 		protected SpriteRenderer _bossFaceSprite;
 
 		[Header("Animation")]
+		protected Animator _bossAnimator;
 		public Animator[] _ratArmyAnimators;
 		public GameObject _bossDestination;
 		public GameObject _basePosition;
@@ -31,7 +32,6 @@ namespace BounceDudes
 		[Header("Stats")]
 		public int _hp = 50;
 		public float _timeToDestination = 60.0f;
-		public float _invulnerabilityTime = 1.0f;
 		public int _hitSpawnThreshold = 3;
 		protected int _hitCount = 0;
 		protected int _firstHpThreshold, _secondHpThreshold, _thirdHpThreshold;
@@ -46,11 +46,12 @@ namespace BounceDudes
 
 		// Use this for initialization
 		void Start () {
+			this._bossAnimator = this.GetComponent<Animator> ();
 			this._bossFaceSprite = this._bossFace.GetComponent<SpriteRenderer> ();
 
-			this._firstHpThreshold  =  (int) (this._hp * 0.8f);
-			this._secondHpThreshold =  (int) (this._hp * 0.5f);
-			this._thirdHpThreshold  =  (int) (this._hp * 0.2f);
+			this._firstHpThreshold  =  (int) (this._hp * 0.7f);
+			this._secondHpThreshold =  (int) (this._hp * 0.4f);
+			this._thirdHpThreshold  =  (int) (this._hp * 0.1f);
 
 			this.MoveToDestination ();
 
@@ -58,7 +59,7 @@ namespace BounceDudes
 		
 		// Update is called once per frame
 		void Update () {
-		
+			SetToCurrentState ();
 		}
 
 		protected void MoveToDestination(){
@@ -94,7 +95,7 @@ namespace BounceDudes
 			
 			this._hitCount++;
 
-			this._bossFaceSprite.sprite = this._faceHit; // TODO: WaitForXSeconds then call "SetToCurrentFace()"
+			this._bossFaceSprite.sprite = this._faceHit; // TODO: WaitForXSeconds then call "SetToCurrentState()" (1~1.5 seconds max)
 
 			if (this._hitCount >= this._hitSpawnThreshold) {
 				this.SpawnNextMonster ();
@@ -105,7 +106,7 @@ namespace BounceDudes
 		protected void SpawnNextMonster(){
 
 			// If wave is over, repeat!
-			if (this._nextSpawnIndex > this._bossWave.Length)
+			if (this._nextSpawnIndex >= this._bossWave.Length)
 				this._nextSpawnIndex = 0;
 
 			SpawnOption currentSpawn = this._bossWave [this._nextSpawnIndex];
@@ -120,8 +121,22 @@ namespace BounceDudes
 			this._nextSpawnIndex++;
 		}
 
-		protected void SetToCurrentFace(){
-			
+		protected void SetToCurrentState(){
+			if (_hp <= _firstHpThreshold && _hp > _secondHpThreshold) {
+				this._bossFaceSprite.sprite = this._faceNormal;
+			}
+			else if (_hp <= _secondHpThreshold && _hp > _thirdHpThreshold){
+				this._bossFaceSprite.sprite = this._faceAngry;
+				this._bossAnimator.SetBool ("Angry", true);
+				this._bossArmAngry.GetComponent<SpriteRenderer> ().enabled = true;
+				this._bossArmNormal.GetComponent<SpriteRenderer> ().enabled = false;
+			}
+			else if (_hp <= _thirdHpThreshold){
+				this._bossFaceSprite.sprite = this._faceCry;
+				this._bossAnimator.SetBool ("Angry", false);
+				this._bossArmAngry.GetComponent<SpriteRenderer> ().enabled = false;
+				this._bossArmNormal.GetComponent<SpriteRenderer> ().enabled = true;
+			}
 		}
 
 	}
