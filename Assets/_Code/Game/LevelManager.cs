@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Code.Game;
+using DG.Tweening;
 
 namespace BounceDudes
 {
@@ -23,10 +25,16 @@ namespace BounceDudes
 
         public Text _soldierNameText;
 
-        public GameObject _pausePanel = null;
+        public GameObject _colliderPanel = null;
+        public PausePanel _pausePanel = null;
+        public LooseLevelPanel _loosePanel = null;
+        public WinLevelPanel _winPanel = null;
+
+        public GameObject _shownPositionPanels = null;
+        public GameObject _hidenPositionPanels = null;
 
         public int EnemiesKilled { get; set; }
-
+        
         public void Awake()
         {
             LevelManager._instance = this;
@@ -82,9 +90,18 @@ namespace BounceDudes
             }
 
             info.ChallengesCompleted = soldiersEarned;
-            GameManager.Instance.AddLevelInfo(GameManager.Instance.CurrentLevel.Id, info);
-            GameManager.Instance.OnStateChange -= this.StateChangeCallback;
-            SceneManager.LoadScene("TitleScreen");
+
+            if (win)
+                GameManager.Instance.AddLevelInfo(GameManager.Instance.CurrentLevel.Id, info);
+            
+            if (win)
+            {
+                this._winPanel.Show();
+            }
+            else
+            {
+                this._loosePanel.Show();
+            }
         }
 
         public void KillEnemy(Character enemy)
@@ -96,11 +113,11 @@ namespace BounceDudes
         {
             if (GameManager.Instance.State == GameState.PAUSED)
             {
-                this._pausePanel.SetActive(true);
+                this._pausePanel.Show();
             }
             else
             {
-                this._pausePanel.SetActive(false);
+                this._pausePanel.Hide();
             }
         }
 
@@ -114,10 +131,50 @@ namespace BounceDudes
             GameManager.Instance.State = GameState.PLAYING;
         }
 
+        public void FadeOutCollider(Action callback)
+        {
+            var image = this._colliderPanel.GetComponent<Image>();
+            Color color = image.color;
+            color.a = 0;
+            image.DOBlendableColor(color, .5f).OnComplete(() =>
+            {
+                if (callback != null)
+                    callback();
+                this._colliderPanel.SetActive(false);
+            });
+        }
+
+        public void FadeInCollider(Action callback)
+        {
+            this._colliderPanel.SetActive(true);
+            var image = this._colliderPanel.GetComponent<Image>();
+            Color color = image.color;
+            color.a = 1;
+            image.DOBlendableColor(color, .5f).OnComplete(() =>
+            {
+                if (callback != null)
+                    callback();
+            });
+        }
+
         public void Quit()
         {
+            GameManager.Instance.LoadScene("MapMenu");
+            /*
             this.UnpauseGame();
             this.GameOver();
+             */
+        }
+
+        public void PlayAgain()
+        {
+            GameManager.Instance.LoadScene(GameManager.Instance.LastLevel.SceneName);
+            //SceneManager.LoadScene(GameManager.Instance.LastLevel.SceneName);
+        }
+
+        public void Dispose()
+        {
+            GameManager.Instance.OnStateChange -= this.StateChangeCallback;
         }
     }
 }

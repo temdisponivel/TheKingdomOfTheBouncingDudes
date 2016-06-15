@@ -90,12 +90,14 @@ namespace BounceDudes
 
         public void Play()
         {
-            SceneManager.LoadScene("MapMenu");
+            GameManager.Instance.LoadScene("MapMenu");
+            //SceneManager.LoadScene("MapMenu");
         }
 
         public void Troop()
         {
-            SceneManager.LoadScene("TroopMenu");
+            GameManager.Instance.LoadScene("TroopMenu");
+            //SceneManager.LoadScene("TroopMenu");
         }
 
         public void ShowSetting()

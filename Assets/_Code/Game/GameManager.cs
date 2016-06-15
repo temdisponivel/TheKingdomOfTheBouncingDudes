@@ -9,6 +9,7 @@ using System.Text;
 using Assets.Code.Game;
 using Assets._Code.Game;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 namespace BounceDudes
 {
@@ -82,7 +83,7 @@ namespace BounceDudes
 
                 foreach (var soldier in NextLevelSoldiersDefinition)
                 {
-                    GameObject gameObject = (GameObject) Instantiate(Soldiers[soldier.Key]);
+                    GameObject gameObject = (GameObject)Instantiate(Soldiers[soldier.Key]);
                     gameObject.GetComponent<Soldier>()._soldierName = soldier.Value;
                     result.Add(gameObject);
                 }
@@ -123,7 +124,9 @@ namespace BounceDudes
         public int SoundVolume = 1;
 
         public int MaxSoldierInLevel = 6;
-        
+
+        public List<string> LooseGameMessages = new List<string>();
+
         public void Awake()
         {
             if (GameManager.Instance == null)
@@ -144,7 +147,7 @@ namespace BounceDudes
 
             if (this._availableSoldierInstanceIdById.Count == 0)
             {
-                this._availableSoldierInstanceIdById[1] = new List<int>() {0};
+                this._availableSoldierInstanceIdById[1] = new List<int>() { 0 };
                 this.AddNameToSoldier(_allSoldiers[0].GetComponent<Soldier>()._soldierName, 1, 0);
                 this.SaveGame();
             }
@@ -201,7 +204,7 @@ namespace BounceDudes
                 if (this._availableSoldierInstanceIdById.ContainsKey(soldier.GetComponent<Character>()._id))
                 {
                     var soldierScript = soldier.GetComponent<Soldier>();
-                    
+
                     int index = 0;
 
                     foreach (var soldiers in this._availableSoldierInstanceIdById[soldierScript._id])
@@ -277,7 +280,7 @@ namespace BounceDudes
                 info.ChallengesCompleted.Clear();
                 foreach (var challeng in newChallengs)
                 {
-                    info.ChallengesCompleted.Add(challeng.Key, challeng.Value);   
+                    info.ChallengesCompleted.Add(challeng.Key, challeng.Value);
                 }
 
                 GameManager.Instance.LevelsInformation.Remove(id);
@@ -301,7 +304,7 @@ namespace BounceDudes
                     }
                     else
                     {
-                        this._availableSoldierInstanceIdById[soldierId] = new List<int>() {0};
+                        this._availableSoldierInstanceIdById[soldierId] = new List<int>() { 0 };
                     }
 
                     this.AddNameToSoldier(_allSoldiers.FirstOrDefault(g => g.GetComponent<Soldier>()._id == soldierId).GetComponent<Soldier>()._soldierName, soldierId, this._availableSoldierInstanceIdById[soldierId].Count - 1);
@@ -383,6 +386,11 @@ namespace BounceDudes
         public void MuteMusic()
         {
             this.MusicVolume = 0;
+        }
+
+        public void LoadScene(string sceneName)
+        {
+            CameraFade.Instance.FadeIn(() => SceneManager.LoadScene(sceneName));
         }
     }
 }

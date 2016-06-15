@@ -71,7 +71,8 @@ namespace BounceDudes
         public void Return()
         {
             GameManager.Instance.SaveGame();
-            SceneManager.LoadScene("TitleScreen");
+            GameManager.Instance.LoadScene("TitleScreen");
+            //SceneManager.LoadScene("TitleScreen");
         }
     }
 }

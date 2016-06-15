@@ -37,6 +37,18 @@ namespace BounceDudes
                 this.FreeIndexes.Push(i);
 
             var soldiers = GameManager.Instance.GetAvailableSoldiersRepresentation();
+            //var soldiers =
+            //    GameManager.Instance._allSoldiers.Select(
+            //        g => Instantiate(GameManager.Instance.GetRepresentationOfSoldier(g.GetComponent<Soldier>()._id))).ToList();
+
+            var grid = this.GetComponent<GridLayoutGroup>();
+            var size = grid.GetComponent<RectTransform>().sizeDelta;
+            grid.GetComponent<RectTransform>().sizeDelta = new Vector2()
+            {
+                x = size.x,
+                y = ((grid.cellSize.y + grid.spacing.y) * soldiers.Count / grid.constraintCount) + .5f,
+            };
+
             for (int i = 0; i < soldiers.Count; i++)
             {
                 var gridCell = (GameObject) Instantiate(GridCellPrefab);
@@ -84,7 +96,7 @@ namespace BounceDudes
                 GameManager.Instance.NextLevelSoldiersDefinition.Add(new KeyValuePair<int, string>(Soldiers[i]._id, Soldiers[i]._soldierName));
             }
 
-            SceneManager.LoadScene(GameManager.Instance.CurrentLevel.SceneName);
+            GameManager.Instance.LoadScene(GameManager.Instance.CurrentLevel.SceneName);
         }
 
         public void ShowName(string name)

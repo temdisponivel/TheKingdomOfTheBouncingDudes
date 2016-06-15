@@ -42,7 +42,7 @@ namespace BounceDudes
             Formation.Instance.RemoveFromFormation(this.Soldier, _representation);
             _representation = null;
             this.SelectedImage.enabled = false;
-            Formation.Instance.ShowName(Soldier._soldierName);
+            Formation.Instance.ShowName(string.Empty);
         }
 
         public void OnClick()
