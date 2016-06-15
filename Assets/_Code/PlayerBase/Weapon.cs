@@ -47,14 +47,14 @@ namespace BounceDudes
 
 
         [Header("Special")]
-		public GameObject _specialHeatEffect;
+		public SpriteRenderer _specialHeatEffect;
 		public GameObject _specialCover;
 		public GameObject _specialCoverPosition;
         public float _coolDownBetweenSpecials = 3f;
         public float _coolDownShoot = .3f;
         public float _specialDuration = 3f;
-        protected bool _special = false;
-        protected float _specialStartTime = 0;
+        public bool _special = false;
+        public float _specialStartTime = 0;
 
         protected float _lastTimeShoot = 0f;
         protected float _currentForceMultiplier = 0f;
@@ -68,6 +68,8 @@ namespace BounceDudes
         public int ShootCount { get; set; }
         public float ForceMultiplier { get { return this._currentForceMultiplier; } }
         public Quaternion WeaponRotation { get { return this.transform.rotation; } }
+
+        public LineRenderer LineRenderer = null;
 
         public void Awake()
         {
@@ -87,7 +89,17 @@ namespace BounceDudes
         {
             this.ShootRoutine();
 
+            var cacheSpecial = _special;
             this._special = this._special && (Time.time - this._specialStartTime) <= this._specialDuration;
+
+            if (cacheSpecial && !_special)
+            {
+                SpriteRenderer heatRenderer = this._specialHeatEffect;
+                Color heatColor = heatRenderer.color;
+                heatColor.a = 0;
+                heatRenderer.DOColor(heatColor, .2f);
+                this._specialCover.transform.DOLocalMoveY(-5.6f, .2f);
+            }
         }
 
         public void SetSpecial()
@@ -99,13 +111,15 @@ namespace BounceDudes
 
             if (_special)
             {
-				//Color heatColor = new Color (1, 1, 1, 1);
-				//SpriteRenderer heatRenderer = this._specialHeatEffect.GetComponent<SpriteRenderer> ();
-				//heatRenderer.DOColor (heatColor, this._specialDuration);
+                SpriteRenderer heatRenderer = this._specialHeatEffect;
+                Color heatColor = heatRenderer.color;
+                heatColor.a = 1;
+                heatRenderer.DOColor(heatColor, this._specialDuration);
 
 				// TODO: Quando especial acabar, voltar para -5.6 do Y Local e Deixar Heat com alpha 0
 				this._specialCover.transform.DOLocalMoveY (0, 0.2f);
                 this._specialStartTime = Time.time;
+                this._currentForceMultiplier = this._maxShootMultiplier;
             }
         }
 
@@ -255,6 +269,25 @@ namespace BounceDudes
                 this.transform.rotation = Quaternion.LookRotation(Vector3.forward, newUp);
                 this._minorCogObject.transform.rotation = Quaternion.Inverse(this.transform.rotation * this.transform.rotation);
             }
+
+            //var direction = (Vector2)this.transform.up;
+            //var position = (Vector2)this.transform.position;
+            //List<Vector3> points = new List<Vector3>() { Vector3.zero };
+            //for (int i = 0; i < 1; i++)
+            //{
+            //    RaycastHit2D hit;
+            //    if ((hit = Physics2D.Raycast(position, direction, 100)).collider != null)
+            //    {
+            //        points.Add(hit.point);
+            //        direction = direction + hit.normal;
+            //        position = hit.point;
+            //    }
+            //    else
+            //    {
+            //        break;
+            //    }
+            //}
+            //LineRenderer.SetPositions(points.ToArray());
         }
 
         public void UpdateSoldierNameUI()

@@ -55,6 +55,8 @@ namespace BounceDudes
                 gridCell.transform.SetParent(this.transform);
                 gridCell.GetComponent<TroopCell>().Soldier = soldiers[i].GetComponent<Soldier>();
             }
+
+            this.BattleButton.enabled = false;
         }
 
         public void AddToFormation(Soldier soldier, GameObject representation)

@@ -2,25 +2,22 @@
 using System.Collections;
 using BounceDudes;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class ComboManager : MonoBehaviour
 {
     public static ComboManager Instance = null;
 
-    public int CurrentPointsMultiplier {
-        get
-        {
-            return (this._killCount*this._killComboMultiplier) + (this._hitCount*this._hitComboMultiplier) +
-                   (this._elementKillCount*this._elementkillComboMultiplier);
-        }
-    }
+    public Text TextCombo;
 
     [Header("Multipliers")]
     public int _killComboMultiplier = 2;
     public int _hitComboMultiplier = 2;
     public int _elementkillComboMultiplier = 2;
+    public int _fontSizeMultiplierPerIncrement = 5;
 
     [Header("Cool down")]
+    public float _comboTextCoolDown = 1f;
     public float _killComboCooldown = 3f;
     public float _hitComboCooldown = 3f;
     public float _elementKillComboCooldown = 3f;
@@ -34,10 +31,17 @@ public class ComboManager : MonoBehaviour
     protected float _lastElementKillTime = 0f;
 
     public int MaxHitComboCount { get; set; }
-    
+
+    public int LastComboShown { get; set; }
+
+    public float _lastComboShownTime = 0;
+
+    public float _fontSizeBkp;
+
     private void Awake()
     {
         ComboManager.Instance = this;
+        _fontSizeBkp = this.TextCombo.fontSize;
     }
 
     private void Update()
@@ -46,18 +50,21 @@ public class ComboManager : MonoBehaviour
         {
             this._killCount = 0;
             this._lastKillTime = Time.time;
+            this.UpdateInfo();
         }
 
         if (Time.time - this._lastHitTime > this._killComboCooldown)
         {
             this._hitCount = 0;
             this._lastHitTime = Time.time;
+            this.UpdateInfo();
         }
 
         if (Time.time - this._elementKillCount > this._killComboCooldown)
         {
             this._elementKillCount = 0;
             this._lastElementKillTime = Time.time;
+            this.UpdateInfo();
         }
     }
 
@@ -65,7 +72,8 @@ public class ComboManager : MonoBehaviour
     {
         this._killCount++;
         this._lastKillTime = Time.time;
-        Debug.Log(string.Format("KILL {0}", this._killCount));
+
+        this.UpdateInfo();
     }
 
     public void AddHit()
@@ -78,7 +86,7 @@ public class ComboManager : MonoBehaviour
             this.MaxHitComboCount = this._hitCount;
         }
 
-        Debug.Log(string.Format("HIT {0}", this._hitCount));
+        this.UpdateInfo();
     }
 
     public void AddElementKill()
@@ -86,6 +94,28 @@ public class ComboManager : MonoBehaviour
         this._elementKillCount++;
         this._lastElementKillTime = Time.time;
 
-        Debug.Log(string.Format("ELEMENT KILL {0}", this._elementKillCount));
+        this.UpdateInfo();
+    }
+
+    public void UpdateInfo()
+    {
+        var current = this._killCount + this._hitCount + this._elementKillCount;
+        if (current > LastComboShown)
+        {
+            this.TextCombo.text = string.Format("{0} x", current);
+            var size = this.TextCombo.fontSize;
+            this.TextCombo.fontSize = (int)Mathf.Clamp(size + (Mathf.Abs(current - LastComboShown) * _fontSizeMultiplierPerIncrement), _fontSizeBkp, 30);
+            this.LastComboShown = current;
+            this._lastComboShownTime = Time.time;
+        }
+        else
+        {
+            if (Time.time - _lastComboShownTime > _comboTextCoolDown)
+            {
+                this.TextCombo.text = string.Empty;
+                LastComboShown = 0;
+                this.TextCombo.fontSize = (int)_fontSizeBkp;
+            }
+        }
     }
 }

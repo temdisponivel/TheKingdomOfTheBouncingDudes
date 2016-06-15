@@ -54,6 +54,8 @@ namespace BounceDudes
 
         public string SaveFilePath { get { return String.Format("{0}{1}{2}", Application.persistentDataPath, "/", SaveFileName); } }
 
+        public List<int> FirstSoldiersToGive = new List<int>();
+
         public List<GameObject> _specialProjectiles = null;
 
         public List<GameObject> _allSoldiers = null;
@@ -143,15 +145,6 @@ namespace BounceDudes
             this.LevelsInformation = new Dictionary<LevelId, LevelInformation>(); ;
             this.SoldierNames = new Dictionary<int, List<string>>();
 
-            this.LoadGame();
-
-            if (this._availableSoldierInstanceIdById.Count == 0)
-            {
-                this._availableSoldierInstanceIdById[1] = new List<int>() { 0 };
-                this.AddNameToSoldier(_allSoldiers[0].GetComponent<Soldier>()._soldierName, 1, 0);
-                this.SaveGame();
-            }
-
             this.Soldiers = new Dictionary<int, GameObject>();
 
             foreach (var soldier in _allSoldiers)
@@ -169,6 +162,19 @@ namespace BounceDudes
             foreach (var level in Levels)
             {
                 LevelsById[level.Id] = level;
+            }
+
+
+            this.LoadGame();
+
+            if (this._availableSoldierInstanceIdById.Count == 0)
+            {
+                for (int i = 0; i < FirstSoldiersToGive.Count; i++)
+                {
+                    this._availableSoldierInstanceIdById[FirstSoldiersToGive[i]] = new List<int>() { 0 };
+                    this.AddNameToSoldier(Soldiers[FirstSoldiersToGive[i]].GetComponent<Soldier>()._soldierName, FirstSoldiersToGive[i], 0);
+                }
+                this.SaveGame();
             }
 
             DOTween.Init(false, true, LogBehaviour.ErrorsOnly);

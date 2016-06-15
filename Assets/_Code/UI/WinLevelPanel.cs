@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
+using Assets._Code.Game;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -53,20 +54,26 @@ namespace BounceDudes
                     break;
             }
 
-            foreach (var soldierIds in levelInfo.ChallengesCompleted.Values)
+            foreach (var soldierIds in levelInfo.ChallengesCompleted)
             {
-                for (int i = 0; i < soldierIds.Length; i++)
+                if (GameManager.Instance.ChallengesComplete.Contains(soldierIds.Key.Id))
+                    continue;
+
+                for (int i = 0; i < soldierIds.Value.Length; i++)
                 {
                     var parent = (GameObject) Instantiate(this.NewSoldierPrefab);
-                    GameObject repre = (GameObject)Instantiate(GameManager.Instance.GetRepresentationOfSoldier(soldierIds[i]));
-                    repre.transform.SetParent(parent.transform);
-                    parent.transform.SetParent(this.ScrollParent.transform);
+                    parent.transform.SetParent(this.ScrollParent.transform, false);
+
+                    GameObject repre = (GameObject)Instantiate(GameManager.Instance.GetRepresentationOfSoldier(soldierIds.Value[i]));
+                    repre.transform.SetParent(parent.transform, false);
                 }
             }
         }
 
         public void Show()
         {
+            LevelManager.Instance.WinPanelShown = true;
+            LevelManager.Instance.PauseGame();
             LevelManager.Instance.FadeInCollider(null);
             this.transform.DOMove(LevelManager.Instance._shownPositionPanels.transform.position, .5f);
             this.gameObject.SetActive(true);
@@ -74,7 +81,9 @@ namespace BounceDudes
 
         public void Hide()
         {
+            LevelManager.Instance.UnpauseGame();
             LevelManager.Instance.FadeOutCollider(null);
+            LevelManager.Instance.WinPanelShown = false;
             this.transform.DOMove(LevelManager.Instance._hidenPositionPanels.transform.position, .5f);
             this.gameObject.SetActive(false);
         }

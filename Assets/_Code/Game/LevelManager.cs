@@ -34,7 +34,13 @@ namespace BounceDudes
         public GameObject _hidenPositionPanels = null;
 
         public int EnemiesKilled { get; set; }
-        
+
+        public bool _showPausePanel = false;
+
+        public bool WinPanelShown = false;
+        public bool LoosePanelShown = false;
+        public bool PausePanelShown = false;
+
         public void Awake()
         {
             LevelManager._instance = this;
@@ -90,13 +96,12 @@ namespace BounceDudes
             }
 
             info.ChallengesCompleted = soldiersEarned;
-
-            if (win)
-                GameManager.Instance.AddLevelInfo(GameManager.Instance.CurrentLevel.Id, info);
             
             if (win)
             {
+                this._winPanel.UpdateInfo(info);
                 this._winPanel.Show();
+                GameManager.Instance.AddLevelInfo(GameManager.Instance.CurrentLevel.Id, info);
             }
             else
             {
@@ -113,11 +118,13 @@ namespace BounceDudes
         {
             if (GameManager.Instance.State == GameState.PAUSED)
             {
-                this._pausePanel.Show();
+                if (!WinPanelShown && !LoosePanelShown)
+                    this._pausePanel.Show();
             }
             else
             {
-                this._pausePanel.Hide();
+                if (PausePanelShown)
+                    this._pausePanel.Hide();
             }
         }
 
@@ -149,7 +156,7 @@ namespace BounceDudes
             this._colliderPanel.SetActive(true);
             var image = this._colliderPanel.GetComponent<Image>();
             Color color = image.color;
-            color.a = 1;
+            color.a = .7f;
             image.DOBlendableColor(color, .5f).OnComplete(() =>
             {
                 if (callback != null)
@@ -159,16 +166,31 @@ namespace BounceDudes
 
         public void Quit()
         {
-            GameManager.Instance.LoadScene("MapMenu");
-            /*
             this.UnpauseGame();
+            if (WinPanelShown)
+                _winPanel.Hide();
+            else if (LoosePanelShown)
+                _loosePanel.Hide();
+            else if (PausePanelShown)
+                _pausePanel.Hide();
+            GameManager.Instance.LoadScene("MapMenu");
+            this.Dispose();
+            /*
             this.GameOver();
              */
         }
 
         public void PlayAgain()
         {
-            GameManager.Instance.LoadScene(GameManager.Instance.LastLevel.SceneName);
+            this.UnpauseGame();
+            if (WinPanelShown)
+                _winPanel.Hide();
+            else if (LoosePanelShown)
+                _loosePanel.Hide();
+            else if (PausePanelShown)
+                _pausePanel.Hide();
+            GameManager.Instance.LoadScene(GameManager.Instance.CurrentLevel.SceneName);
+            this.Dispose();
             //SceneManager.LoadScene(GameManager.Instance.LastLevel.SceneName);
         }
 

@@ -8,13 +8,14 @@ namespace BounceDudes
     public class Monster : Character
     {
 
-		protected Quaternion _fixedRotation;
+        protected Quaternion _fixedRotation;
+        public bool _dead = false;
 
         public override void Start()
         {
             base.Start();
 
-			this._fixedRotation = new Quaternion(0, 0, 0, 1.0f);
+            this._fixedRotation = new Quaternion(0, 0, 0, 1.0f);
             //this.transform.position = Vector3.zero;
 
             //this.CurrentSortingOrder = 1;
@@ -23,15 +24,17 @@ namespace BounceDudes
             _minSpeed /= 3;
         }
 
-		public override void LateUpdate(){
-			
-			base.LateUpdate ();
+        public override void LateUpdate()
+        {
 
-			if (this.transform.rotation != this._fixedRotation) {
-				this.transform.rotation = this._fixedRotation;
-			}
+            base.LateUpdate();
 
-		}
+            if (this.transform.rotation != this._fixedRotation)
+            {
+                this.transform.rotation = this._fixedRotation;
+            }
+
+        }
 
         public override void Shoot()
         {
@@ -56,16 +59,18 @@ namespace BounceDudes
             }
         }
 
-		public override void Die(){
+        public override void Die()
+        {
+            if (_dead)
+                return;
 
-			EffectManager.Instance.CreateDieEffect(this.transform);
-			EffectManager.Instance.CreateSmokeEffect(this.transform);
-			LevelManager.Instance.KillEnemy(this);
-			ComboManager.Instance.AddKill();
-			ComboManager.Instance.AddElementKill();
+            EffectManager.Instance.CreateDieEffect(this.transform);
+            EffectManager.Instance.CreateSmokeEffect(this.transform);
 
-			base.Die ();
-		}
+            _dead = true;
+
+            base.Die();
+        }
 
         public override void Recycle()
         {

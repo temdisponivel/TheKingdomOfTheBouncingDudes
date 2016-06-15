@@ -29,6 +29,8 @@ namespace BounceDudes
 
         public void Show()
         {
+            LevelManager.Instance.LoosePanelShown = true;
+            LevelManager.Instance.PauseGame();
             LevelManager.Instance.FadeInCollider(null);
             this.transform.DOMove(LevelManager.Instance._shownPositionPanels.transform.position, .5f);
             this.gameObject.SetActive(true);
@@ -36,7 +38,9 @@ namespace BounceDudes
 
         public void Hide()
         {
+            LevelManager.Instance.UnpauseGame();
             LevelManager.Instance.FadeOutCollider(null);
+            LevelManager.Instance.LoosePanelShown = false;
             this.transform.DOMove(LevelManager.Instance._hidenPositionPanels.transform.position, .5f);
             this.gameObject.SetActive(false);
         }

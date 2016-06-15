@@ -9,14 +9,14 @@ namespace BounceDudes
     /// </summary>
     public class Soldier : Character
     {
-		public string _soldierName = "Vicenzito";
+        public string _soldierName = "Vicenzito";
 
         protected int _ammunitionPosition = -1;
-        
+
         public int AmmunitionPosition { get { return this._ammunitionPosition; } set { this._ammunitionPosition = value; } }
 
         private bool _shooted = false;
-        
+
         public override void Start()
         {
             base.Start();
@@ -59,11 +59,12 @@ namespace BounceDudes
             {
                 EffectManager.Instance.CreateWallHitEffect(this.transform);
             }
-			else if (collTag == TagAndLayer.BOSS){
-				EffectManager.Instance.CreateDieEffect(this.transform);
-				collision.gameObject.GetComponent<BossBehaviour>().BossHP -= this.Damage;
-				this.HP -= 1;
-			}
+            else if (collTag == TagAndLayer.BOSS)
+            {
+                EffectManager.Instance.CreateDieEffect(this.transform);
+                collision.gameObject.GetComponent<BossBehaviour>().BossHP -= this.Damage;
+                this.HP -= 1;
+            }
         }
 
         public virtual void OnTriggerEnter2D(Collider2D collider)
@@ -79,13 +80,12 @@ namespace BounceDudes
 
                 EffectManager.Instance.CreateHitEffect(monster.transform);
 
+                ComboManager.Instance.AddHit();
                 if (monster.HP <= 0)
-				{
-					monster.Die ();
-                }
-                else
                 {
-                    ComboManager.Instance.AddHit();
+                    LevelManager.Instance.KillEnemy(this);
+                    ComboManager.Instance.AddKill();
+                    ComboManager.Instance.AddElementKill();
                 }
             }
         }
@@ -109,7 +109,6 @@ namespace BounceDudes
 
         public override void Recycle()
         {
-            Debug.Log("RECYCLE");
             this._shooted = false;
             this._transitioning = true;
             this.Start();
