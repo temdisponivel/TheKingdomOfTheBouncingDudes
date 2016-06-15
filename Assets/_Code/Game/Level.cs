@@ -15,7 +15,10 @@ namespace BounceDudes
         public Sprite LevelImage;
         public string SceneName;
         public string Name;
+
+		[TextArea(3, 10)]
         public string Description;
+
         public int[] StarByScore;
         public SoldierByChallengeDictionaryHack SoldiersByChallengeHackOne;
         public SoldierByChallengeDictionaryHack SoldiersByChallengeHackTwo;

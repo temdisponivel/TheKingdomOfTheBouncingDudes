@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using DG.Tweening;
 
 namespace BounceDudes
 {
@@ -58,6 +59,7 @@ namespace BounceDudes
                 this.Die();
             }
         }
+			
 
         public override void Die()
         {

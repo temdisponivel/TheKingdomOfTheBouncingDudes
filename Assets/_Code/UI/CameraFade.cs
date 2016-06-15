@@ -28,7 +28,7 @@ namespace BounceDudes
         {
             Color color = ImageToFade.color;
             color.a = 0;
-            ImageToFade.DOBlendableColor(color, .5f).OnComplete(() =>
+            ImageToFade.DOBlendableColor(color, 1.0f).OnComplete(() =>
             {
                 if (callback != null)
                     callback();
@@ -39,7 +39,7 @@ namespace BounceDudes
         {
             Color color = ImageToFade.color;
             color.a = 1;
-            ImageToFade.DOBlendableColor(color, .5f).OnComplete(() =>
+            ImageToFade.DOBlendableColor(color, 0.5f).OnComplete(() =>
             {
                 if (callback != null)
                     callback();

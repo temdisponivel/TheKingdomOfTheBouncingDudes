@@ -11,10 +11,10 @@ public class ComboManager : MonoBehaviour
     public Text TextCombo;
 
     [Header("Multipliers")]
-    public int _killComboMultiplier = 2;
-    public int _hitComboMultiplier = 2;
-    public int _elementkillComboMultiplier = 2;
-    public int _fontSizeMultiplierPerIncrement = 5;
+    public int _killComboMultiplier = 1;
+    public int _hitComboMultiplier = 1;
+    public int _elementkillComboMultiplier = 1;
+    public int _fontSizeMultiplierPerIncrement = 1;
 
     [Header("Cool down")]
     public float _comboTextCoolDown = 1f;
@@ -42,6 +42,7 @@ public class ComboManager : MonoBehaviour
     {
         ComboManager.Instance = this;
         _fontSizeBkp = this.TextCombo.fontSize;
+		this.TextCombo.text = string.Empty;
     }
 
     private void Update()
@@ -103,8 +104,8 @@ public class ComboManager : MonoBehaviour
         if (current > LastComboShown)
         {
             this.TextCombo.text = string.Format("{0} x", current);
-            var size = this.TextCombo.fontSize;
-            this.TextCombo.fontSize = (int)Mathf.Clamp(size + (Mathf.Abs(current - LastComboShown) * _fontSizeMultiplierPerIncrement), _fontSizeBkp, 30);
+           // var size = this.TextCombo.fontSize;
+            //this.TextCombo.fontSize = (int)Mathf.Clamp(size + (Mathf.Abs(current - LastComboShown) * _fontSizeMultiplierPerIncrement), _fontSizeBkp, 30);
             this.LastComboShown = current;
             this._lastComboShownTime = Time.time;
         }
