@@ -182,11 +182,14 @@ namespace BounceDudes
 
         public void CallReloadAnimation()
         {
-            if (AmmunitionClip.Instance.IsOutOfAmmo)
-                this._waitingForAmmo = true;
-
             if (this._waitingForAmmo)
                 return;
+
+            if (AmmunitionClip.Instance.IsOutOfAmmo)
+            {
+                this._waitingForAmmo = true;
+                this.UpdateSoldierNameUI();
+            }
 
             this._weaponAnimator.SetTrigger("Reloading"); // Calls PrepareAmmunition() in mid animation
         }

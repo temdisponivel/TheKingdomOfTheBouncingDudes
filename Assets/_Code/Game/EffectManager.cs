@@ -23,16 +23,7 @@ namespace BounceDudes
         // Use this for initialization
         void Awake()
         {
-            if (EffectManager.Instance == null)
-            {
-                EffectManager._instance = this;
-                GameObject.DontDestroyOnLoad(this.gameObject);
-            }
-            else
-            {
-                GameObject.Destroy(this.gameObject);
-                return;
-            }
+            EffectManager._instance = this;
         }
 
         public void AttachShinyEffect(Transform target)
