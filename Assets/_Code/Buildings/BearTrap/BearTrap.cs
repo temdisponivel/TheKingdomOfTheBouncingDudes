@@ -18,6 +18,8 @@ namespace BounceDudes
         protected GameObject _object = null;
         protected Animator _animator = null;
 
+        protected int _objOrder = 0;
+
         // Use this for initialization
         void Start()
         {
@@ -36,6 +38,10 @@ namespace BounceDudes
 
             EffectManager.Instance.CreateDieEffect(this.transform);
 
+            //_objOrder = collider.gameObject.GetComponent<SpriteRenderer>().sortingOrder;
+            //collider.gameObject.GetComponent<SpriteRenderer>().sortingOrder =
+            //    this.GetComponent<SpriteRenderer>().sortingOrder - 1;
+
             this._animator.SetTrigger("Close");
             this._animator.ResetTrigger("Open");
             this._object = collider.gameObject;
@@ -49,6 +55,7 @@ namespace BounceDudes
         {
             if (this._object == collider.gameObject)
             {
+                //collider.gameObject.GetComponent<SpriteRenderer>().sortingOrder = _objOrder;
                 this._object = null;
             }
         }

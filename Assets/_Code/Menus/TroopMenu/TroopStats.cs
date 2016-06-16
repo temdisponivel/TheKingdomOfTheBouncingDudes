@@ -80,7 +80,7 @@ namespace BounceDudes
 			AudioManager.Instance.PlayInterfaceSound (0);
 
             GameManager.Instance.SaveGame();
-            GameManager.Instance.LoadScene("TitleScreen");
+            GameManager.Instance.LoadScene("TitleScreen");  
             //SceneManager.LoadScene("TitleScreen");
         }
 			

@@ -18,5 +18,6 @@ namespace Assets.Code.Game
         public Dictionary<LevelId, LevelInformation> Levels;
         public Dictionary<int, List<string>> SoldierNames;
         public List<AchivmentId> UnleckedAchivments;
+        public DayTimeSequence CurrentDayTimeSequence;
     }
 }

@@ -126,6 +126,10 @@ namespace BounceDudes
 
         public List<string> LooseGameMessages = new List<string>();
 
+        public DayTimeSequence CurrentDayTimeSequence = DayTimeSequence.Morning;
+
+        public bool PassSplashScreen = false;
+
         public void Awake()
         {
             if (GameManager.Instance == null)
@@ -264,9 +268,9 @@ namespace BounceDudes
             {
                 var currencLevelInfo = this.LevelsInformation[id];
 
-                currencLevelInfo.Star = Mathf.Max(info.Star, currencLevelInfo.Star);
-                currencLevelInfo.EnemiesKilled = Mathf.Max(info.EnemiesKilled, currencLevelInfo.EnemiesKilled);
-                currencLevelInfo.ShootCount = Mathf.Max(info.ShootCount, currencLevelInfo.ShootCount);
+                info.Star = Mathf.Max(info.Star, currencLevelInfo.Star);
+                info.EnemiesKilled = Mathf.Max(info.EnemiesKilled, currencLevelInfo.EnemiesKilled);
+                info.ShootCount = Mathf.Max(info.ShootCount, currencLevelInfo.ShootCount);
 
                 var currentChallengs = currencLevelInfo.ChallengesCompleted.ToList();
                 var newChallengs = info.ChallengesCompleted.ToList();
@@ -348,6 +352,7 @@ namespace BounceDudes
             this._availableSoldierInstanceIdById = gameInfo.AvailableSoldierInstanceIdById;
             this.SoldierNames = gameInfo.SoldierNames;
             this.UnlockedAchivments = gameInfo.UnleckedAchivments;
+            this.CurrentDayTimeSequence = gameInfo.CurrentDayTimeSequence;
         }
 
         public GameInfomation UpdateToGameInfo()
@@ -358,6 +363,7 @@ namespace BounceDudes
                 AvailableSoldierInstanceIdById = this._availableSoldierInstanceIdById,
                 SoldierNames = this.SoldierNames,
                 UnleckedAchivments = UnlockedAchivments,
+                CurrentDayTimeSequence = CurrentDayTimeSequence,
             };
         }
 

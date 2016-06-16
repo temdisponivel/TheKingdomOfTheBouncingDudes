@@ -10,6 +10,7 @@ namespace BounceDudes
     {
         public float MaxSizeX = 0;
         public float CoolDownSpecial = 0;
+        public float SpecialDuration = 0;
 
         public bool IsInSpecial = false;
 
@@ -28,7 +29,7 @@ namespace BounceDudes
                 z = this.transform.localScale.z
             };
 
-            if (newScale.x <= MaxSizeX)
+            if (newScale.x <= MaxSizeX && newScale.x >= 0)
                 this.transform.localScale = newScale;
         }
     }
