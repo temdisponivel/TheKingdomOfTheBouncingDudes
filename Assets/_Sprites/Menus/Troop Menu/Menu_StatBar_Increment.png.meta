@@ -47,11 +47,16 @@ TextureImporter:
   spritePixelsToUnits: 22000
   alphaIsTransparency: 1
   textureType: 8
-  buildTargetSettings: []
+  buildTargetSettings:
+  - buildTarget: Android
+    maxTextureSize: 256
+    textureFormat: -1
+    compressionQuality: 50
+    allowsAlphaSplitting: 0
   spriteSheet:
     sprites: []
     outline: []
-  spritePackingTag: 
+  spritePackingTag: BounceDudesUI
   userData: 
   assetBundleName: 
   assetBundleVariant: 
