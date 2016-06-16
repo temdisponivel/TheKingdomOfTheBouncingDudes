@@ -9,6 +9,7 @@ using System.Text;
 using Assets.Code.Game;
 using Assets._Code.Game;
 using DG.Tweening;
+using DigitalRuby.SoundManagerNamespace;
 using UnityEngine.SceneManagement;
 
 namespace BounceDudes
@@ -128,6 +129,7 @@ namespace BounceDudes
 
         public DayTimeSequence CurrentDayTimeSequence = DayTimeSequence.Morning;
 
+        [NonSerialized]
         public bool PassSplashScreen = false;
 
         public void Awake()

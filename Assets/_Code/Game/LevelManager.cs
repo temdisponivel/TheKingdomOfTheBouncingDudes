@@ -203,5 +203,17 @@ namespace BounceDudes
         {
             GameManager.Instance.OnStateChange -= this.StateChangeCallback;
         }
+
+        void OnApplicationFocus(bool focusStatus)
+        {
+            if (focusStatus)
+                this.PauseGame();
+        }
+
+        void OnApplicationPause(bool pauseStatus)
+        {
+            if (pauseStatus)
+                this.PauseGame();
+        }
     }
 }

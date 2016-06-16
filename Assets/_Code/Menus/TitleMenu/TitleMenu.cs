@@ -41,7 +41,7 @@ namespace BounceDudes
 			AudioManager.Instance.PlayMusic (0);
 
             if (GameManager.Instance.PassSplashScreen)
-                this.ChangeStateToMainMenu();
+                this._animator.SetTrigger("GoSplashToMain");
         }
 
 
