@@ -267,9 +267,9 @@ namespace BounceDudes
             {
                 var currencLevelInfo = this.LevelsInformation[id];
 
-                currencLevelInfo.Star = Mathf.Max(info.Star, currencLevelInfo.Star);
-                currencLevelInfo.EnemiesKilled = Mathf.Max(info.EnemiesKilled, currencLevelInfo.EnemiesKilled);
-                currencLevelInfo.ShootCount = Mathf.Max(info.ShootCount, currencLevelInfo.ShootCount);
+                info.Star = Mathf.Max(info.Star, currencLevelInfo.Star);
+                info.EnemiesKilled = Mathf.Max(info.EnemiesKilled, currencLevelInfo.EnemiesKilled);
+                info.ShootCount = Mathf.Max(info.ShootCount, currencLevelInfo.ShootCount);
 
                 var currentChallengs = currencLevelInfo.ChallengesCompleted.ToList();
                 var newChallengs = info.ChallengesCompleted.ToList();
