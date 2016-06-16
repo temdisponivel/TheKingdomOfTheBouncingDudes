@@ -44,11 +44,11 @@ namespace BounceDudes
             this.CurrentSoldier = soldier;
             this.NameText.text = this.CurrentSoldier._soldierName;
             var delta = this.SizeImage.GetComponent<RectTransform>().sizeDelta;
-            this.SizeImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = this.CurrentSoldier._size + .15f, y = delta.y };
+            this.SizeImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = this.CurrentSoldier._size * 67.0f, y = delta.y };
             delta = this.SpeedImage.GetComponent<RectTransform>().sizeDelta;
-            this.SpeedImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = this.CurrentSoldier._statSpeed + .15f, y = delta.y };
+            this.SpeedImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = this.CurrentSoldier._statSpeed * 67.0f, y = delta.y };
             delta = this.ArmorImage.GetComponent<RectTransform>().sizeDelta;
-            this.ArmorImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = this.CurrentSoldier._hp + .15f, y = delta.y };
+            this.ArmorImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = this.CurrentSoldier._hp * 67.0f, y = delta.y };
         }
 
         public void OnClickTextName()
