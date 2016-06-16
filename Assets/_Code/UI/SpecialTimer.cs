@@ -17,53 +17,20 @@ namespace BounceDudes
         public void Start()
         {
             this.MaxSizeX = this.transform.localScale.x;
-            this.CoolDownSpecial = Weapon.Instance._coolDownBetweenSpecials;
-            this.SpecialDuration = Weapon.Instance._specialDuration;
+            this.CoolDownSpecial = Weapon.Instance._coolDownBetweenSpecials + Weapon.Instance._specialDuration;
         }
 
         public void LateUpdate()
         {
-            bool up = true;
-            if (IsInSpecial)
+            var newScale = new Vector3()
             {
-                IsInSpecial = Weapon.Instance._special;
+                x = MaxSizeX * ((Time.time - Weapon.Instance._specialStartTime) / CoolDownSpecial),
+                y = this.transform.localScale.y,
+                z = this.transform.localScale.z
+            };
 
-                if (!IsInSpecial)
-                {
-                    up = true;
-                }
-                else
-                {
-                    up = false;
-                }
-            }
-            
-            if (up)
-            {
-                var newScale = new Vector3()
-                {
-                    x = MaxSizeX * ((Time.time - Weapon.Instance._specialStartTime) / CoolDownSpecial),
-                    y = this.transform.localScale.y,
-                    z = this.transform.localScale.z
-                };
-
-                if (newScale.x <= MaxSizeX && newScale.x >= 0)
-                    this.transform.localScale = newScale;
-            }
-            else
-            {
-                Debug.Log("FALLLLSEEEEE");
-                Debug.Log(MaxSizeX - (MaxSizeX * ((Time.time - Weapon.Instance._specialStartTime) / SpecialDuration)));
-                var newScale = new Vector3()
-                {
-                    x = MaxSizeX - (MaxSizeX * ((Time.time - Weapon.Instance._specialStartTime) / SpecialDuration)),
-                    y = this.transform.localScale.y,
-                    z = this.transform.localScale.z
-                };
-
-                if (newScale.x <= MaxSizeX && newScale.x >= 0)
-                    this.transform.localScale = newScale;
-            }
+            if (newScale.x <= MaxSizeX && newScale.x >= 0)
+                this.transform.localScale = newScale;
         }
     }
 }

@@ -15,6 +15,7 @@ namespace BounceDudes
 		public GameObject _spawner;
         public List<Wave> _waves = null;
         public float _startDelay = 1f;
+        public Character _last;
         
         public void Start()
         {
@@ -41,8 +42,11 @@ namespace BounceDudes
                     var character = monster.GetComponent<Character>();
                     character.Shoot();
 
-                    if (i == this._waves.Count -1 && j == currentSpaws.Count - 1)
-                        character.OnDie += this.OnLastDie;
+                    if (i == this._waves.Count - 1 && j == currentSpaws.Count - 1)
+                    {
+                        _last = character;
+                        _last.OnDie += this.OnLastDie;
+                    }
 
                     yield return new WaitForSeconds(currentSpawn._timeToNextSpawn);
                 }
@@ -64,6 +68,7 @@ namespace BounceDudes
 
         public void OnLastDie(Character last)
         {
+            _last.OnDie -= this.OnLastDie;
             LevelManager.Instance.FinishLevel();
         }
     }

@@ -57,6 +57,7 @@ namespace BounceDudes
         {
 			this._shade.transform.DOScale(0, 0.2f);
 			this.transform.DORotate (new Vector3 (0, 0, -90), 0.4f, RotateMode.Fast).OnComplete (this.toggleShadeComplete);
+            MapMenu.Instance._lastNode = null;
             //this.transform.DOMove(this._hidenPosition.transform.position, 0.5f);
         }
 

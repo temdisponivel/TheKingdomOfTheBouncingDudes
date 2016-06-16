@@ -38,6 +38,9 @@ namespace BounceDudes
         public void Start()
         {
             this._animator = this.GetComponent<Animator>();
+
+            if (GameManager.Instance.PassSplashScreen)
+                this._animator.SetTrigger("GoSplashToMain");
         }
 
 
@@ -58,7 +61,7 @@ namespace BounceDudes
         {
             _currentState = ON_MAIN_MENU;
             _mainMenuAnimator.ResetTrigger("CallIntro");
-
+            GameManager.Instance.PassSplashScreen = true;
         }
 
         public void ChangeStateToSplashScreen()

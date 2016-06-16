@@ -15,7 +15,14 @@ namespace BounceDudes
     public class MapMenu : MonoBehaviour
     {
         public DiaryController _diary;
-        private LevelNode _lastNode;
+        public LevelNode _lastNode;
+
+        public static MapMenu Instance = null;
+
+        public void Awake()
+        {
+            Instance = this;
+        }
 
         public void Start()
         {

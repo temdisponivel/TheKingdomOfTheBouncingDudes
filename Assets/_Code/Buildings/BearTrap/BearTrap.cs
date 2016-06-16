@@ -38,9 +38,9 @@ namespace BounceDudes
 
             EffectManager.Instance.CreateDieEffect(this.transform);
 
-            _objOrder = collider.gameObject.GetComponent<SpriteRenderer>().sortingOrder;
-            collider.gameObject.GetComponent<SpriteRenderer>().sortingOrder =
-                this.GetComponent<SpriteRenderer>().sortingOrder - 1;
+            //_objOrder = collider.gameObject.GetComponent<SpriteRenderer>().sortingOrder;
+            //collider.gameObject.GetComponent<SpriteRenderer>().sortingOrder =
+            //    this.GetComponent<SpriteRenderer>().sortingOrder - 1;
 
             this._animator.SetTrigger("Close");
             this._animator.ResetTrigger("Open");
@@ -55,7 +55,7 @@ namespace BounceDudes
         {
             if (this._object == collider.gameObject)
             {
-                collider.gameObject.GetComponent<SpriteRenderer>().sortingOrder = _objOrder;
+                //collider.gameObject.GetComponent<SpriteRenderer>().sortingOrder = _objOrder;
                 this._object = null;
             }
         }
