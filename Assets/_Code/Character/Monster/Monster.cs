@@ -8,6 +8,8 @@ namespace BounceDudes
     /// </summary>
     public class Monster : Character
     {
+		public int _monsterType;
+		protected int _soundMinValue, _soundMaxValue;
 
         protected Quaternion _fixedRotation;
         public bool _dead = false;
@@ -39,6 +41,7 @@ namespace BounceDudes
 
         public override void Shoot()
         {
+			this.PlaySpawnSound ();
             this.RigidBody.AddForce(this.transform.up * this._maxSpeed * 0.8f, ForceMode2D.Impulse);
         }
 
@@ -46,6 +49,7 @@ namespace BounceDudes
         {
             if (collision.gameObject.tag == TagAndLayer.BASE)
             {
+				this.PlayHitSound ();
                 collision.gameObject.GetComponent<Base>().HP -= this.Damage;
                 this.Die();
             }
@@ -55,6 +59,7 @@ namespace BounceDudes
         {
             if (collider.gameObject.tag == TagAndLayer.BASE)
             {
+				this.PlayHitSound ();
                 collider.gameObject.GetComponent<Base>().HP -= this.Damage;
                 this.Die();
             }
@@ -78,5 +83,59 @@ namespace BounceDudes
         {
             this.Start();
         }
+
+		public void PlaySpawnSound(){
+			
+			this.SetSpawnSoundValues ();
+			int random = (int)Random.Range (_soundMinValue, _soundMaxValue);
+			AudioManager.Instance.PlaySound (1, random);
+
+		}
+
+		public void PlayHitSound(){
+
+			this.SetHitSoundValues ();
+			int random = (int)Random.Range (_soundMinValue, _soundMaxValue);
+			AudioManager.Instance.PlaySound (1, random);
+
+		}
+
+		protected void SetSpawnSoundValues(){
+			switch (_monsterType) {
+			case 0:
+				_soundMinValue = 0;
+				_soundMaxValue = 2;
+				break;
+			case 1:
+				_soundMinValue = 6;
+				_soundMaxValue = 6;
+				break;
+			case 2:
+				_soundMinValue = 8;
+				_soundMaxValue = 9;
+				break;
+			default:
+				break;
+			}
+		}
+
+		protected void SetHitSoundValues(){
+			switch (_monsterType) {
+			case 0:
+				_soundMinValue = 3;
+				_soundMaxValue = 5;
+				break;
+			case 1:
+				_soundMinValue = 7;
+				_soundMaxValue = 7;
+				break;
+			case 2:
+				_soundMinValue = 10;
+				_soundMaxValue = 11;
+				break;
+			default:
+				break;
+			}
+		}
     }
 }

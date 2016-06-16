@@ -38,6 +38,7 @@ namespace BounceDudes
         public void Start()
         {
             this._animator = this.GetComponent<Animator>();
+			AudioManager.Instance.PlayMusic (0);
         }
 
 
@@ -48,6 +49,8 @@ namespace BounceDudes
                 if (this._currentState == ON_SPLASH_SCREEN)
                 {
                     this._animator.SetTrigger("GoSplashToMain");
+					this.PlayInterfaceSound (7);
+					AudioManager.Instance.PlayMusic (1);
                 }
 
             }
@@ -112,15 +115,20 @@ namespace BounceDudes
             this.ConfigPanel.transform.DOMove(this.ConfigHiddenPosition.transform.position, 0.5f);
         }
 
-        public void Music(bool mute)
-        {
-            GameManager.Instance.MusicVolume = !mute ? 0 : 1;
-        }
+		public void ToggleMusic(){
+			AudioManager.Instance.ToggleMusicVolume();
+		}
 
-        public void Sound(bool mute)
-        {
-            GameManager.Instance.SoundVolume = !mute ? 0 : 1;
-        }
+		public void ToggleSound(){
+			AudioManager.Instance.ToggleSoundVolume();
+		}
+
+		public void PlayInterfaceSound(int index){
+			AudioManager.Instance.PlayInterfaceSound (index);
+		}
+
+
+
     }
 
 }

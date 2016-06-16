@@ -122,9 +122,6 @@ namespace BounceDudes
 
         public List<Achivment> Achivments = new List<Achivment>();
 
-        public int MusicVolume = 1;
-        public int SoundVolume = 1;
-
         public int MaxSoldierInLevel = 6;
 
         public List<string> LooseGameMessages = new List<string>();
@@ -384,15 +381,6 @@ namespace BounceDudes
             }
         }
 
-        public void MuteSound()
-        {
-            this.SoundVolume = 0;
-        }
-
-        public void MuteMusic()
-        {
-            this.MusicVolume = 0;
-        }
 
         public void LoadScene(string sceneName)
         {

@@ -231,6 +231,7 @@ namespace BounceDudes
         /// </summary>
         public void Shoot()
         {
+			AudioManager.Instance.PlayInterfaceSound (4);
             AmmunitionClip.Instance.ShootNextAmmunition();
             this._lastTimeShoot = Time.time;
             this.ShootCount++;
@@ -249,6 +250,7 @@ namespace BounceDudes
 
         public IEnumerator ShootSpecialObject(GameObject shootObject)
         {
+			AudioManager.Instance.PlayInterfaceSound (4);
             GameObject shoot = (GameObject)GameObject.Instantiate(shootObject, this._specialShootPoint.transform.position, this.transform.rotation);
             Soldier shootSoldier = shoot.GetComponent<Soldier>();
             shootSoldier._shouldRecycle = false;

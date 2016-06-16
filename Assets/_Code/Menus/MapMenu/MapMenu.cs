@@ -19,6 +19,7 @@ namespace BounceDudes
 
         public void Start()
         {
+
             LevelNode[] nodes = this.GetComponentsInChildren<LevelNode>();
             LevelInformation[] levelsUnlocked = GameManager.Instance.LevelsInformation.Values.ToArray();
 
@@ -52,17 +53,20 @@ namespace BounceDudes
             _lastNode = node;
             _diary.UpdateInfo(node.LevelId);
             _diary.Show();
+
+			AudioManager.Instance.PlayInterfaceSound (3);
         }
 
         public void HideDiary()
         {
             _diary.Hide();
+			AudioManager.Instance.PlayInterfaceSound (4);
         }
 
         public void PlayNode()
         {
+			AudioManager.Instance.PlayInterfaceSound (2);
             GameManager.Instance.CurrentLevel = GameManager.Instance.LevelsById[_lastNode.LevelId];
-            
             GameManager.Instance.LoadScene("FormationMenu");
             //SceneManager.LoadScene("FormationMenu");
             //SceneManager.LoadScene(GameManager.Instance.LevelsById[_lastNode.LevelId].SceneName);

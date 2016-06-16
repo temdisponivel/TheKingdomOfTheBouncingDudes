@@ -81,19 +81,22 @@ namespace BounceDudes
 			}
 
 			// SOUND: Stop Music and Play BOB Voice!
+			AudioManager.Instance.StopCurrentAudio();
+			AudioManager.Instance.PlaySound (3, 1);
 			this._bossBody.transform.DOMove (this._basePosition.transform.position, 0.5f).OnComplete(this.GameOverComplete);
 
 		}
 
 		protected void GameOverComplete(){
 			this._blackOut.enabled = true;
-
+			AudioManager.Instance.PlaySound (1, 12);
 			LevelManager.Instance.GameOver ();
 		}
 
 		protected void GetHit(){
 			
 			this._hitCount++;
+
 
 			this._bossFaceSprite.sprite = this._faceHit; // TODO: WaitForXSeconds then call "SetToCurrentState()" (1~1.5 seconds max)
 
@@ -126,6 +129,7 @@ namespace BounceDudes
 				this._bossFaceSprite.sprite = this._faceNormal;
 			}
 			else if (_hp <= _secondHpThreshold && _hp > _thirdHpThreshold){
+				AudioManager.Instance.PlaySound (1, 12);
 				this._bossFaceSprite.sprite = this._faceAngry;
 				this._bossAnimator.SetBool ("Angry", true);
 				this._bossArmAngry.GetComponent<SpriteRenderer> ().enabled = true;

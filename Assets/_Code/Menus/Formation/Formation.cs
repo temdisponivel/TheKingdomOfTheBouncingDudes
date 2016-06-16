@@ -91,6 +91,7 @@ namespace BounceDudes
 
         public void Battle()
         {
+			AudioManager.Instance.PlayInterfaceSound (2);
             GameManager.Instance.NextLevelSoldiersDefinition.Clear();
 
             for (int i = 0; i < this.Soldiers.Count; i++)
@@ -98,7 +99,10 @@ namespace BounceDudes
                 GameManager.Instance.NextLevelSoldiersDefinition.Add(new KeyValuePair<int, string>(Soldiers[i]._id, Soldiers[i]._soldierName));
             }
 
-            GameManager.Instance.LoadScene(GameManager.Instance.CurrentLevel.SceneName);
+			string sceneName = GameManager.Instance.CurrentLevel.SceneName;
+
+			AudioManager.Instance.PlayMusic(sceneName == "LevelBOSS" ? 3 : 2);
+            GameManager.Instance.LoadScene(sceneName);
         }
 
         public void ShowName(string name)
