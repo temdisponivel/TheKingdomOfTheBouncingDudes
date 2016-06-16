@@ -47,6 +47,7 @@ namespace BounceDudes
 
         public void OnClick()
         {
+			AudioManager.Instance.PlayInterfaceSound (0);
             _selected = !_selected;
 
             if (_selected)

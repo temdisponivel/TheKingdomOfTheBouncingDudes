@@ -51,12 +51,14 @@ namespace BounceDudes
 
             if (collTag == TagAndLayer.ENEMY_BASE)
             {
+				AudioManager.Instance.PlayInterfaceSound (6);
                 EffectManager.Instance.CreateDieEffect(this.transform);
                 collision.gameObject.GetComponent<Base>().HP -= this.Damage;
                 this.HP -= 1;
             }
             else if (collTag == TagAndLayer.WALL || collTag == TagAndLayer.BASE)
             {
+				AudioManager.Instance.PlayInterfaceSound (5);
                 EffectManager.Instance.CreateWallHitEffect(this.transform);
             }
             else if (collTag == TagAndLayer.BOSS)
@@ -74,9 +76,11 @@ namespace BounceDudes
                 if (this._onBarrel || _transitioning)
                     return;
 
-                Character monster = collider.gameObject.GetComponent<Character>();
+                Monster monster = collider.gameObject.GetComponent<Monster>();
                 this.HP -= 1;
                 monster.HP -= 1;
+
+				monster.PlayHitSound ();
 
                 EffectManager.Instance.CreateHitEffect(monster.transform);
 

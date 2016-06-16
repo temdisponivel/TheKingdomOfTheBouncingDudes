@@ -47,7 +47,7 @@ namespace BounceDudes
             this._baseHpBakp = this._playerBase.HP;
             GameManager.Instance.OnStateChange += this.StateChangeCallback;
         }
-
+			
         public void GameOver()
         {
             this.EndLevel(false);
@@ -99,12 +99,14 @@ namespace BounceDudes
             
             if (win)
             {
+				AudioManager.Instance.PlaySound(2, 0);
                 this._winPanel.UpdateInfo(info);
                 this._winPanel.Show();
                 GameManager.Instance.AddLevelInfo(GameManager.Instance.CurrentLevel.Id, info);
             }
             else
             {
+				AudioManager.Instance.PlaySound(2, 1);
                 this._loosePanel.Show();
             }
         }
@@ -173,7 +175,9 @@ namespace BounceDudes
                 _loosePanel.Hide();
             else if (PausePanelShown)
                 _pausePanel.Hide();
+
             GameManager.Instance.LoadScene("MapMenu");
+			AudioManager.Instance.PlayMusic (1);
             this.Dispose();
             /*
             this.GameOver();
@@ -190,6 +194,7 @@ namespace BounceDudes
             else if (PausePanelShown)
                 _pausePanel.Hide();
             GameManager.Instance.LoadScene(GameManager.Instance.CurrentLevel.SceneName);
+			AudioManager.Instance.PlayMusic (2);
             this.Dispose();
             //SceneManager.LoadScene(GameManager.Instance.LastLevel.SceneName);
         }

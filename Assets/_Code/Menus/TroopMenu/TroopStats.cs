@@ -30,7 +30,9 @@ namespace BounceDudes
 
             HorizontalScrollSnap.Instance.OnChangeSoldier += (soldier =>
             {
+				AudioManager.Instance.PlayInterfaceSound (0);
                 this.UpdateInfo(soldier);
+				
             });
 
             yield return new WaitForEndOfFrame();
@@ -41,6 +43,7 @@ namespace BounceDudes
 
         public void UpdateInfo(Soldier soldier)
         {
+			
             this.CurrentSoldier = soldier;
             this.NameText.text = this.CurrentSoldier._soldierName;
             var delta = this.SizeImage.GetComponent<RectTransform>().sizeDelta;
@@ -53,6 +56,8 @@ namespace BounceDudes
 
         public void OnClickTextName()
         {
+			AudioManager.Instance.PlayInterfaceSound (0);
+
             this.NameText.gameObject.SetActive(false);
             this.InputNameText.gameObject.SetActive(true);
             this.InputNameText.text = this.CurrentSoldier._soldierName;
@@ -61,6 +66,8 @@ namespace BounceDudes
 
         public void OnEndEditName()
         {
+			AudioManager.Instance.PlayInterfaceSound (0);
+
             this.NameText.gameObject.SetActive(true);
             this.InputNameText.gameObject.SetActive(false);
             this.NameText.text = this.InputNameText.text;
@@ -70,9 +77,12 @@ namespace BounceDudes
 
         public void Return()
         {
+			AudioManager.Instance.PlayInterfaceSound (0);
+
             GameManager.Instance.SaveGame();
             GameManager.Instance.LoadScene("TitleScreen");  
             //SceneManager.LoadScene("TitleScreen");
         }
+			
     }
 }
