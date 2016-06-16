@@ -71,6 +71,8 @@ namespace BounceDudes
 
         public LineRenderer LineRenderer = null;
 
+        public Text ShootCountText;
+
         public void Awake()
         {
             Weapon.Instance = this;
@@ -81,7 +83,7 @@ namespace BounceDudes
         {
             AmmunitionClip.Instance.AmmoCountChanged += this.NewAmmo;
             this._projectilesSpecial = GameManager.Instance._specialProjectiles;
-
+            this.ShootCountText.text = string.Empty;
             this.CallReloadAnimation();
         }
 
@@ -234,6 +236,7 @@ namespace BounceDudes
             AmmunitionClip.Instance.ShootNextAmmunition();
             this._lastTimeShoot = Time.time;
             this.ShootCount++;
+            this.ShootCountText.text = this.ShootCount.ToString();
         }
 
         /// <summary>

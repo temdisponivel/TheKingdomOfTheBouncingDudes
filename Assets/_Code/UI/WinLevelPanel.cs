@@ -56,16 +56,18 @@ namespace BounceDudes
 
             foreach (var soldierIds in levelInfo.ChallengesCompleted)
             {
+                bool check = false;
                 if (GameManager.Instance.ChallengesComplete.Contains(soldierIds.Key.Id))
-                    continue;
+                    check = true;
 
                 for (int i = 0; i < soldierIds.Value.Length; i++)
                 {
                     var parent = (GameObject) Instantiate(this.NewSoldierPrefab);
                     parent.transform.SetParent(this.ScrollParent.transform, false);
-
+                    parent.GetComponentInChildren<Image>().enabled = check;
                     GameObject repre = (GameObject)Instantiate(GameManager.Instance.GetRepresentationOfSoldier(soldierIds.Value[i]));
                     repre.transform.SetParent(parent.transform, false);
+                    repre.transform.SetAsFirstSibling();
                 }
             }
         }

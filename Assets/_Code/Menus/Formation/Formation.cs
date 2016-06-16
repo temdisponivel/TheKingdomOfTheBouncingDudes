@@ -24,6 +24,7 @@ namespace BounceDudes
 
         public bool HasSpace { get { return FreeIndexes.Count != 0; } }
 
+        public Text TextNameLevel;
         public Text TextNameSoldier;
 
         public void Awake()
@@ -46,7 +47,7 @@ namespace BounceDudes
             grid.GetComponent<RectTransform>().sizeDelta = new Vector2()
             {
                 x = size.x,
-                y = ((grid.cellSize.y + grid.spacing.y) * soldiers.Count / grid.constraintCount) + .5f,
+                y = ((grid.cellSize.y + grid.spacing.y) * Mathf.CeilToInt(soldiers.Count / grid.constraintCount + 1)) + .5f,
             };
 
             for (int i = 0; i < soldiers.Count; i++)
@@ -57,6 +58,7 @@ namespace BounceDudes
             }
 
             this.BattleButton.enabled = false;
+            this.TextNameLevel.text = GameManager.Instance.CurrentLevel.Name;
         }
 
         public void AddToFormation(Soldier soldier, GameObject representation)
@@ -109,6 +111,11 @@ namespace BounceDudes
         public void ShowNameIndex(int index)
         {
             this.ShowName(this.Buckets[index].GetComponentInChildren<Soldier>()._soldierName);
+        }
+
+        public void Return()
+        {
+            GameManager.Instance.LoadScene("TitleScreen");
         }
     }
 }

@@ -67,6 +67,11 @@ namespace BounceDudes
             //SceneManager.LoadScene("FormationMenu");
             //SceneManager.LoadScene(GameManager.Instance.LevelsById[_lastNode.LevelId].SceneName);
         }
+
+        public void Return()
+        {
+            GameManager.Instance.LoadScene("TitleScreen");
+        }
     }
 
 }
