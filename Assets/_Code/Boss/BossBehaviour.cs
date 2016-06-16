@@ -2,11 +2,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using BounceDudes;
 using DG.Tweening;
 
 namespace BounceDudes
 {
+
     /// <summary>
     /// Class that holds the behaviour of the boss of the game.s
     /// </summary>
@@ -44,10 +44,10 @@ namespace BounceDudes
         public SpawnOption[] _bossWave;
         protected int _nextSpawnIndex = 0;
 
-        public bool CanGetHit = true;
-
 
         public int BossHP { get { return _hp; } set { _hp = value; this.GetHit(); } }
+
+        public bool CanTakeHit = true;
 
         // Use this for initialization
         void Start()
@@ -92,8 +92,8 @@ namespace BounceDudes
             }
 
             // SOUND: Stop Music and Play BOB Voice!
-            AudioManager.Instance.StopCurrentAudio();
-            AudioManager.Instance.PlaySound(3, 1);
+			AudioManager.Instance.StopCurrentAudio();
+			AudioManager.Instance.PlaySound (3, 1);
             this._bossBody.transform.DOMove(this._basePosition.transform.position, 0.5f).OnComplete(this.GameOverComplete);
 
         }
@@ -101,26 +101,28 @@ namespace BounceDudes
         protected void GameOverComplete()
         {
             this._blackOut.enabled = true;
-            AudioManager.Instance.PlaySound(1, 12);
+			AudioManager.Instance.PlaySound (3, 0);
+
             LevelManager.Instance.GameOver();
         }
 
         protected void GetHit()
         {
-            if (!CanGetHit)
+            if (!CanTakeHit)
                 return;
 
             this._hitCount++;
 
+			AudioManager.Instance.PlaySound (1, 13);
 
-            this._bossFaceSprite.sprite = this._faceHit;
-            CanGetHit = false;
-            this.StartCoroutine(this.WaitAndCall(1.5f, () =>
+            this._bossFaceSprite.sprite = this._faceHit; // TODO: WaitForXSeconds then call "SetToCurrentState()" (1~1.5 seconds max)
+            
+            CanTakeHit = true;
+            this.StartCoroutine(this.WaitForAndCall(1.5f, () =>
             {
-                CanGetHit = true;
-                this.SetToCurrentState();
+                CanTakeHit = true;
+                SetToCurrentState();
             }));
-
 
             if (this._hitCount >= this._hitSpawnThreshold)
             {
@@ -131,6 +133,7 @@ namespace BounceDudes
 
         protected void SpawnNextMonster()
         {
+
             // If wave is over, repeat!
             if (this._nextSpawnIndex >= this._bossWave.Length)
                 this._nextSpawnIndex = 0;
@@ -155,7 +158,7 @@ namespace BounceDudes
             }
             else if (_hp <= _secondHpThreshold && _hp > _thirdHpThreshold)
             {
-                AudioManager.Instance.PlaySound(1, 12);
+				AudioManager.Instance.PlaySound (1, 12);
                 this._bossFaceSprite.sprite = this._faceAngry;
                 this._bossAnimator.SetBool("Angry", true);
                 this._bossArmAngry.GetComponent<SpriteRenderer>().enabled = true;
@@ -170,7 +173,7 @@ namespace BounceDudes
             }
         }
 
-        public IEnumerator WaitAndCall(float seconds, Action callback)
+        public IEnumerator WaitForAndCall(float seconds, Action callback)
         {
             yield return new WaitForSeconds(seconds);
             if (callback != null)
@@ -178,4 +181,5 @@ namespace BounceDudes
         }
 
     }
+
 }

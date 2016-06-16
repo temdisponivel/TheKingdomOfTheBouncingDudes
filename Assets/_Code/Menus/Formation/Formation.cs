@@ -119,7 +119,7 @@ namespace BounceDudes
 
         public void Return()
         {
-            GameManager.Instance.LoadScene("TitleScreen");
+            GameManager.Instance.LoadScene("MapMenu");
         }
     }
 }
