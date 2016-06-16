@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Assets._Code.Game;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -103,7 +104,8 @@ namespace BounceDudes
 
 			string sceneName = GameManager.Instance.CurrentLevel.SceneName;
 
-			AudioManager.Instance.PlayMusic(sceneName == "LevelBOSS" ? 3 : 2);
+            if (GameManager.Instance.CurrentLevel.Id != LevelId.FIFTEEN)
+                AudioManager.Instance.PlayMusic(2);
             GameManager.Instance.LoadScene(sceneName);
         }
 

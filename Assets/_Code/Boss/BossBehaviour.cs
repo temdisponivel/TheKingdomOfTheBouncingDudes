@@ -45,7 +45,20 @@ namespace BounceDudes
         protected int _nextSpawnIndex = 0;
 
 
-        public int BossHP { get { return _hp; } set { _hp = value; this.GetHit(); } }
+        public int BossHP
+        {
+            get { return _hp; }
+            set
+            {
+                _hp = value;
+                if (_hp <= 0)
+                {
+                    LevelManager.Instance.FinishLevel();
+                }
+                else
+                    this.GetHit();
+            }
+        }
 
         public bool CanTakeHit = true;
 
@@ -56,11 +69,12 @@ namespace BounceDudes
             this._bossFaceSprite = this._bossFace.GetComponent<SpriteRenderer>();
 
             this._firstHpThreshold = (int)(this._hp * 0.7f);
-            this._secondHpThreshold = (int)(this._hp * 0.4f);
+            this._secondHpThreshold = (int)(this._hp * 0.5f);
             this._thirdHpThreshold = (int)(this._hp * 0.1f);
 
             this.MoveToDestination();
 
+            AudioManager.Instance.PlayMusic(3);
         }
 
         // Update is called once per frame
@@ -71,7 +85,6 @@ namespace BounceDudes
 
         protected void MoveToDestination()
         {
-
             foreach (var anim in this._ratArmyAnimators)
             {
                 anim.SetBool("Walking", true);
@@ -92,8 +105,8 @@ namespace BounceDudes
             }
 
             // SOUND: Stop Music and Play BOB Voice!
-			AudioManager.Instance.StopCurrentAudio();
-			AudioManager.Instance.PlaySound (3, 1);
+            AudioManager.Instance.StopCurrentAudio();
+            AudioManager.Instance.PlaySound(3, 1);
             this._bossBody.transform.DOMove(this._basePosition.transform.position, 0.5f).OnComplete(this.GameOverComplete);
 
         }
@@ -101,7 +114,7 @@ namespace BounceDudes
         protected void GameOverComplete()
         {
             this._blackOut.enabled = true;
-			AudioManager.Instance.PlaySound (3, 0);
+            AudioManager.Instance.PlaySound(3, 0);
 
             LevelManager.Instance.GameOver();
         }
@@ -113,12 +126,12 @@ namespace BounceDudes
 
             this._hitCount++;
 
-			AudioManager.Instance.PlaySound (1, 13);
+            AudioManager.Instance.PlaySound(1, 13);
 
             this._bossFaceSprite.sprite = this._faceHit; // TODO: WaitForXSeconds then call "SetToCurrentState()" (1~1.5 seconds max)
-            
+
             CanTakeHit = true;
-            this.StartCoroutine(this.WaitForAndCall(1.5f, () =>
+            this.StartCoroutine(this.WaitForAndCall(.7f, () =>
             {
                 CanTakeHit = true;
                 SetToCurrentState();
@@ -158,7 +171,7 @@ namespace BounceDudes
             }
             else if (_hp <= _secondHpThreshold && _hp > _thirdHpThreshold)
             {
-				AudioManager.Instance.PlaySound (1, 12);
+                AudioManager.Instance.PlaySound(1, 12);
                 this._bossFaceSprite.sprite = this._faceAngry;
                 this._bossAnimator.SetBool("Angry", true);
                 this._bossArmAngry.GetComponent<SpriteRenderer>().enabled = true;

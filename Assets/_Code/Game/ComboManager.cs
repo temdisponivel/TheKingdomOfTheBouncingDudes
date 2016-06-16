@@ -82,11 +82,6 @@ public class ComboManager : MonoBehaviour
         this._hitCount++;
         this._lastKillTime = Time.time;
 
-        if (this.MaxHitComboCount < this._hitCount)
-        {
-            this.MaxHitComboCount = this._hitCount;
-        }
-
         this.UpdateInfo();
     }
 
@@ -118,5 +113,8 @@ public class ComboManager : MonoBehaviour
                 this.TextCombo.fontSize = (int)_fontSizeBkp;
             }
         }
+
+        if (current > MaxHitComboCount)
+            MaxHitComboCount = current;
     }
 }

@@ -13,7 +13,7 @@ namespace BounceDudes
 
         protected Quaternion _fixedRotation;
         public bool _dead = false;
-
+        
         public override void Start()
         {
             base.Start();
@@ -29,7 +29,6 @@ namespace BounceDudes
 
         public override void LateUpdate()
         {
-
             base.LateUpdate();
 
             if (this.transform.rotation != this._fixedRotation)

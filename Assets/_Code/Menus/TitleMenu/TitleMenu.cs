@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using DigitalRuby.SoundManagerNamespace;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace BounceDudes
 {
@@ -22,26 +24,37 @@ namespace BounceDudes
 
         protected Animator _animator;
 
+        public Toggle ToggleSoundUI;
+        public Toggle ToggleMusicUI;
+
         protected bool _animating = false;
 
         public GameObject ConfigPanel;
 
-		public GameObject _shade;
+        public GameObject _shade;
         public GameObject ConfigShownPosition;
         public GameObject ConfigHiddenPosition;
 
         public int _currentState = 0;
         protected const int ON_SPLASH_SCREEN = 0;
         protected const int ON_MAIN_MENU = 1;
-        
 
         public void Start()
         {
             this._animator = this.GetComponent<Animator>();
-			AudioManager.Instance.PlayMusic (0);
 
             if (GameManager.Instance.PassSplashScreen)
+            {
+                this.PlayInterfaceSound(7);
                 this._animator.SetTrigger("GoSplashToMain");
+            }
+            else
+            {
+                AudioManager.Instance.PlayMusic(0);
+            }
+
+            ToggleMusicUI.isOn = GameManager.Instance.MusicVolume;
+            ToggleSoundUI.isOn = GameManager.Instance.SoundVolume;
         }
 
 
@@ -52,8 +65,8 @@ namespace BounceDudes
                 if (this._currentState == ON_SPLASH_SCREEN)
                 {
                     this._animator.SetTrigger("GoSplashToMain");
-					this.PlayInterfaceSound (7);
-					AudioManager.Instance.PlayMusic (1);
+                    this.PlayInterfaceSound(7);
+                    AudioManager.Instance.PlayMusic(1);
                 }
 
             }
@@ -72,7 +85,7 @@ namespace BounceDudes
             _currentState = ON_SPLASH_SCREEN;
             _mainMenuAnimator.ResetTrigger("CallOutro");
         }
-        
+
         public void CallCapeBlown()
         {
             this._animator.SetTrigger("KingCapeBlown");
@@ -108,30 +121,32 @@ namespace BounceDudes
 
         public void ShowSetting()
         {
-			this._shade.transform.DOScale (1, 0.2f);
+            this._shade.transform.DOScale(1, 0.2f);
             this.ConfigPanel.transform.DOMove(this.ConfigShownPosition.transform.position, 0.5f);
         }
 
         public void HideSetting()
         {
-			this._shade.transform.DOScale (0, 0.2f);
+            this._shade.transform.DOScale(0, 0.2f);
             this.ConfigPanel.transform.DOMove(this.ConfigHiddenPosition.transform.position, 0.5f);
         }
 
-		public void ToggleMusic(){
-			AudioManager.Instance.ToggleMusicVolume();
-		}
+        public void ToggleMusic(bool on)
+        {
+            GameManager.Instance.MusicVolume = on;
+            AudioManager.Instance.ToggleMusicVolume();
+        }
 
-		public void ToggleSound(){
-			AudioManager.Instance.ToggleSoundVolume();
-		}
+        public void ToggleSound(bool on)
+        {
+            GameManager.Instance.SoundVolume = on;
+            AudioManager.Instance.ToggleSoundVolume();
+        }
 
-		public void PlayInterfaceSound(int index){
-			AudioManager.Instance.PlayInterfaceSound (index);
-		}
-
-
-
+        public void PlayInterfaceSound(int index)
+        {
+            AudioManager.Instance.PlayInterfaceSound(index);
+        }
     }
 
 }

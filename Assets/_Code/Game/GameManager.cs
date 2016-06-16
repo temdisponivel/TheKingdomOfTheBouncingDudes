@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
 using Assets.Code.Game;
@@ -11,6 +12,7 @@ using Assets._Code.Game;
 using DG.Tweening;
 using DigitalRuby.SoundManagerNamespace;
 using UnityEngine.SceneManagement;
+using UnityEngineInternal;
 
 namespace BounceDudes
 {
@@ -181,6 +183,13 @@ namespace BounceDudes
             }
 
             DOTween.Init(false, true, LogBehaviour.ErrorsOnly);
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        }
+
+        void Start()
+        {
+            this.SoundVolume = SoundManager.SoundVolume != 0;
+            this.MusicVolume = SoundManager.MusicVolume != 0;
         }
 
         public List<GameObject> GetAvailableSoldiers()
@@ -256,7 +265,6 @@ namespace BounceDudes
         public void GameOver()
         {
             this.SaveGame();
-            Debug.Log("GAME OVER");
         }
 
         public void AddLevelInfo(LevelId id, LevelInformation info)
@@ -389,7 +397,6 @@ namespace BounceDudes
             }
         }
 
-
         public void LoadScene(string sceneName)
         {
             CameraFade.Instance.FadeIn(() => SceneManager.LoadScene(sceneName));
@@ -418,5 +425,8 @@ namespace BounceDudes
             this.SaveFileName = bkp + "full.save";
             this.SaveGame();
         }
+
+        public bool SoundVolume { get; set; }
+        public bool MusicVolume { get; set; }
     }
 }

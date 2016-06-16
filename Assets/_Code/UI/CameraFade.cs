@@ -26,6 +26,11 @@ namespace BounceDudes
 
         public void FadeOut(Action callback)
         {
+            if (ImageToFade == null)
+            {
+                callback();
+                return;
+            }
             Color color = ImageToFade.color;
             color.a = 0;
             ImageToFade.DOBlendableColor(color, 1.5f).OnComplete(() =>
@@ -37,6 +42,12 @@ namespace BounceDudes
 
         public void FadeIn(Action callback)
         {
+            if (ImageToFade == null)
+            {
+                callback();
+                return;
+            }
+
             Color color = ImageToFade.color;
             color.a = 1;
             ImageToFade.DOBlendableColor(color, 0.5f).OnComplete(() =>

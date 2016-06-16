@@ -14,8 +14,12 @@ namespace BounceDudes
     /// </summary>
     public class MapMenu : MonoBehaviour
     {
+        public ScrollRect Scroll;
         public DiaryController _diary;
         public LevelNode _lastNode;
+
+        public Sprite StarBorderSilver;
+        public Sprite StarBorderGold;
 
         public static MapMenu Instance = null;
 
@@ -26,12 +30,13 @@ namespace BounceDudes
 
         public void Start()
         {
-
             LevelNode[] nodes = this.GetComponentsInChildren<LevelNode>();
             LevelInformation[] levelsUnlocked = GameManager.Instance.LevelsInformation.Values.ToArray();
 
             levelsUnlocked.OrderBy(l => (int) l.LevelId);
             int lastLevel = -1; //-1 to sum 0 below
+
+            int current = 0;
 
             if (levelsUnlocked.Length > 0)
             {
@@ -47,6 +52,9 @@ namespace BounceDudes
                     node.gameObject.GetComponent<Button>().enabled = false;
                 }
             }
+
+            var percent = 1f / nodes.Length;
+            Scroll.normalizedPosition = Vector2.one * percent * levelsUnlocked.Length;
         }
 
         public void SelectNode(LevelNode node)

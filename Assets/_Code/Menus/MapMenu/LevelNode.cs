@@ -14,6 +14,7 @@ namespace BounceDudes
 
         public Image _levelImage;
 
+        public Image _starBorder;
         public Image _starOne;
         public Image _starTwo;
         public Image _starThree;
@@ -58,6 +59,17 @@ namespace BounceDudes
                     _starOne.enabled = false;
                     _starTwo.enabled = false;
                     _starThree.enabled = false;
+                    break;
+            }
+
+            int count = levelInfo.ChallengesCompleted.Count;
+            switch (count)
+            {
+                case 2:
+                    this._starBorder.sprite = MapMenu.Instance.StarBorderSilver;
+                    break;
+                case 3:
+                    this._starBorder.sprite = MapMenu.Instance.StarBorderGold;
                     break;
             }
         }
