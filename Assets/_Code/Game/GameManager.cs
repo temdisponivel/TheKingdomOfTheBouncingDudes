@@ -392,5 +392,29 @@ namespace BounceDudes
         {
             CameraFade.Instance.FadeIn(() => SceneManager.LoadScene(sceneName));
         }
+
+        public void CreateFullSave()
+        {
+            for (int i = 0; i < _allSoldiers.Count; i++)
+            {
+                this._availableSoldierInstanceIdById[_allSoldiers[i].GetComponent<Soldier>()._id] = new List<int>() { 0 };
+                this.AddNameToSoldier(Soldiers[_allSoldiers[i].GetComponent<Soldier>()._id].GetComponent<Soldier>()._soldierName, _allSoldiers[i].GetComponent<Soldier>()._id, 0);
+            }
+            foreach (Level level in Levels)
+            {
+                this.AddLevelInfo(level.Id, new LevelInformation()
+                {
+                    ChallengesCompleted = new Dictionary<Challenge, int[]>(),
+                    EnemiesKilled = 10,
+                    Finished = true,
+                    LevelId = level.Id,
+                    ShootCount = 10,
+                    Star = 1,
+                });
+            }
+            var bkp = this.SaveFileName;
+            this.SaveFileName = bkp + "full.save";
+            this.SaveGame();
+        }
     }
 }

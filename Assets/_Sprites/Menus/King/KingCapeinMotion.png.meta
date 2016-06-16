@@ -49,14 +49,14 @@ TextureImporter:
   textureType: 8
   buildTargetSettings:
   - buildTarget: Android
-    maxTextureSize: 1024
+    maxTextureSize: 512
     textureFormat: -1
     compressionQuality: 50
     allowsAlphaSplitting: 0
   spriteSheet:
     sprites: []
     outline: []
-  spritePackingTag: BounceDudesSprites
+  spritePackingTag: BounceDudesUI
   userData: 
   assetBundleName: 
   assetBundleVariant: 
