@@ -39,6 +39,9 @@ namespace BounceDudes
         {
             this._animator = this.GetComponent<Animator>();
 			AudioManager.Instance.PlayMusic (0);
+
+            if (GameManager.Instance.PassSplashScreen)
+                this.ChangeStateToMainMenu();
         }
 
 
@@ -61,7 +64,7 @@ namespace BounceDudes
         {
             _currentState = ON_MAIN_MENU;
             _mainMenuAnimator.ResetTrigger("CallIntro");
-
+            GameManager.Instance.PassSplashScreen = true;
         }
 
         public void ChangeStateToSplashScreen()
