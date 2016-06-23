@@ -18,6 +18,8 @@ namespace BounceDudes
         public DiaryController _diary;
         public LevelNode _lastNode;
 
+		public Sprite StarBorderTransparent;
+		public Sprite StarBorderBronze;
         public Sprite StarBorderSilver;
         public Sprite StarBorderGold;
 
@@ -48,8 +50,9 @@ namespace BounceDudes
             {
                 if ((int) node.LevelId > lastLevel + 1)
                 {
-                    node._levelImage.color *= Color.gray;
+					node._levelImage.color *= (Color.gray);
                     node.gameObject.GetComponent<Button>().enabled = false;
+					node.gameObject.GetComponent<LevelNode> ().setLocked(true);
                 }
             }
 
@@ -89,6 +92,7 @@ namespace BounceDudes
 
         public void Return()
         {
+			AudioManager.Instance.PlayInterfaceSound (0);
             GameManager.Instance.LoadScene("TitleScreen");
         }
     }

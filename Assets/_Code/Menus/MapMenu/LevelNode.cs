@@ -19,6 +19,8 @@ namespace BounceDudes
         public Image _starTwo;
         public Image _starThree;
 
+		public bool _levelLocked = false;
+
         public void Start()
         {
             Level level;
@@ -38,33 +40,40 @@ namespace BounceDudes
 
             this._levelImage.sprite = level.LevelImage;
 
-            switch (levelInfo.Star)
-            {
-                case 1:
-                    _starOne.enabled = true;
-                    _starTwo.enabled = false;
-                    _starThree.enabled = false;
-                    break;
-                case 2:
-                    _starOne.enabled = true;
-                    _starTwo.enabled = true;
-                    _starThree.enabled = false;
-                    break;
-                case 3:
-                    _starOne.enabled = true;
-                    _starTwo.enabled = true;
-                    _starThree.enabled = true;
-                    break;
-                default:
-                    _starOne.enabled = false;
-                    _starTwo.enabled = false;
-                    _starThree.enabled = false;
-                    break;
+            switch (levelInfo.Star){
+           	case 1:
+                _starOne.enabled = true;
+                _starTwo.enabled = false;
+                _starThree.enabled = false;
+                break;
+            case 2:
+                _starOne.enabled = true;
+                _starTwo.enabled = true;
+                _starThree.enabled = false;
+                break;
+            case 3:
+                _starOne.enabled = true;
+                _starTwo.enabled = true;
+                _starThree.enabled = true;
+                break;
+			default:
+                _starOne.enabled = false;
+                _starTwo.enabled = false;
+                _starThree.enabled = false;
+                break;
             }
+				
 
             int count = levelInfo.ChallengesCompleted.Count;
+			Debug.Log (count);
             switch (count)
             {
+				case 0:
+					this._starBorder.sprite = MapMenu.Instance.StarBorderTransparent;
+					break;
+				case 1:
+					this._starBorder.sprite = MapMenu.Instance.StarBorderBronze;
+					break;
                 case 2:
                     this._starBorder.sprite = MapMenu.Instance.StarBorderSilver;
                     break;
@@ -72,6 +81,16 @@ namespace BounceDudes
                     this._starBorder.sprite = MapMenu.Instance.StarBorderGold;
                     break;
             }
+				
+
         }
+
+		public void setLocked(bool value){
+			_levelLocked = value;
+			this._starBorder.enabled = !_levelLocked;
+		}
+
     }
+
+
 }

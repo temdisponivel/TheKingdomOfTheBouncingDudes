@@ -18,8 +18,6 @@ namespace BounceDudes
 
 		public GameObject _shade;
 
-        public GameObject _shownPosition;
-        public GameObject _hidenPosition;
         public Image _levelImage;
         public Text _levelName;
         public Text _levelDesc;
@@ -38,14 +36,18 @@ namespace BounceDudes
 
         public static WinLevelPanel Instance;
 
-        public Image ChallengeOneIcon;
-        public Image ChallengeTwoIcon;
-        public Image ChallengeThreeIcon;
+        public Image ChallengeOneSoldierIcon;
+        public Image ChallengeTwoSoldierIcon;
+        public Image ChallengeThreeSoldierIcon;
 
-        public Image ChallengeOneIconChecker;
-        public Image ChallengeTwoIconChecker;
-        public Image ChallengeThreeIconChecker;
+        public Image ChallengeOneCheck;
+        public Image ChallengeTwoCheck;
+        public Image ChallengeThreeCheck;
         
+		public Image ChallengeOneLock;
+		public Image ChallengeTwoLock;
+		public Image ChallengeThreeLock;
+
         public void Show()
         {
 			this._shade.transform.DOScale(1, 0.2f);
@@ -111,48 +113,61 @@ namespace BounceDudes
                     break;
             }
 
-            Challenge currentChellenge = level.SoldiersByChallengeHackOne._challenge;
-            _challengeDescOne.text = currentChellenge.Description;
+			Challenge currentChallenge = level.SoldiersByChallengeHackOne._challenge;
+            _challengeDescOne.text = currentChallenge.Description;
             var challengesComplete = GameManager.Instance.ChallengesComplete;
             _challengeImageOne.enabled = true;
-            ChallengeOneIcon.sprite = GameManager.Instance.GetRepresentationOfSoldier(level.SoldiersByChallengeHackOne._soldierToGive[0]).GetComponent<Image>().sprite;
-            if (challengesComplete.Contains(currentChellenge.Id))
+            ChallengeOneSoldierIcon.sprite = GameManager.Instance.GetRepresentationOfSoldier(level.SoldiersByChallengeHackOne._soldierToGive[0]).GetComponent<Image>().sprite;
+            if (challengesComplete.Contains(currentChallenge.Id))
             {
                 _challengeImageOne.enabled = true;
-                ChallengeOneIconChecker.enabled = true;
+                ChallengeOneCheck.enabled = true;
+				ChallengeOneLock.enabled = false;
+				ChallengeOneSoldierIcon.color = Color.white;
             }
             else
             {
                 _challengeImageOne.enabled = false;
-                ChallengeOneIconChecker.enabled = false;
+                ChallengeOneCheck.enabled = false;
+				ChallengeOneLock.enabled = true;
+				ChallengeOneSoldierIcon.color = Color.gray;
             }
 
-            currentChellenge = level.SoldiersByChallengeHackTwo._challenge;
-            _challengeDescTwo.text = currentChellenge.Description;
-            ChallengeTwoIcon.sprite = GameManager.Instance.GetRepresentationOfSoldier(level.SoldiersByChallengeHackTwo._soldierToGive[0]).GetComponent<Image>().sprite;
-            if (challengesComplete.Contains(currentChellenge.Id))
+            currentChallenge = level.SoldiersByChallengeHackTwo._challenge;
+            _challengeDescTwo.text = currentChallenge.Description;
+            ChallengeTwoSoldierIcon.sprite = GameManager.Instance.GetRepresentationOfSoldier(level.SoldiersByChallengeHackTwo._soldierToGive[0]).GetComponent<Image>().sprite;
+            if (challengesComplete.Contains(currentChallenge.Id))
             {
                 _challengeImageTwo.enabled = true;
-                ChallengeTwoIconChecker.enabled = true;
+                ChallengeTwoCheck.enabled = true;
+				ChallengeTwoLock.enabled = false;
+				ChallengeTwoSoldierIcon.color = Color.white;
+
             }
             else
             {
                 _challengeImageTwo.enabled = false;
-                ChallengeTwoIconChecker.enabled = false;
+                ChallengeTwoCheck.enabled = false;
+				ChallengeTwoLock.enabled = true;
+				ChallengeTwoSoldierIcon.color = Color.gray;
             }
 
-            currentChellenge = level.SoldiersByChallengeHackThree._challenge;
-            _challengeDescThree.text = currentChellenge.Description;
-            ChallengeThreeIcon.sprite = GameManager.Instance.GetRepresentationOfSoldier(level.SoldiersByChallengeHackThree._soldierToGive[0]).GetComponent<Image>().sprite;
-            if (challengesComplete.Contains(currentChellenge.Id))
+            currentChallenge = level.SoldiersByChallengeHackThree._challenge;
+            _challengeDescThree.text = currentChallenge.Description;
+            ChallengeThreeSoldierIcon.sprite = GameManager.Instance.GetRepresentationOfSoldier(level.SoldiersByChallengeHackThree._soldierToGive[0]).GetComponent<Image>().sprite;
+            if (challengesComplete.Contains(currentChallenge.Id))
             {
                 _challengeImageThree.enabled = true;
-                ChallengeThreeIconChecker.enabled = true;
+                ChallengeThreeCheck.enabled = true;
+				ChallengeThreeLock.enabled = false;
+				ChallengeThreeSoldierIcon.color = Color.white;
             }
             else
             {
                 _challengeImageThree.enabled = false;
-                ChallengeThreeIconChecker.enabled = false;
+                ChallengeThreeCheck.enabled = false;
+				ChallengeThreeLock.enabled = true;
+				ChallengeThreeSoldierIcon.color = Color.gray;
             }
         }
     }

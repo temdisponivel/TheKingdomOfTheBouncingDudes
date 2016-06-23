@@ -18,6 +18,8 @@ namespace BounceDudes
         static protected LevelManager _instance = null;
         static public LevelManager Instance { get { return LevelManager._instance; } }
 
+		public Camera _uiCamera = null;
+
         public Base _playerBase = null;
         public Base _enemyBase = null;
 
@@ -43,6 +45,7 @@ namespace BounceDudes
 
         public void Awake()
         {
+			this._uiCamera.aspect = GameManager.Instance.AspectRatio;	
             LevelManager._instance = this;
             this._baseHpBakp = this._playerBase.HP;
             GameManager.Instance.OnStateChange += this.StateChangeCallback;

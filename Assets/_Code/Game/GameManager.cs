@@ -131,11 +131,17 @@ namespace BounceDudes
 
         public DayTimeSequence CurrentDayTimeSequence = DayTimeSequence.Morning;
 
+
         [NonSerialized]
         public bool PassSplashScreen = false;
 
+		public float AspectRatio = 10f / 16f;
+
         public void Awake()
         {
+
+			Camera.main.aspect = AspectRatio;
+
             if (GameManager.Instance == null)
             {
                 GameManager._instance = this;
