@@ -73,16 +73,18 @@ namespace BounceDudes
             this.NameText.text = this.InputNameText.text;
             GameManager.Instance.AddNameToSoldier(this.NameText.text, CurrentSoldier._id, SoldierArray.Instance.GetInstanceId(CurrentSoldier));
             CurrentSoldier._soldierName = this.InputNameText.text;
+
+			GameManager.Instance.SaveGame();
         }
 
         public void Return()
         {
 
-            GameManager.Instance.SaveGame();
+            //GameManager.Instance.SaveGame();
+			AudioManager.Instance.PlayInterfaceSound (0);
             GameManager.Instance.LoadScene("TitleScreen"); 
 
-			AudioManager.Instance.PlayInterfaceSound (0);
-            //SceneManager.LoadScene("TitleScreen");
+
         }
 			
     }

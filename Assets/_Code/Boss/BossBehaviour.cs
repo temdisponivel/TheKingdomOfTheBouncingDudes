@@ -80,7 +80,7 @@ namespace BounceDudes
         // Update is called once per frame
         void Update()
         {
-            SetToCurrentState();
+            //SetToCurrentState();
         }
 
         protected void MoveToDestination()
@@ -171,7 +171,7 @@ namespace BounceDudes
             }
             else if (_hp <= _secondHpThreshold && _hp > _thirdHpThreshold)
             {
-                AudioManager.Instance.PlaySound(1, 12);
+				AudioManager.Instance.PlaySound(1, 12);
                 this._bossFaceSprite.sprite = this._faceAngry;
                 this._bossAnimator.SetBool("Angry", true);
                 this._bossArmAngry.GetComponent<SpriteRenderer>().enabled = true;
@@ -188,6 +188,7 @@ namespace BounceDudes
 
         public IEnumerator WaitForAndCall(float seconds, Action callback)
         {
+
             yield return new WaitForSeconds(seconds);
             if (callback != null)
                 callback();

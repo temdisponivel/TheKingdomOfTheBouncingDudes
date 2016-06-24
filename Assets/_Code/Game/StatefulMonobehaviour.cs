@@ -8,10 +8,10 @@ namespace Assets.Code.Game
         public void Update()
         {
             if (GameManager.Instance.State != GameState.PAUSED)
-                this.InnetUpdate();
+                this.InnerUpdate();
         }
 
-        public virtual void InnetUpdate()
+        public virtual void InnerUpdate()
         {
         }
     }

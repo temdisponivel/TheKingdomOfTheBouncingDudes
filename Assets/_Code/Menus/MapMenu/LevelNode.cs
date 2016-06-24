@@ -68,18 +68,18 @@ namespace BounceDudes
 			Debug.Log (count);
             switch (count)
             {
-				case 0:
-					this._starBorder.sprite = MapMenu.Instance.StarBorderTransparent;
-					break;
-				case 1:
-					this._starBorder.sprite = MapMenu.Instance.StarBorderBronze;
-					break;
-                case 2:
-                    this._starBorder.sprite = MapMenu.Instance.StarBorderSilver;
-                    break;
-                case 3:
-                    this._starBorder.sprite = MapMenu.Instance.StarBorderGold;
-                    break;
+			case 1:
+				this._starBorder.sprite = MapMenu.Instance.StarBorderBronze;
+				break;
+            case 2:
+                this._starBorder.sprite = MapMenu.Instance.StarBorderSilver;
+                break;
+            case 3:
+                this._starBorder.sprite = MapMenu.Instance.StarBorderGold;
+                break;
+			default:
+				this._starBorder.sprite = MapMenu.Instance.StarBorderTransparent;
+				break;
             }
 				
 
