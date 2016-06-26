@@ -30,7 +30,7 @@ namespace BounceDudes
 
         [Header("Effects")]
         protected bool _isShinyAttached = false;
-        protected float _timeToTravel = .5f;
+        protected float _timeToTravel = 1.0f;
 
         private int _currentSortingOrder = 0;
 
@@ -141,7 +141,7 @@ namespace BounceDudes
         public void TurnIntoAmmunition()
         {
             _transitioning = true;
-            this.StartCoroutine(this.WaitSecondsAndCall(.5f, () =>
+			this.StartCoroutine(this.WaitSecondsAndCall(_timeToTravel / 2, () =>
             {
                 this.CurrentSortingOrder = this._spriteOnFieldOrder;
                 _transitioning = false;

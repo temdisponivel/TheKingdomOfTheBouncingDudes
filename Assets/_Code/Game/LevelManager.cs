@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Assets.Code.Game;
 using DG.Tweening;
+using Assets._Code.Game;
 
 namespace BounceDudes
 {
@@ -50,6 +51,11 @@ namespace BounceDudes
             this._baseHpBakp = this._playerBase.HP;
             GameManager.Instance.OnStateChange += this.StateChangeCallback;
         }
+
+		public void Start(){
+			if (GameManager.Instance.CurrentLevel.Id != LevelId.FIFTEEN) // If not the Boss Level
+				AudioManager.Instance.PlayMusic(2);
+		}
 			
         public void GameOver()
         {
@@ -110,6 +116,7 @@ namespace BounceDudes
             else
             {
 				AudioManager.Instance.PlaySound(2, 1);
+				this._loosePanel.UpdateInfo (info);
                 this._loosePanel.Show();
             }
         }
@@ -171,7 +178,7 @@ namespace BounceDudes
 
         public void Quit()
         {
-            this.UnpauseGame();
+        
             if (WinPanelShown)
                 _winPanel.Hide();
             else if (LoosePanelShown)
@@ -181,6 +188,9 @@ namespace BounceDudes
 
             GameManager.Instance.LoadScene("MapMenu");
 			AudioManager.Instance.PlayMusic (1);
+
+			this.UnpauseGame();
+
             this.Dispose();
             /*
             this.GameOver();
@@ -189,7 +199,7 @@ namespace BounceDudes
 
         public void PlayAgain()
         {
-            this.UnpauseGame();
+            
             if (WinPanelShown)
                 _winPanel.Hide();
             else if (LoosePanelShown)
@@ -197,7 +207,11 @@ namespace BounceDudes
             else if (PausePanelShown)
                 _pausePanel.Hide();
             GameManager.Instance.LoadScene(GameManager.Instance.CurrentLevel.SceneName);
+
 			AudioManager.Instance.PlayMusic (2);
+
+			this.UnpauseGame();
+
             this.Dispose();
             //SceneManager.LoadScene(GameManager.Instance.LastLevel.SceneName);
         }

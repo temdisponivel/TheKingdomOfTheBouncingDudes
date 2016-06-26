@@ -38,7 +38,6 @@ namespace BounceDudes
         protected Character _inside = null;
         protected GameObject[] _targets = null;
         protected float _lastTimeShoot = 0;
-        protected int _currentIndexTarget = 0;
         protected int _currentShootCount = 0;
 
         protected Vector3 _insideScaleBkp = Vector3.zero;
@@ -65,7 +64,7 @@ namespace BounceDudes
 
             if (!this._free && Time.time - this._lastTimeShoot >= this._coolDown)
             {
-                this.CreateCopy();
+                this.CreateCopy(); // Shoot
             }
         }
 
@@ -80,7 +79,7 @@ namespace BounceDudes
 
         protected void CreateCopy()
         {
-            GameObject target = this._targets[this._currentIndexTarget % this._targets.Length];
+			GameObject target = this._targets[this._currentShootCount];
 
             if (_toShoot == null)
                 this.Clear();
@@ -102,7 +101,6 @@ namespace BounceDudes
             charScript.HP = 1;// Clones can only have 1 life.
             this._lastTimeShoot = Time.time;
             this._currentShootCount++;
-            this._currentIndexTarget++;
             charScript._shouldRecycle = false;
             charScript._isSpecial = true;
             charScript.Shoot();
@@ -132,7 +130,6 @@ namespace BounceDudes
         {
             this._free = false;
             this._currentShootCount = 0;
-            this._currentIndexTarget = 0;
             this._lastTimeShoot = Time.time;
             this._insideScaleBkp = gameObject.transform.localScale;
             this._inside = gameObject;

@@ -19,11 +19,11 @@ namespace BounceDudes
 
         public List<Transform> Buckets = new List<Transform>();
 
-        private Stack<int> FreeIndexes = new Stack<int>();
+		private HashSet<int> UsedIndexes = new HashSet<int>();
 
         public GameObject GridCellPrefab = null;
 
-        public bool HasSpace { get { return FreeIndexes.Count != 0; } }
+		public bool HasSpace { get { return UsedIndexes.Count < Buckets.Count; } }
 
         public Text TextNameLevel;
         public Text TextNameSoldier;
@@ -35,8 +35,6 @@ namespace BounceDudes
 
         public void Start()
         {
-            for (int i = this.Buckets.Count-1; i >= 0; i--)
-                this.FreeIndexes.Push(i);
 
             var soldiers = GameManager.Instance.GetAvailableSoldiersRepresentation();
             //var soldiers =
@@ -64,10 +62,14 @@ namespace BounceDudes
 
         public void AddToFormation(Soldier soldier, GameObject representation)
         {
-            if (FreeIndexes.Count == 0)
+			if (!HasSpace)
                 return;
 
-            representation.transform.SetParent(this.Buckets[FreeIndexes.Pop()], false);
+			int index = 0;
+			while (UsedIndexes.Contains (index))
+				index++;
+			UsedIndexes.Add (index);
+			representation.transform.SetParent(this.Buckets[index], false);
             //representation.transform.position = Vector3.zero;
 
             var rect = representation.GetComponent<RectTransform>();
@@ -80,7 +82,7 @@ namespace BounceDudes
 
         public void RemoveFromFormation(Soldier soldier, GameObject representation, bool destroy = true)
         {
-            this.FreeIndexes.Push(this.Buckets.IndexOf(representation.transform.parent));
+			this.UsedIndexes.Remove (this.Buckets.IndexOf (representation.transform.parent));
 
             representation.transform.SetParent(null);
 
@@ -94,7 +96,7 @@ namespace BounceDudes
 
         public void Battle()
         {
-			AudioManager.Instance.PlayInterfaceSound (2);
+			
             GameManager.Instance.NextLevelSoldiersDefinition.Clear();
 
             for (int i = 0; i < this.Soldiers.Count; i++)
@@ -103,10 +105,9 @@ namespace BounceDudes
             }
 
 			string sceneName = GameManager.Instance.CurrentLevel.SceneName;
-
-            if (GameManager.Instance.CurrentLevel.Id != LevelId.FIFTEEN)
-                AudioManager.Instance.PlayMusic(2);
+						
             GameManager.Instance.LoadScene(sceneName);
+			AudioManager.Instance.PlayInterfaceSound (2);
         }
 
         public void ShowName(string name)
@@ -121,6 +122,7 @@ namespace BounceDudes
 
         public void Return()
         {
+			AudioManager.Instance.PlayInterfaceSound (0);
             GameManager.Instance.LoadScene("MapMenu");
         }
     }

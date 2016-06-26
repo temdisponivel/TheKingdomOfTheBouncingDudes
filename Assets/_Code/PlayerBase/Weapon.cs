@@ -143,7 +143,7 @@ namespace BounceDudes
                 return;
             }
 
-            bool clicked = Input.GetMouseButton(0);
+			bool clicked = Input.GetMouseButton(0);
 
             if (clicked)
             {
@@ -154,8 +154,10 @@ namespace BounceDudes
                     return;
                 }
 
-                if (AmmunitionClip.Instance.IsOutOfAmmo)
-                    this._waitingForAmmo = true;
+				if (AmmunitionClip.Instance.IsOutOfAmmo) {
+					this._waitingForAmmo = true;
+					//UnSetCanShoot();
+				}
 
                 this.RotateTowardsMouse();
 
@@ -198,25 +200,27 @@ namespace BounceDudes
 
         public void CallReloadAnimation()
         {
-            if (this._waitingForAmmo)
-                return;
 
-            if (AmmunitionClip.Instance.IsOutOfAmmo)
-            {
-                this._waitingForAmmo = true;
-                this.UpdateSoldierNameUI();
-            }
+			if (this._waitingForAmmo)
+				return;
 
-            this._weaponAnimator.SetTrigger("Reloading"); // Calls PrepareAmmunition() in mid animation
+			if (AmmunitionClip.Instance.IsOutOfAmmo)
+			{
+				this._waitingForAmmo = true;
+				//UnSetCanShoot();
+				this.UpdateSoldierNameUI();
+			}
+
+            this._weaponAnimator.SetTrigger("Reloading"); // Calls CallPrepareAmmunition() in mid animation
         }
 
-        //called from animator
+        //called from Animation
         public void SetCanShoot()
         {
             this._canShoot = true;
         }
 
-        //called from animator
+		//called from Animation
         public void UnSetCanShoot()
         {
             this._canShoot = false;
@@ -224,7 +228,7 @@ namespace BounceDudes
 
         public void CallPrepareAmmunition()
         {
-            AmmunitionClip.Instance.PrepareNextAmmunition();
+			AmmunitionClip.Instance.PrepareNextAmmunition();
             this.UpdateSoldierNameUI();
         }
 
@@ -308,8 +312,7 @@ namespace BounceDudes
 
         public void RetrieveAll()
         {
-            var soldiers =
-            AmmunitionClip.Instance.ShootedSoldiers.ToList();
+            var soldiers = AmmunitionClip.Instance.ShootedSoldiers.ToList();
             for (int i = 0; i < soldiers.Count; i++)
             {
                 soldiers[i].Die();
@@ -320,8 +323,11 @@ namespace BounceDudes
         {
             if (this._waitingForAmmo)
             {
-                this._waitingForAmmo = false;
+				//SetCanShoot ();
+				this._waitingForAmmo = false;
                 this.CallReloadAnimation();
+
+
             }
         }
     }

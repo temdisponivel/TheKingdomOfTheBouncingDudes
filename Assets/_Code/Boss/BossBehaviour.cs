@@ -31,6 +31,7 @@ namespace BounceDudes
         public GameObject _bossDestination;
         public GameObject _basePosition;
         public Image _blackOut;
+		protected Tweener _bossTween;
 
         [Header("Stats")]
         public int _hp = 50;
@@ -43,6 +44,8 @@ namespace BounceDudes
         public GameObject _spawner;
         public SpawnOption[] _bossWave;
         protected int _nextSpawnIndex = 0;
+		public float _waveInterval = 5;
+		protected float _waveTimer;
 
 
         public int BossHP
@@ -67,10 +70,13 @@ namespace BounceDudes
         {
             this._bossAnimator = this.GetComponent<Animator>();
             this._bossFaceSprite = this._bossFace.GetComponent<SpriteRenderer>();
+			this._bossTween = null;
 
             this._firstHpThreshold = (int)(this._hp * 0.7f);
             this._secondHpThreshold = (int)(this._hp * 0.5f);
             this._thirdHpThreshold = (int)(this._hp * 0.1f);
+
+			this._waveTimer = this._waveInterval;
 
             this.MoveToDestination();
 
@@ -80,6 +86,25 @@ namespace BounceDudes
         // Update is called once per frame
         void Update()
         {
+			if (_bossTween != null && !_bossTween.IsComplete()) {
+				if (GameManager.Instance.State == Assets.Code.Game.GameState.PAUSED) {
+					if (_bossTween.IsPlaying()) {
+						_bossTween.Pause();
+					}
+				} else {
+					if (!_bossTween.IsPlaying()) {
+						_bossTween.Play();
+					}
+					this._waveTimer -= Time.deltaTime;
+					if (this._waveTimer <= 0) {
+						this._waveTimer = this._waveInterval;
+						this.SpawnNextMonster ();
+					}
+				}
+			}
+
+
+
             //SetToCurrentState();
         }
 
@@ -90,7 +115,9 @@ namespace BounceDudes
                 anim.SetBool("Walking", true);
             }
 
-            this.transform.DOMove(this._bossDestination.transform.position, this._timeToDestination).OnComplete(this.OnMoveComplete);
+			_bossTween = this.transform.DOMove(this._bossDestination.transform.position, this._timeToDestination);
+			_bossTween.OnComplete(this.OnMoveComplete);
+			_bossTween.SetEase(Ease.Linear);
         }
 
         protected void OnMoveComplete()
@@ -107,8 +134,8 @@ namespace BounceDudes
             // SOUND: Stop Music and Play BOB Voice!
             AudioManager.Instance.StopCurrentAudio();
             AudioManager.Instance.PlaySound(3, 1);
-            this._bossBody.transform.DOMove(this._basePosition.transform.position, 0.5f).OnComplete(this.GameOverComplete);
-
+			this._bossBody.transform.DOMove(this._basePosition.transform.position, 0.5f).OnComplete(this.GameOverComplete).SetEase(Ease.InBack);
+			_bossTween = null;
         }
 
         protected void GameOverComplete()
@@ -128,10 +155,10 @@ namespace BounceDudes
 
             AudioManager.Instance.PlaySound(1, 13);
 
-            this._bossFaceSprite.sprite = this._faceHit; // TODO: WaitForXSeconds then call "SetToCurrentState()" (1~1.5 seconds max)
+            this._bossFaceSprite.sprite = this._faceHit;
 
-            CanTakeHit = true;
-            this.StartCoroutine(this.WaitForAndCall(.7f, () =>
+            //CanTakeHit = true;
+            this.StartCoroutine(this.WaitForAndCall(1f, () =>
             {
                 CanTakeHit = true;
                 SetToCurrentState();

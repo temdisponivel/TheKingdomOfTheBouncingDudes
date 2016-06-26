@@ -13,6 +13,7 @@ namespace Assets.Code.Game
 
         public virtual void InnerUpdate()
         {
+			
         }
     }
 }

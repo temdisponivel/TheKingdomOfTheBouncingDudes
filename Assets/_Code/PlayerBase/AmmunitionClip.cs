@@ -1,5 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +28,8 @@ namespace BounceDudes
 
         protected int _positions = 0;
 
-        public bool IsOutOfAmmo { get { return this._ammunitionClip.Count == 0; } }
-        public Soldier NextAmmunition { get { return _ammunitionClip.Count > 0 ? _ammunitionClip.Peek() : null; } }
+		public bool IsOutOfAmmo { get { return _ammunitionClip.Count == 0; } }
+		public Soldier NextAmmunition { get { return _ammunitionClip.Count > 0 ? _ammunitionClip.Peek() : null; } }
 
         public Queue<Soldier> SoldiersInClip { get { return _ammunitionClip; } }
 
@@ -61,19 +61,24 @@ namespace BounceDudes
         public void AddAmmunition(GameObject ammunition, bool recycleAnimation = false)
         {
             Soldier ammoSoldier = ammunition.GetComponent<Soldier>();
+          
+			ammoSoldier.AmmunitionPosition = this._ammunitionClip.Count;
+			this._ammunitionClip.Enqueue(ammoSoldier);
+			this.ShootedSoldiers.Remove(ammoSoldier);
+
+		
+			ammoSoldier.transform.DOMove(this.GetAmmunitionPositionOnWorld(ammoSoldier.AmmunitionPosition).position, ammoSoldier.TimeToTravel / 4).OnComplete(() => {
+				
+				if (this.AmmoCountChanged != null)
+					this.AmmoCountChanged();
+			
+			}); 
+
+
+
             
-            ammoSoldier.AmmunitionPosition = this._ammunitionClip.Count;
-
-            this._ammunitionClip.Enqueue(ammoSoldier);
-            
-            ammoSoldier.transform.DOMove(this.GetAmmunitionPositionOnWorld(ammoSoldier.AmmunitionPosition).position, ammoSoldier.TimeToTravel / 2);
-
-            if (this.ShootedSoldiers.Contains(ammoSoldier))
-                this.ShootedSoldiers.Remove(ammoSoldier);
-
-            if (this.AmmoCountChanged != null)
-                this.AmmoCountChanged();
         }
+
 
         public void ShootNextAmmunition()
         {
@@ -82,7 +87,7 @@ namespace BounceDudes
 
             Soldier shooted;
             this.ShootedSoldiers.Add(shooted = _ammunitionClip.Dequeue());
-            
+           
             shooted.Shoot();
 
             foreach (Soldier ammo in this._ammunitionClip)
