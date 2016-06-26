@@ -167,7 +167,7 @@ namespace BounceDudes
                 if (!this._canShoot)
                     return;
 
-                if (!this._holding)
+				if (!this._holding && !this._waitingForAmmo && this._canShoot)
                 {
                     this._holding = true;
                     this._currentForceMultiplier = this._minShootMultiplier;
@@ -218,12 +218,14 @@ namespace BounceDudes
         public void SetCanShoot()
         {
             this._canShoot = true;
+			this._weaponAnimator.SetBool("CanHold", true);
         }
 
 		//called from Animation
         public void UnSetCanShoot()
         {
             this._canShoot = false;
+			this._weaponAnimator.SetBool("CanHold", false);
         }
 
         public void CallPrepareAmmunition()

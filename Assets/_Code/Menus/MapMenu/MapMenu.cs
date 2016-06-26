@@ -38,7 +38,7 @@ namespace BounceDudes
             levelsUnlocked.OrderBy(l => (int) l.LevelId);
             int lastLevel = -1; //-1 to sum 0 below
 
-            int current = 0;
+            //int current = 0;
 
             if (levelsUnlocked.Length > 0)
             {

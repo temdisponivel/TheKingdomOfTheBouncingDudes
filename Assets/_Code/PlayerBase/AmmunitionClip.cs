@@ -27,9 +27,10 @@ namespace BounceDudes
         protected List<GameObject> SoldiersBkp;
 
         protected int _positions = 0;
+		protected int _ammoClipCount = 0;
 
-		public bool IsOutOfAmmo { get { return _ammunitionClip.Count == 0; } }
-		public Soldier NextAmmunition { get { return _ammunitionClip.Count > 0 ? _ammunitionClip.Peek() : null; } }
+		public bool IsOutOfAmmo { get { return _ammoClipCount == 0; } }
+		public Soldier NextAmmunition { get { return _ammoClipCount > 0 ? _ammunitionClip.Peek() : null; } }
 
         public Queue<Soldier> SoldiersInClip { get { return _ammunitionClip; } }
 
@@ -62,21 +63,23 @@ namespace BounceDudes
         {
             Soldier ammoSoldier = ammunition.GetComponent<Soldier>();
           
-			ammoSoldier.AmmunitionPosition = this._ammunitionClip.Count;
-			this._ammunitionClip.Enqueue(ammoSoldier);
-			this.ShootedSoldiers.Remove(ammoSoldier);
 
-		
-			ammoSoldier.transform.DOMove(this.GetAmmunitionPositionOnWorld(ammoSoldier.AmmunitionPosition).position, ammoSoldier.TimeToTravel / 4).OnComplete(() => {
+			ammoSoldier.transform.DOMove (this._othersPoint.transform.position, ammoSoldier.TimeToTravel / 2).OnComplete (() => {
+
+				ammoSoldier.AmmunitionPosition = this._ammunitionClip.Count;
+				this._ammunitionClip.Enqueue(ammoSoldier);
+				_ammoClipCount++;
+				this.ShootedSoldiers.Remove(ammoSoldier);
+
+				ammoSoldier.transform.DOMove(this.GetAmmunitionPositionOnWorld(ammoSoldier.AmmunitionPosition).position, ammoSoldier.TimeToTravel / 4).OnComplete(() => {
+
+					if (this.AmmoCountChanged != null)
+						this.AmmoCountChanged();
+
+				}); 
+
+			});
 				
-				if (this.AmmoCountChanged != null)
-					this.AmmoCountChanged();
-			
-			}); 
-
-
-
-            
         }
 
 
@@ -87,6 +90,7 @@ namespace BounceDudes
 
             Soldier shooted;
             this.ShootedSoldiers.Add(shooted = _ammunitionClip.Dequeue());
+			_ammoClipCount--;
            
             shooted.Shoot();
 

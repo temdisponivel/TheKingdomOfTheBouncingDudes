@@ -27,7 +27,7 @@ namespace BounceDudes
         public Toggle ToggleSoundUI;
         public Toggle ToggleMusicUI;
 
-        protected bool _animating = false;
+        protected bool _animating = true;
 
         public GameObject ConfigPanel;
 
@@ -51,6 +51,7 @@ namespace BounceDudes
             else
             {
                 AudioManager.Instance.PlayMusic(0);
+				_animating = false;
             }
 
             ToggleMusicUI.isOn = GameManager.Instance.MusicVolume;
@@ -60,7 +61,7 @@ namespace BounceDudes
 
         public void Update()
         {
-            if (Input.GetMouseButton(0))
+			if (Input.GetMouseButton(0) && !_animating)
             {
                 if (this._currentState == ON_SPLASH_SCREEN)
                 {

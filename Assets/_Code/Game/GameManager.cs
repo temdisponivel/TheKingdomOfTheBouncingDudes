@@ -353,6 +353,7 @@ namespace BounceDudes
                 }
                 catch (SerializationException ex)
                 {
+					Debug.Log (ex);
                     File.Delete(this.SaveFilePath);
                 }
             }
