@@ -12,7 +12,9 @@ namespace BounceDudes
     {
         public static CameraFade Instance = null;
         
-        public SpriteRenderer ImageToFade;
+		protected SpriteRenderer ImageToFade;
+
+		protected Vector3 _trueTransform;
 
         public void Awake()
         {
@@ -20,9 +22,12 @@ namespace BounceDudes
 
             if (this.ImageToFade == null)
                 this.ImageToFade = this.GetComponent<SpriteRenderer>();
+			
+			this.transform.localPosition = new Vector3 (this.transform.position.x, this.transform.position.y, 1);
 
             this.FadeOut(null);
         }
+			
 
         public void FadeOut(Action callback)
         {

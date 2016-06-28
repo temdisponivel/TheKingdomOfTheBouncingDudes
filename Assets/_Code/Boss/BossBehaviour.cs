@@ -40,12 +40,14 @@ namespace BounceDudes
         protected int _hitCount = 0;
         protected int _firstHpThreshold, _secondHpThreshold, _thirdHpThreshold;
 
+
         [Header("Wave")]
         public GameObject _spawner;
         public SpawnOption[] _bossWave;
         protected int _nextSpawnIndex = 0;
 		public float _waveInterval = 5;
 		protected float _waveTimer;
+		protected float _waveSpawnModifier = 0;
 
 
         public int BossHP
@@ -54,7 +56,7 @@ namespace BounceDudes
             set
             {
                 _hp = value;
-                if (_hp <= 0)
+                if (_hp == 0)
                 {
                     LevelManager.Instance.FinishLevel();
                 }
@@ -74,7 +76,7 @@ namespace BounceDudes
 
             this._firstHpThreshold = (int)(this._hp * 0.7f);
             this._secondHpThreshold = (int)(this._hp * 0.5f);
-            this._thirdHpThreshold = (int)(this._hp * 0.1f);
+            this._thirdHpThreshold = (int)(this._hp * 0.2f);
 
 			this._waveTimer = this._waveInterval;
 
@@ -97,15 +99,12 @@ namespace BounceDudes
 					}
 					this._waveTimer -= Time.deltaTime;
 					if (this._waveTimer <= 0) {
-						this._waveTimer = this._waveInterval;
+						this._waveTimer = this._waveInterval - this._waveSpawnModifier;
 						this.SpawnNextMonster ();
 					}
 				}
 			}
-
-
-
-            //SetToCurrentState();
+				
         }
 
         protected void MoveToDestination()
@@ -132,7 +131,7 @@ namespace BounceDudes
             }
 
             // SOUND: Stop Music and Play BOB Voice!
-            AudioManager.Instance.StopCurrentAudio();
+			AudioManager.Instance.StopCurrentMusic(3);
             AudioManager.Instance.PlaySound(3, 1);
 			this._bossBody.transform.DOMove(this._basePosition.transform.position, 0.5f).OnComplete(this.GameOverComplete).SetEase(Ease.InBack);
 			_bossTween = null;
@@ -152,19 +151,19 @@ namespace BounceDudes
                 return;
 
             this._hitCount++;
-
-            AudioManager.Instance.PlaySound(1, 13);
-
             this._bossFaceSprite.sprite = this._faceHit;
 
+			AudioManager.Instance.PlaySound(1, 13);
+			AudioManager.Instance.PlayInterfaceSound (6);
             //CanTakeHit = true;
             this.StartCoroutine(this.WaitForAndCall(1f, () =>
             {
                 CanTakeHit = true;
                 SetToCurrentState();
+
             }));
 
-            if (this._hitCount >= this._hitSpawnThreshold)
+			if (this._hitCount >= this._hitSpawnThreshold)
             {
                 this.SpawnNextMonster();
                 this._hitCount = 0;
@@ -192,9 +191,14 @@ namespace BounceDudes
 
         protected void SetToCurrentState()
         {
-            if (_hp <= _firstHpThreshold && _hp > _secondHpThreshold)
+			if (_hp >= _firstHpThreshold)
+			{
+				this._bossFaceSprite.sprite = this._faceNormal;
+			}
+            else if (_hp <= _firstHpThreshold && _hp > _secondHpThreshold)
             {
-                this._bossFaceSprite.sprite = this._faceNormal;
+				this._bossFaceSprite.sprite = this._faceNormal;
+				this._waveSpawnModifier = this._waveInterval * 0.15f; // 15% less seconds to spawn another monster
             }
             else if (_hp <= _secondHpThreshold && _hp > _thirdHpThreshold)
             {
@@ -203,6 +207,8 @@ namespace BounceDudes
                 this._bossAnimator.SetBool("Angry", true);
                 this._bossArmAngry.GetComponent<SpriteRenderer>().enabled = true;
                 this._bossArmNormal.GetComponent<SpriteRenderer>().enabled = false;
+
+				this._waveSpawnModifier = this._waveInterval * 0.25f; // 25% less seconds to spawn another monster
             }
             else if (_hp <= _thirdHpThreshold)
             {
@@ -210,6 +216,8 @@ namespace BounceDudes
                 this._bossAnimator.SetBool("Angry", false);
                 this._bossArmAngry.GetComponent<SpriteRenderer>().enabled = false;
                 this._bossArmNormal.GetComponent<SpriteRenderer>().enabled = true;
+
+				this._waveSpawnModifier = this._waveInterval * 0.5f; // 50% less seconds to spawn another monster
             }
         }
 

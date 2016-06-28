@@ -141,7 +141,7 @@ namespace BounceDudes
         public void TurnIntoAmmunition()
         {
             _transitioning = true;
-			this.StartCoroutine(this.WaitSecondsAndCall(_timeToTravel / 2, () =>
+			this.StartCoroutine(this.WaitSecondsAndCall(_timeToTravel / 1.5f, () =>
             {
                 this.CurrentSortingOrder = this._spriteOnFieldOrder;
                 _transitioning = false;

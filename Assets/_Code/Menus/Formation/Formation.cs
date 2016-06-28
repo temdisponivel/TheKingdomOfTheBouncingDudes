@@ -72,7 +72,7 @@ namespace BounceDudes
 			representation.transform.SetParent(this.Buckets[index], false);
             //representation.transform.position = Vector3.zero;
 
-            var rect = representation.GetComponent<RectTransform>();
+            //var rect = representation.GetComponent<RectTransform>();
             
             this.Soldiers.Add(soldier);
 

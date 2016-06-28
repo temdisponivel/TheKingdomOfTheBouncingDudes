@@ -41,6 +41,8 @@ namespace BounceDudes
 
         public void Start()
         {
+			//GameManager.Instance.CreateFullSave (true); // FOR TESTS ONLY
+
             this._animator = this.GetComponent<Animator>();
 
             if (GameManager.Instance.PassSplashScreen)

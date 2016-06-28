@@ -233,6 +233,7 @@ namespace BounceDudes
 
                     foreach (var soldiers in this._availableSoldierInstanceIdById[soldierScript._id])
                     {
+						
                         var soldierCopy = Instantiate(GetRepresentationOfSoldier(soldierScript._id));
 
                         var soldierCopyScript = soldierCopy.GetComponent<Soldier>();
@@ -409,7 +410,7 @@ namespace BounceDudes
             CameraFade.Instance.FadeIn(() => SceneManager.LoadScene(sceneName));
         }
 
-        public void CreateFullSave()
+		public void CreateFullSave(bool overrideNormalSave)
         {
             for (int i = 0; i < _allSoldiers.Count; i++)
             {
@@ -429,7 +430,7 @@ namespace BounceDudes
                 });
             }
             var bkp = this.SaveFileName;
-            this.SaveFileName = bkp + "full.save";
+			this.SaveFileName = overrideNormalSave == true ? bkp : bkp + "full.save";
             this.SaveGame();
         }
 

@@ -55,12 +55,15 @@ namespace BounceDudes
         public float _specialDuration = 3f;
         public bool _special = false;
         public float _specialStartTime = 0;
+		protected float _timeWhenLoaded = 0;
 
         protected float _lastTimeShoot = 0f;
         protected float _currentForceMultiplier = 0f;
         protected bool _holding = false;
         protected int _currentProjectileIndex = 0;
         protected int _currentSpecialProjectileIndex = 0;
+
+		protected bool _animating = false;
 
         protected Animator _weaponAnimator = null;
         private bool _waitingForAmmo;
@@ -81,6 +84,9 @@ namespace BounceDudes
 
         public void Start()
         {
+
+			this._timeWhenLoaded = Time.time;
+
             AmmunitionClip.Instance.AmmoCountChanged += this.NewAmmo;
             this._projectilesSpecial = GameManager.Instance._specialProjectiles;
             this.ShootCountText.text = string.Empty;
@@ -92,7 +98,7 @@ namespace BounceDudes
             this.ShootRoutine();
 
             var cacheSpecial = _special;
-            this._special = this._special && (Time.time - this._specialStartTime) <= this._specialDuration;
+			this._special = this._special && (Time.time - this._specialStartTime) <= this._specialDuration;
 
             if (cacheSpecial && !_special)
             {
@@ -109,7 +115,7 @@ namespace BounceDudes
             if (_special)
                 return;
 
-            this._special = (Time.time - (this._specialStartTime + this._specialDuration)) >= this._coolDownBetweenSpecials;
+			this._special = (Time.time - (this._specialStartTime + this._specialDuration)) >= this._coolDownBetweenSpecials;
 
             if (_special)
             {
@@ -120,7 +126,7 @@ namespace BounceDudes
 
 				// TODO: Quando especial acabar, voltar para -5.6 do Y Local e Deixar Heat com alpha 0
 				this._specialCover.transform.DOLocalMoveY (0, 0.2f);
-                this._specialStartTime = Time.time;
+				this._specialStartTime = Time.time;
                 this._currentForceMultiplier = this._maxShootMultiplier;
             }
         }
@@ -167,7 +173,7 @@ namespace BounceDudes
                 if (!this._canShoot)
                     return;
 
-				if (!this._holding && !this._waitingForAmmo && this._canShoot)
+				if (!this._holding)
                 {
                     this._holding = true;
                     this._currentForceMultiplier = this._minShootMultiplier;
@@ -210,13 +216,15 @@ namespace BounceDudes
 				//UnSetCanShoot();
 				this.UpdateSoldierNameUI();
 			}
-
+				
             this._weaponAnimator.SetTrigger("Reloading"); // Calls CallPrepareAmmunition() in mid animation
         }
+			
 
         //called from Animation
         public void SetCanShoot()
         {
+			this._animating = false;
             this._canShoot = true;
 			this._weaponAnimator.SetBool("CanHold", true);
         }
@@ -224,6 +232,7 @@ namespace BounceDudes
 		//called from Animation
         public void UnSetCanShoot()
         {
+			this._animating = true;
             this._canShoot = false;
 			this._weaponAnimator.SetBool("CanHold", false);
         }
@@ -323,12 +332,14 @@ namespace BounceDudes
 
         public void NewAmmo()
         {
-            if (this._waitingForAmmo)
-            {
-				//SetCanShoot ();
+			if (this._waitingForAmmo)
+			{
 				this._waitingForAmmo = false;
-                this.CallReloadAnimation();
 
+				if (this._animating)
+					return;
+
+                this.CallReloadAnimation();
 
             }
         }

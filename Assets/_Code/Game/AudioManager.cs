@@ -82,9 +82,9 @@ public class AudioManager : MonoBehaviour
         this.StartCoroutine(this.PlayMusicAfterFrame(index));
     }
 
-    public void StopCurrentAudio()
+	public void StopCurrentMusic(int musicIndex)
     {
-        SoundManager.StopAll();
+		SoundManager.StopLoopingMusic(MusicAudioSources[musicIndex]);
     }
 
     public IEnumerator PlayAfterFrame(int soundTypeIndex, int soundIndex)

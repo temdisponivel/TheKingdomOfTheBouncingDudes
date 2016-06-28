@@ -55,18 +55,20 @@ namespace BounceDudes
         {
             foreach (GameObject ammo in SoldiersBkp)
             {
-                this.AddAmmunition(ammo);
+				this.AddAmmunition (ammo);
+
             }
+				
         }
 
-        public void AddAmmunition(GameObject ammunition, bool recycleAnimation = false)
+        public void AddAmmunition(GameObject ammunition)
         {
             Soldier ammoSoldier = ammunition.GetComponent<Soldier>();
           
 
 			ammoSoldier.transform.DOMove (this._othersPoint.transform.position, ammoSoldier.TimeToTravel / 2).OnComplete (() => {
 
-				ammoSoldier.AmmunitionPosition = this._ammunitionClip.Count;
+				ammoSoldier.AmmunitionPosition = this._ammoClipCount;
 				this._ammunitionClip.Enqueue(ammoSoldier);
 				_ammoClipCount++;
 				this.ShootedSoldiers.Remove(ammoSoldier);

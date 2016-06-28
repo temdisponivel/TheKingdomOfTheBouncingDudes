@@ -55,6 +55,8 @@ namespace BounceDudes
 		public void Start(){
 			if (GameManager.Instance.CurrentLevel.Id != LevelId.FIFTEEN) // If not the Boss Level
 				AudioManager.Instance.PlayMusic(2);
+
+			this.UnpauseGame();
 		}
 			
         public void GameOver()
@@ -181,8 +183,10 @@ namespace BounceDudes
         
             if (WinPanelShown)
                 _winPanel.Hide();
+			
             else if (LoosePanelShown)
                 _loosePanel.Hide();
+			
             else if (PausePanelShown)
                 _pausePanel.Hide();
 
@@ -202,15 +206,16 @@ namespace BounceDudes
             
             if (WinPanelShown)
                 _winPanel.Hide();
+			
             else if (LoosePanelShown)
                 _loosePanel.Hide();
+			
             else if (PausePanelShown)
                 _pausePanel.Hide();
+			
             GameManager.Instance.LoadScene(GameManager.Instance.CurrentLevel.SceneName);
 
-			AudioManager.Instance.PlayMusic (2);
-
-			this.UnpauseGame();
+			//AudioManager.Instance.PlayMusic (2);
 
             this.Dispose();
             //SceneManager.LoadScene(GameManager.Instance.LastLevel.SceneName);
