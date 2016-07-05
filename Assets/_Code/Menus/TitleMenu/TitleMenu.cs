@@ -48,6 +48,7 @@ namespace BounceDudes
             if (GameManager.Instance.PassSplashScreen)
             {
                 this.PlayInterfaceSound(7);
+				_balloonAnimator.SetTrigger("CallOutro");
                 this._animator.SetTrigger("GoSplashToMain");
             }
             else
@@ -118,7 +119,7 @@ namespace BounceDudes
 
         public void Troop()
         {
-            GameManager.Instance.LoadScene("TroopMenu");
+            GameManager.Instance.LoadScene("CreditsMenu");
             //SceneManager.LoadScene("TroopMenu");
         }
 

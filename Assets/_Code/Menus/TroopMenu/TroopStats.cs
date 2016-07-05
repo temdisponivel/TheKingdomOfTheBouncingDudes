@@ -28,6 +28,7 @@ namespace BounceDudes
         {
             TroopStats.Instance = this;
 
+
             HorizontalScrollSnap.Instance.OnChangeSoldier += (soldier =>
             {
 				AudioManager.Instance.PlayInterfaceSound (0);
@@ -82,7 +83,7 @@ namespace BounceDudes
 
             //GameManager.Instance.SaveGame();
 			AudioManager.Instance.PlayInterfaceSound (0);
-            GameManager.Instance.LoadScene("TitleScreen"); 
+            GameManager.Instance.LoadScene("MapMenu"); 
 
 
         }

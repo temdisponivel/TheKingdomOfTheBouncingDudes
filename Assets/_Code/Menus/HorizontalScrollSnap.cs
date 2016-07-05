@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace UnityEngine.UI.Extensions
 {
+
     [RequireComponent(typeof(ScrollRect))]
     [AddComponentMenu("UI/Extensions/Horizontal Scroll Snap")]
     public class HorizontalScrollSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
@@ -50,6 +51,7 @@ namespace UnityEngine.UI.Extensions
         {
             yield return new WaitForEndOfFrame();
             _scroll_rect = gameObject.GetComponent<ScrollRect>();
+			_scroll_rect.scrollSensitivity = 0;
             _screensContainer = _scroll_rect.content;
             DistributePages();
 
@@ -74,11 +76,22 @@ namespace UnityEngine.UI.Extensions
 
             ChangeBulletsInfo(CurrentScreen());
 
-            if (NextButton)
-                NextButton.GetComponent<Button>().onClick.AddListener(() => { NextScreen(); });
+			if (NextButton) {
+				NextButton.GetComponent<Button> ().onClick.AddListener (() => {
+					NextScreen ();
+				});
 
-            if (PrevButton)
-                PrevButton.GetComponent<Button>().onClick.AddListener(() => { PreviousScreen(); });
+
+			}
+
+			if (PrevButton) {
+				PrevButton.GetComponent<Button> ().onClick.AddListener (() => {
+					PreviousScreen ();
+				});
+
+				PrevButton.SetActive (false);
+			}
+				
         }
 
         public void Awake()
@@ -121,28 +134,65 @@ namespace UnityEngine.UI.Extensions
         private bool fastSwipe = false; //to determine if a fast swipe was performed
 
 
+		protected void SetButtonsActive(int buttonIndex){
+			
+			if (buttonIndex == 0) { // NEXT
+				if (CurrentScreen () == _screens - 2)
+					NextButton.SetActive (false);
+				else
+					PrevButton.SetActive (true);
+			}
+			else { // PREVIOUS
+				if (CurrentScreen() == 1)
+					PrevButton.SetActive (false);
+				else
+					NextButton.SetActive (true);
+			}
+		}
+
+		protected void SetButtonsActiveSwipe(int buttonIndex){
+			
+			if (buttonIndex == 0) { // NEXT
+				if (CurrentScreen () == _screens - 1)
+					NextButton.SetActive (false);
+				else
+					PrevButton.SetActive (true);
+			}
+			else { // PREVIOUS
+				if (CurrentScreen() == 0)
+					PrevButton.SetActive (false);
+				else
+					NextButton.SetActive (true);
+			}
+		}
+
         //Function for switching screens with buttons
         public void NextScreen()
         {
-            if (CurrentScreen() < _screens - 1)
-            {
-                _lerp = true;
-                _lerp_target = _positions[CurrentScreen() + 1];
+			if (CurrentScreen () < _screens - 1) {
+				_lerp = true;
+				_lerp_target = _positions [CurrentScreen () + 1];
 
-                ChangeBulletsInfo(CurrentScreen() + 1);
-            }
+				ChangeBulletsInfo (CurrentScreen () + 1);
+
+				SetButtonsActive (0);
+			}
+
+
         }
 
         //Function for switching screens with buttons
         public void PreviousScreen()
         {
-            if (CurrentScreen() > 0)
-            {
-                _lerp = true;
-                _lerp_target = _positions[CurrentScreen() - 1];
+			if (CurrentScreen () > 0) {
+				_lerp = true;
+				_lerp_target = _positions [CurrentScreen () - 1];
 
-                ChangeBulletsInfo(CurrentScreen() - 1);
-            }
+				ChangeBulletsInfo (CurrentScreen () - 1);
+
+				SetButtonsActive (1);
+
+			}
         }
 
         //Because the CurrentScreen function is not so reliable, these are the functions used for swipes
@@ -154,6 +204,7 @@ namespace UnityEngine.UI.Extensions
                 _lerp_target = _positions[_currentScreen + 1];
 
                 ChangeBulletsInfo(CurrentScreen() + 1);
+
             }
         }
 
@@ -166,6 +217,7 @@ namespace UnityEngine.UI.Extensions
                 _lerp_target = _positions[_currentScreen - 1];
 
                 ChangeBulletsInfo(CurrentScreen() - 1);
+
             }
         }
 
@@ -235,17 +287,21 @@ namespace UnityEngine.UI.Extensions
             _screensContainer.GetComponent<RectTransform>().offsetMax = new Vector2(_dimension, 0f);
         }
 
+
         #region Interfaces
-        public void OnBeginDrag(PointerEventData eventData)
+		public void OnBeginDrag(PointerEventData eventData)
         {
+			
             _startPosition = _screensContainer.localPosition;
             _fastSwipeCounter = 0;
             _fastSwipeTimer = true;
             _currentScreen = CurrentScreen();
+
         }
 
-        public void OnEndDrag(PointerEventData eventData)
+		public void OnEndDrag(PointerEventData eventData)
         {
+			
             _startDrag = true;
             if (_scroll_rect.horizontal)
             {
@@ -283,17 +339,21 @@ namespace UnityEngine.UI.Extensions
                     _lerp_target = FindClosestFrom(_screensContainer.localPosition, _positions);
                 }
             }
+            
         }
 
         public void OnDrag(PointerEventData eventData)
         {
+			
             _lerp = false;
             if (_startDrag)
             {
                 OnBeginDrag(eventData);
                 _startDrag = false;
             }
+            
         }
         #endregion
+        
     }
 }

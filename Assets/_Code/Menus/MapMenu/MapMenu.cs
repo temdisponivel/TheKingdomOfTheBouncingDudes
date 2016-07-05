@@ -95,6 +95,13 @@ namespace BounceDudes
 			AudioManager.Instance.PlayInterfaceSound (0);
             GameManager.Instance.LoadScene("TitleScreen");
         }
+
+		public void Troop()
+		{
+			AudioManager.Instance.PlayInterfaceSound (0);
+			GameManager.Instance.LoadScene("TroopMenu");
+			//SceneManager.LoadScene("TroopMenu");
+		}
     }
 
 }
