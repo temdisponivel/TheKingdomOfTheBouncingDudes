@@ -11,6 +11,9 @@ namespace BounceDudes
     {
         public string _soldierName = "Vicenzito";
 
+		[TextArea(3, 10)]
+		public string _soldierDescription = "Ele é um troxa";
+
         protected int _ammunitionPosition = -1;
 
         public int AmmunitionPosition { get { return this._ammunitionPosition; } set { this._ammunitionPosition = value; } }
