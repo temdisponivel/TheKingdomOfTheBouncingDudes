@@ -50,10 +50,14 @@ namespace BounceDudes
 		public SpriteRenderer _specialHeatEffect;
 		public GameObject _specialCover;
 		public GameObject _specialCoverPosition;
+
+		public float _specialLimit = 100;
+		protected float _specialCurrentPoints = 0;
+
         public float _coolDownBetweenSpecials = 3f;
         public float _coolDownShoot = .3f;
         public float _specialDuration = 3f;
-        public bool _special = false;
+		protected bool _specialActive = false;
         public float _specialStartTime = 0;
 		protected float _timeWhenLoaded = 0;
 
@@ -71,6 +75,8 @@ namespace BounceDudes
         public int ShootCount { get; set; }
         public float ForceMultiplier { get { return this._currentForceMultiplier; } }
         public Quaternion WeaponRotation { get { return this.transform.rotation; } }
+
+		public float SpecialCurrentPoints { get { return this._specialCurrentPoints; } set { _specialCurrentPoints = Mathf.Clamp (value, 0, 100); } }
 
         public LineRenderer LineRenderer = null;
 
@@ -96,40 +102,45 @@ namespace BounceDudes
         public void Update()
         {
             this.ShootRoutine();
-
-            var cacheSpecial = _special;
-			this._special = this._special && (Time.time - this._specialStartTime) <= this._specialDuration;
-
-            if (cacheSpecial && !_special)
-            {
-                SpriteRenderer heatRenderer = this._specialHeatEffect;
-                Color heatColor = heatRenderer.color;
-                heatColor.a = 0;
-                heatRenderer.DOColor(heatColor, .2f);
-                this._specialCover.transform.DOLocalMoveY(-5.6f, .2f);
-            }
         }
 
-        public void SetSpecial()
+        public void CallSpecial() // Called by Button
         {
-            if (_special)
+			if (_specialActive)
                 return;
 
-			this._special = (Time.time - (this._specialStartTime + this._specialDuration)) >= this._coolDownBetweenSpecials;
+			//_specialReady = this._specialCurrentPoints >= this._specialLimit;
+			//this._special = (Time.time - (this._specialStartTime + this._specialDuration)) >= this._coolDownBetweenSpecials;
 
-            if (_special)
+			Debug.Log (this._specialCurrentPoints);
+
+			if (Weapon.Instance.SpecialCurrentPoints >= this._specialLimit)
             {
+				_specialActive = true;
+
                 SpriteRenderer heatRenderer = this._specialHeatEffect;
                 Color heatColor = heatRenderer.color;
                 heatColor.a = 1;
                 heatRenderer.DOColor(heatColor, this._specialDuration);
 
-				// TODO: Quando especial acabar, voltar para -5.6 do Y Local e Deixar Heat com alpha 0
 				this._specialCover.transform.DOLocalMoveY (0, 0.2f);
 				this._specialStartTime = Time.time;
                 this._currentForceMultiplier = this._maxShootMultiplier;
+
+				DOTween.To (()=> Weapon.Instance.SpecialCurrentPoints, x=> Weapon.Instance.SpecialCurrentPoints = x, 0, this._specialDuration).OnComplete(CompleteSpecial);
             }
         }
+
+		// Intelisense <Complete>
+		protected void CompleteSpecial()
+		{
+			_specialActive = false;
+			SpriteRenderer heatRenderer = this._specialHeatEffect;
+			Color heatColor = heatRenderer.color;
+			heatColor.a = 0;
+			heatRenderer.DOColor(heatColor, .2f);
+			this._specialCover.transform.DOLocalMoveY(-5.6f, .2f);
+		}
 
         /// <summary>
         /// Perform the logic of shooting.
@@ -139,7 +150,7 @@ namespace BounceDudes
             if (GameManager.Instance.State == GameState.PAUSED)
                 return;
 
-            if (_special)
+            if (_specialActive)
             {
                 if (Time.time - _lastTimeShoot >= this._coolDownShoot)
                     this.ShootSpecial();

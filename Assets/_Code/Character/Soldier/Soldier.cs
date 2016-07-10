@@ -4,25 +4,31 @@ using UnityEngine;
 
 namespace BounceDudes
 {
+
+
     /// <summary>
     /// Base class for all soldiers.
     /// </summary>
     public class Soldier : Character
     {
+		public SoldierClassEnum _soldierClass;
         public string _soldierName = "Vicenzito";
 
 		[TextArea(3, 10)]
 		public string _soldierDescription = "Ele é um troxa";
 
         protected int _ammunitionPosition = -1;
-
         public int AmmunitionPosition { get { return this._ammunitionPosition; } set { this._ammunitionPosition = value; } }
+
+		protected float _maxHP = 0;
 
         private bool _shooted = false;
 
         public override void Start()
         {
             base.Start();
+
+			_maxHP = this.HP;
 
             if (!_shooted && !_isSpecial)
                 this.TurnIntoAmmunition();
@@ -48,9 +54,10 @@ namespace BounceDudes
         {
             string collTag = collision.gameObject.tag;
 
-            if (collTag == TagAndLayer.BASE)
-                return;
-
+			if (collTag == TagAndLayer.BASE) {
+				AudioManager.Instance.PlayInterfaceSound (5);
+				return;
+			}
 
             if (collTag == TagAndLayer.ENEMY_BASE)
             {
@@ -80,7 +87,6 @@ namespace BounceDudes
                     return;
 
                 Monster monster = collider.gameObject.GetComponent<Monster>();
-                this.HP -= 1;
                 monster.HP -= 1;
 
 				monster.PlayHitSound ();
@@ -90,12 +96,43 @@ namespace BounceDudes
                 ComboManager.Instance.AddHit();
                 if (monster.HP <= 0)
                 {
+					// Elf Skill
+					if (this._soldierClass == SoldierClassEnum.PRECISION) {
+						// TODO: Call elf skill effect
+						this.HP += 1;
+					}
+
+					AddSpecialPoints (2f);
+
                     LevelManager.Instance.KillEnemy(this);
                     ComboManager.Instance.AddKill();
                     ComboManager.Instance.AddElementKill();
                 }
+
+
+				AddSpecialPoints(2f);
+				this.HP -= 1;
+
+				// Dwarf Skill
+				if (this._soldierClass == SoldierClassEnum.BERSERK && this.HP == this._maxHP / 2f) {
+					this._rigid.AddForce(this._rigid.velocity.normalized * 100f, ForceMode2D.Force);
+				}
             }
         }
+
+		protected void AddSpecialPoints(float value){
+
+			float auxValue = value;
+
+			// Human Skill
+			if (this._soldierClass == SoldierClassEnum.RESEARCH) {
+				auxValue *= 1.75f;
+			}
+
+			Debug.Log (auxValue);
+			Debug.Log (Weapon.Instance.SpecialCurrentPoints);
+			Weapon.Instance.SpecialCurrentPoints += auxValue;
+		}
 
         public override void LateUpdate()
         {

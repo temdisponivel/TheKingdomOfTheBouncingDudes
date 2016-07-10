@@ -56,8 +56,14 @@ namespace BounceDudes
                 }
             }
 
-            var percent = 1f / nodes.Length;
-            Scroll.normalizedPosition = Vector2.one * percent * levelsUnlocked.Length;
+			if (!GameManager.Instance.FromMainMenuToMapMenu) {
+				var percent = 1f / nodes.Length;
+				Scroll.normalizedPosition = Vector2.one * percent * levelsUnlocked.Length;
+			}
+
+			GameManager.Instance.FromMainMenuToMapMenu = false;
+
+
         }
 
         public void SelectNode(LevelNode node)

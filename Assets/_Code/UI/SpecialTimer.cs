@@ -17,14 +17,14 @@ namespace BounceDudes
         public void Start()
         {
             this.MaxSizeX = this.transform.localScale.x;
-            this.CoolDownSpecial = Weapon.Instance._coolDownBetweenSpecials + Weapon.Instance._specialDuration;
+			this.CoolDownSpecial = Weapon.Instance._specialLimit;
         }
 
         public void LateUpdate()
         {
             var newScale = new Vector3()
             {
-                x = MaxSizeX * ((Time.time - Weapon.Instance._specialStartTime) / CoolDownSpecial),
+				x = MaxSizeX * Weapon.Instance.SpecialCurrentPoints / CoolDownSpecial,
                 y = this.transform.localScale.y,
                 z = this.transform.localScale.z
             };

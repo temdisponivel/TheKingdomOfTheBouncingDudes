@@ -64,8 +64,7 @@ namespace BounceDudes
             }
 				
 
-            int count = levelInfo.ChallengesCompleted.Count;
-			Debug.Log (count);
+			int count = levelInfo.GetCountChallengesCompleted;
             switch (count)
             {
 			case 1:

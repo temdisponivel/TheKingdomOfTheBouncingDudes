@@ -113,13 +113,16 @@ namespace BounceDudes
 
         public void Play()
         {
+			GameManager.Instance.FromMainMenuToMapMenu = true;
             GameManager.Instance.LoadScene("MapMenu");
+			this.PlayInterfaceSound(2);
             //SceneManager.LoadScene("MapMenu");
         }
 
-        public void Troop()
+        public void Credits()
         {
             GameManager.Instance.LoadScene("CreditsMenu");
+			this.PlayInterfaceSound(0);
             //SceneManager.LoadScene("TroopMenu");
         }
 
@@ -127,24 +130,29 @@ namespace BounceDudes
         {
             this._shade.transform.DOScale(1, 0.2f);
             this.ConfigPanel.transform.DOMove(this.ConfigShownPosition.transform.position, 0.5f);
+			this.PlayInterfaceSound(0);
         }
 
         public void HideSetting()
         {
             this._shade.transform.DOScale(0, 0.2f);
             this.ConfigPanel.transform.DOMove(this.ConfigHiddenPosition.transform.position, 0.5f);
+			this.PlayInterfaceSound(0);
+
         }
 
         public void ToggleMusic(bool on)
         {
             GameManager.Instance.MusicVolume = on;
             AudioManager.Instance.ToggleMusicVolume();
+			this.PlayInterfaceSound(0);
         }
 
         public void ToggleSound(bool on)
         {
             GameManager.Instance.SoundVolume = on;
             AudioManager.Instance.ToggleSoundVolume();
+			this.PlayInterfaceSound(0);
         }
 
         public void PlayInterfaceSound(int index)

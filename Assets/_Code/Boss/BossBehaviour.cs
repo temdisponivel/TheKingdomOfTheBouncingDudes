@@ -132,7 +132,7 @@ namespace BounceDudes
 
             // SOUND: Stop Music and Play BOB Voice!
 			AudioManager.Instance.StopCurrentMusic(3);
-            AudioManager.Instance.PlaySound(3, 1);
+			AudioManager.Instance.PlayCharacterSound (1);
 			this._bossBody.transform.DOMove(this._basePosition.transform.position, 0.5f).OnComplete(this.GameOverComplete).SetEase(Ease.InBack);
 			_bossTween = null;
         }
@@ -140,7 +140,7 @@ namespace BounceDudes
         protected void GameOverComplete()
         {
             this._blackOut.enabled = true;
-            AudioManager.Instance.PlaySound(3, 0);
+			AudioManager.Instance.PlayCharacterSound (0);
 
             LevelManager.Instance.GameOver();
         }
@@ -153,7 +153,7 @@ namespace BounceDudes
             this._hitCount++;
             this._bossFaceSprite.sprite = this._faceHit;
 
-			AudioManager.Instance.PlaySound(1, 13);
+			AudioManager.Instance.PlayMonsterSound (13);
 			AudioManager.Instance.PlayInterfaceSound (6);
             //CanTakeHit = true;
             this.StartCoroutine(this.WaitForAndCall(1f, () =>
@@ -202,7 +202,7 @@ namespace BounceDudes
             }
             else if (_hp <= _secondHpThreshold && _hp > _thirdHpThreshold)
             {
-				AudioManager.Instance.PlaySound(1, 12);
+				AudioManager.Instance.PlayMonsterSound (12);
                 this._bossFaceSprite.sprite = this._faceAngry;
                 this._bossAnimator.SetBool("Angry", true);
                 this._bossArmAngry.GetComponent<SpriteRenderer>().enabled = true;

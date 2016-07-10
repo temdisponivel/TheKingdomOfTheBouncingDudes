@@ -19,5 +19,7 @@ namespace BounceDudes
         public bool Finished { get; set; }
         public Dictionary<Challenge, int[]> ChallengesCompleted { get; set; }
         public int Star { get; set; }
+
+		public int GetCountChallengesCompleted { get { return (this.ChallengesCompleted != null) ?  this.ChallengesCompleted.Count : 0; } }
     }
 }

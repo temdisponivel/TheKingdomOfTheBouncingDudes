@@ -87,7 +87,7 @@ namespace BounceDudes
 			
 			this.SetSpawnSoundValues ();
 			int random = (int)Random.Range (_soundMinValue, _soundMaxValue);
-			AudioManager.Instance.PlaySound (1, random);
+			AudioManager.Instance.PlayMonsterSound (random);
 
 		}
 
@@ -95,10 +95,11 @@ namespace BounceDudes
 
 			this.SetHitSoundValues ();
 			int random = (int)Random.Range (_soundMinValue, _soundMaxValue);
-			AudioManager.Instance.PlaySound (1, random);
+			AudioManager.Instance.PlayMonsterSound (random);
 
 		}
 
+		// SOUNDS BASED ON THE AUDIO MANAGER > MONSTERS SFX ORDER
 		protected void SetSpawnSoundValues(){
 			switch (_monsterType) {
 			case 0:

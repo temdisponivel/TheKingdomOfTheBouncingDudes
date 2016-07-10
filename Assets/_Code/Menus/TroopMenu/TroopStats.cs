@@ -22,7 +22,17 @@ namespace BounceDudes
         public Image SpeedImage;
         public Image ArmorImage;
 
+		public GameObject DescriptionPanel;
+		public Image ManIcon;
+		public Image TextIcon;
+
+		public Text SoldierDescriptionText;
+		public Text SoldierClassNameText;
+		public Text SoldierClassDescriptionText;
+
         public Soldier CurrentSoldier;
+
+		protected bool InfoShown = false;
 
         public IEnumerator Start()
         {
@@ -47,8 +57,13 @@ namespace BounceDudes
 			
             this.CurrentSoldier = soldier;
             this.NameText.text = this.CurrentSoldier._soldierName;
+
+			this.SoldierDescriptionText.text = this.CurrentSoldier._soldierDescription;
+			this.SoldierClassNameText.text = GameManager.Instance.AllSoldierClasses[(int)this.CurrentSoldier._soldierClass]._className;
+			this.SoldierClassDescriptionText.text = GameManager.Instance.AllSoldierClasses[(int)this.CurrentSoldier._soldierClass]._classDescription;
+
             var delta = this.SizeImage.GetComponent<RectTransform>().sizeDelta;
-			this.SizeImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = this.CurrentSoldier._size * 67.8f, y = delta.y };
+			this.SizeImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = this.CurrentSoldier._size * 67.25f, y = delta.y };
             delta = this.SpeedImage.GetComponent<RectTransform>().sizeDelta;
             this.SpeedImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = this.CurrentSoldier._statSpeed * 68.5f, y = delta.y };
             delta = this.ArmorImage.GetComponent<RectTransform>().sizeDelta;
@@ -80,13 +95,24 @@ namespace BounceDudes
 
         public void Return()
         {
-
             //GameManager.Instance.SaveGame();
 			AudioManager.Instance.PlayInterfaceSound (0);
             GameManager.Instance.LoadScene("MapMenu"); 
 
-
         }
+
+		public void ToggleInfo()
+		{
+			AudioManager.Instance.PlayInterfaceSound (0);
+
+			InfoShown = !InfoShown;
+
+			DescriptionPanel.gameObject.SetActive (InfoShown);
+
+			ManIcon.enabled = InfoShown;
+			TextIcon.enabled = !InfoShown;
+
+		}
 			
     }
 }

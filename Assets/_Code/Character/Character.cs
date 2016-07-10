@@ -134,6 +134,12 @@ namespace BounceDudes
             _minSpeed = _speed / 2f;
         }
 
+		public void IncrementMaxMinSpeed(float value)
+		{
+			_maxSpeed = (_speed + value) * 2f;
+			_minSpeed = (_speed + value) / 2f;
+		}
+
 
         /// <summary>
         /// The initial state of every character. Also called when animating "dead" projectiles or taking them out from the field. 
@@ -145,6 +151,7 @@ namespace BounceDudes
             {
                 this.CurrentSortingOrder = this._spriteOnFieldOrder;
                 _transitioning = false;
+
             }));
             
             this._onBarrel = false;

@@ -18,12 +18,11 @@ namespace BounceDudes
         public Character _last;
         
         public int _dead = 0;
-        public int _maxShoots;
+        public int _maxEnemies;
 
         public void Start()
         {
-            this._maxShoots = this._waves.Sum(w => w._spawns.Count);
-            Debug.Log(_maxShoots);
+            this._maxEnemies = this._waves.Sum(w => w._spawns.Count);
             this.StartCoroutine(this.WaitSeconds(this._startDelay, this.StartWave));
         }
 
@@ -71,7 +70,7 @@ namespace BounceDudes
         {
             last.OnDie -= this.OnLastDie;
             _dead++;
-            if (_dead == _maxShoots)
+            if (_dead == _maxEnemies)
                 LevelManager.Instance.FinishLevel();
         }
     }

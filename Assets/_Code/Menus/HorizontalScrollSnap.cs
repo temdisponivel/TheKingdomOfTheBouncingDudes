@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using BounceDudes;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace UnityEngine.UI.Extensions
 {
