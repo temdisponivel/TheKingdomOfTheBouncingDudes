@@ -72,6 +72,8 @@ namespace BounceDudes
 			this.SoldierClassNameText.text = GameManager.Instance.AllSoldierClasses[(int)this.CurrentSoldier._soldierClass]._className;
 			this.SoldierClassDescriptionText.text = GameManager.Instance.AllSoldierClasses[(int)this.CurrentSoldier._soldierClass]._classDescription;
 
+			this.TranslateFields ();
+
             var delta = this.SizeImage.GetComponent<RectTransform>().sizeDelta;
 			this.SizeImage.GetComponent<RectTransform>().sizeDelta = new Vector2() { x = this.CurrentSoldier._size * 67.25f, y = delta.y };
             delta = this.SpeedImage.GetComponent<RectTransform>().sizeDelta;
@@ -119,9 +121,20 @@ namespace BounceDudes
 
 			DescriptionPanel.gameObject.SetActive (InfoShown);
 
+			this.TranslateFields ();
+
 			ManIcon.enabled = InfoShown;
 			TextIcon.enabled = !InfoShown;
 
+		}
+
+		public void TranslateFields(){
+			if (!InfoShown)
+				return;
+			
+			this.SoldierDescriptionText.GetComponent<TextToTraslate> ().Translate();
+			this.SoldierClassNameText.GetComponent<TextToTraslate> ().Translate();
+			this.SoldierClassDescriptionText.GetComponent<TextToTraslate> ().Translate();
 		}
 			
     }

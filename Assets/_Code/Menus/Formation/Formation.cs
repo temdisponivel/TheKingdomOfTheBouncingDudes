@@ -60,6 +60,7 @@ namespace BounceDudes
 
             this.BattleButton.enabled = false;
             this.TextNameLevel.text = GameManager.Instance.CurrentLevel.Name;
+			this.TextNameLevel.GetComponent<TextToTraslate> ().Translate ();
         }
 
 		void Update(){

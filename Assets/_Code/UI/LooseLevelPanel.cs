@@ -23,8 +23,8 @@ namespace BounceDudes
 
         public void UpdateInfo(LevelInformation levelInfo)
         {
-            this.LooseText.text =
-                GameManager.Instance.LooseGameMessages[Random.Range(0, GameManager.Instance.LooseGameMessages.Count)];
+            this.LooseText.text = GameManager.Instance.LooseGameMessages[Random.Range(0, GameManager.Instance.LooseGameMessages.Count)];
+			this.LooseText.GetComponent<TextToTraslate> ().Translate ();
         }
 
         public void Show()

@@ -89,6 +89,9 @@ namespace BounceDudes
             this._levelName.text = level.Name;
             this._levelDesc.text = level.Description;
 
+			this._levelName.GetComponent<TextToTraslate> ().Translate ();
+			this._levelDesc.GetComponent<TextToTraslate> ().Translate ();
+
             switch (levelInfo.Star)
             {
                 case 1:
@@ -113,10 +116,13 @@ namespace BounceDudes
                     break;
             }
 
+			var challengesComplete = GameManager.Instance.ChallengesComplete;
+
 			Challenge currentChallenge = level.SoldiersByChallengeHackOne._challenge;
+			currentChallenge.SetDescription ();
             _challengeDescOne.text = currentChallenge.Description;
-            var challengesComplete = GameManager.Instance.ChallengesComplete;
-            _challengeImageOne.enabled = true;
+			_challengeDescOne.GetComponent<TextToTraslate> ().TranslateWithOneArgument (currentChallenge._x);
+
             ChallengeOneSoldierIcon.sprite = GameManager.Instance.GetRepresentationOfSoldier(level.SoldiersByChallengeHackOne._soldierToGive[0]).GetComponent<Image>().sprite;
             if (challengesComplete.Contains(currentChallenge.Id))
             {
@@ -134,7 +140,10 @@ namespace BounceDudes
             }
 
             currentChallenge = level.SoldiersByChallengeHackTwo._challenge;
+			currentChallenge.SetDescription ();
             _challengeDescTwo.text = currentChallenge.Description;
+			_challengeDescTwo.GetComponent<TextToTraslate> ().TranslateWithOneArgument (currentChallenge._x);
+
             ChallengeTwoSoldierIcon.sprite = GameManager.Instance.GetRepresentationOfSoldier(level.SoldiersByChallengeHackTwo._soldierToGive[0]).GetComponent<Image>().sprite;
             if (challengesComplete.Contains(currentChallenge.Id))
             {
@@ -153,7 +162,10 @@ namespace BounceDudes
             }
 
             currentChallenge = level.SoldiersByChallengeHackThree._challenge;
+			currentChallenge.SetDescription ();
             _challengeDescThree.text = currentChallenge.Description;
+			_challengeDescThree.GetComponent<TextToTraslate> ().TranslateWithOneArgument (currentChallenge._x);
+
             ChallengeThreeSoldierIcon.sprite = GameManager.Instance.GetRepresentationOfSoldier(level.SoldiersByChallengeHackThree._soldierToGive[0]).GetComponent<Image>().sprite;
             if (challengesComplete.Contains(currentChallenge.Id))
             {

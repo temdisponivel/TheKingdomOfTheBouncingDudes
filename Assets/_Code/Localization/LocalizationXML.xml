@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+
+<languages>
+            <English>
+
+            	 <!-- True Splash Screen -->
+                <string name="TSS_Description">Made by&#xA;Team Bouncing Dudes&#xA;&#xA;Version 2.0</string>
+
+               	 <!-- Title Screen ( Short Space ) -->
+                <string name="TS_Balloon">tap to start</string>
+                <string name="TS_Sound">Sound</string>
+                <string name="TS_Music">Music</string>
+                <string name="TS_Back">back</string>
+                <string name="TS_Map">map</string>
+                <string name="TS_Credits">credits</string>
+                <string name="TS_Medals">medals</string>
+
+                <!-- Credits Menu -->
+                <string name="CM_Header">CREDITS</string>
+                <string name="CM_Body">ART&#xA;César F. Alasmar&#xA;&#xA;MUSIC, SFX&#xA;Vicenzo R. Canineo&#xA;&#xA;PROGRAMMING&#xA;Matheus de Almeida&#xA;Victor D. Savariego</string>
+                <string name="CM_FindUs">FIND US ON</string>
+
+                <!-- Map Menu -->
+                <string name="MM_TroopButton">soldiers</string>
+                <string name="MM_PlayButton">play</string>
+                <string name="MM_BeatChallenges">beat challenges to unlock</string>
+
+                <!-- Map Menu // LEVEL DESCRIPTIONS -->
+                <string name="LD_Level00_Title">DEY WANT MY GOLD</string>
+                <string name="LD_Level00_Description">These creatures are coming to take my gold stash. BUT THEY NEVER WILL! Hehehe</string>
+
+                <string name="LD_Level01_Title">BAD</string>
+                <string name="LD_Level01_Description">They are bad :(</string>
+
+                <string name="LD_Level02_Title">FAST BAD</string>
+                <string name="LD_Level02_Description">Now they are bad and fast :((</string>
+
+                <string name="LD_Level03_Title">FAST</string>
+                <string name="LD_Level03_Description">Now I am fast too! :)</string>
+
+                <string name="LD_Level04_Title">HAHA</string>
+                <string name="LD_Level04_Description">HAHAHAHAHAHAHAHAHA</string>
+
+                <string name="LD_Level05_Title">MOR BAD</string>
+                <string name="LD_Level05_Description">I can't believe that they can fly now!! :((</string>
+
+                <string name="LD_Level06_Title">HIT</string>
+                <string name="LD_Level06_Description">Let me ~ACE~ those dummies :B</string>
+
+                <string name="LD_Level07_Title">SLO</string>
+                <string name="LD_Level07_Description">~Let it go, let it go!~ (Note to myself: I should write more songs!)</string>
+
+                <string name="LD_Level08_Title">PULL</string>
+                <string name="LD_Level08_Description">I hope that it doesn't create a black hole... :I</string>
+
+                <string name="LD_Level09_Title">MOR SHOTS</string>
+                <string name="LD_Level09_Description">This invention is really nice! I should win the King Science Awards this year too!</string>
+
+                <string name="LD_Level10_Title">PORTAL</string>
+                <string name="LD_Level10_Description">~This was a triumph, I'm making a note here: Huge success.~</string>
+
+                <string name="LD_Level11_Title">BEST TOWER</string>
+                <string name="LD_Level11_Description">Now THIS is something worth of a KSA! Hehehe, I love this one :B</string>
+
+                <string name="LD_Level12_Title">SEPARATE BAD</string>
+                <string name="LD_Level12_Description">Divide and conquer, just like Mommy E. always says!</string>
+
+                <string name="LD_Level13_Title">MANY BAD</string>
+                <string name="LD_Level13_Description">Argh, so many bads, annoyiiing :(((</string>
+
+                <string name="LD_Level14_Title">GET OUT PLS</string>
+                <string name="LD_Level14_Description">Pls :((((((((</string>
+
+                <string name="LD_Level15_Title">BOB</string>
+                <string name="LD_Level15_Description">Oh no, I can already smell him! D:</string>
+
+                 <!-- Map Menu // CHALLENGES ( Short Space ) -->
+                 <string name="LD_Challenge_SurviveHP">Survive with {0}+ HP</string>
+                 <string name="LD_Challenge_GetCombo">Get a {0}x Combo</string>
+                 <string name="LD_Challenge_ShootXTimes">Shoot {0} times or less</string>
+                 <string name="LD_Challenge_DefeatEnemies">Defeat {0} enemies</string>
+
+                 <!-- Troop Menu ( Short Space ) -->
+                 <string name="TM_Size">SIZE</string>
+                 <string name="TM_Speed">SPEED</string>
+                 <string name="TM_Armor">ARMOR</string>
+
+                 <!-- Troop Menu // SOLDIER DESCRIPTIONS -->
+                 <string name="TM_Soldier_Helga_Description">Sign: Leo&#xA;Spirit Animal: Horse&#xA;"I need to keep an eye on my brothers, or else... gosh."</string>
+                 <string name="TM_Soldier_Balfur_Description">Sign: Leo&#xA;Spirit Animal: Pig&#xA;"My favorite hobby is not get killed by monsters."</string>
+                 <string name="TM_Soldier_Belfur_Description">Sign: Leo&#xA;Spirit Animal: Michael Cera&#xA;"Launch me, launch me!! Yeeah! :D"</string>
+
+                 <string name="TM_Soldier_Tomiel_Description">Sign: Gemini&#xA;Spirit Animal: Otter&#xA;"I fell a little too big in that cannon :("</string>
+                 <string name="TM_Soldier_Tamiel_Description">Sign: Gemini&#xA;Spirit Animal: Owl&#xA;"Hitting those monsters really isn't for me :("</string>
+                 <string name="TM_Soldier_Tumiel_Description">Sign: Gemini&#xA;Spirit Animal: Courage the Cowardly Dog&#xA;"I get motion sickness when launched :("</string>
+
+                 <string name="TM_Soldier_Marta_Description">Sign: Sagittarius&#xA;Spirit Animal: Ox&#xA;"TRY AND HIT ME, MONSTERS!! :@"</string>
+                 <string name="TM_Soldier_Tyson_Description">Sign: Sagittarius&#xA;Spirit Animal: Chamaleon&#xA;"Well, my mom was right: going to college would've been better."</string>
+                 <string name="TM_Soldier_Taison_Description">Sign: Sagittarius&#xA;Spirit Animal: Bruce Lee&#xA;"I hate this! Argh, argh, AAARGH! ò.ó"</string>
+
+                 <string name="TM_Soldier_Obar_Description">Sign: Cancer&#xA;Spirit Animal: Turtle&#xA;"This armor is great! Hard to go to the bathroom though..."</string>
+                 <string name="TM_Soldier_MEmily_Description">Sign: Scorpio&#xA;Spirit Animal: Muriel Bagge&#xA;"Flying is really fun! (y)"</string>
+
+                 <string name="TM_Soldier_Eshelaa_Description">Sign: Aries&#xA;Spirit Animal: Hawk&#xA;"I do not play on duty."</string>
+                 <string name="TM_Soldier_Legolar_Description">Sign: Libra&#xA;Spirit Animal: Monkey&#xA;"George, george, george of the jungle..."</string>
+
+                 <string name="TM_Soldier_Nilpert_Description">Sign: Capricorn&#xA;Spirit Animal: Magpie&#xA;"Rocking, rocking and rolling, down to the enemy I'm strolling..."</string>
+                 <string name="TM_Soldier_Margaret_Description">Sign: Pisces&#xA;Spirit Animal: Mafalda&#xA;"Err... Ahn... Ok."</string>
+
+                 <string name="TM_Soldier_Skullsmasher_Description">Sign: Taurus&#xA;Spirit Animal: Rock&#xA;"..."</string>
+                 <string name="TM_Soldier_SirBeretta_Description">Sign: Aquarius&#xA;Spirit Animal: Rage&#xA;"ARRRRRGHHHHHHH!!!!!!!"</string>
+
+                 <string name="TM_Soldier_Galadriel_Description">Sign: Scorpio&#xA;Spirit Animal: Lotus Flower&#xA;"Nerf this!"</string>
+                 <string name="TM_Soldier_Saske_Description">Sign: Leo&#xA;Spirit Animal: Naruto&#xA;"Revenge is everything, failure is nothing!"</string>
+
+                 <string name="TM_Soldier_SirVicenzito_Description">Sign: Gemini&#xA;Spirit Animal: Fox&#xA;"I can't really see. But that doesn't change much :I"</string>
+                 <string name="TM_Soldier_LadyCatsby_Description">Sign: Virgo&#xA;Spirit Animal: Cats&#xA;"Meow meow, Hisss hisss :3"</string>
+
+                 <!-- Troop Menu // SOLDIER CLASS -->
+                 <string name="TM_Class_Berserk_Name">BERSERK (Dwarf)</string>
+                 <string name="TM_Class_Berserk_Description">Gets faster when with low Armor.</string>
+
+                 <string name="TM_Class_Precision_Name">PRECISION (Elf)</string>
+                 <string name="TM_Class_Precision_Description">Final blows do not reduce Armor.</string>
+
+  				 <string name="TM_Class_Research_Name">RESEARCH (Human)</string>
+                 <string name="TM_Class_Research_Description">Collects extra Special Cannon Points.</string>
+
+                 <!-- Formation Menu -->
+                 <string name="FM_BattleButton">battle</string>
+
+                 <!-- Combat Field ( Short Space )-->
+                 <string name="CF_Combo">COMBO</string>
+                 <string name="CF_Shots">SHOTS</string>
+                 <string name="CF_Paused">PAUSED</string>
+                 <string name="CF_Unlocked">Unlocked:</string>
+
+                 <!-- Combat Field // LOSE MESSAGES-->
+                 <string name="CF_LoseMessage_0">You get nothing, good day sir!</string>
+                 <string name="CF_LoseMessage_1">Try again :(</string>
+                 <string name="CF_LoseMessage_2">They are not that smart you know...</string>
+                 <string name="CF_LoseMessage_3">YOU SHALL NOT PASS!</string>
+                 <string name="CF_LoseMessage_4">Error 404 Victory not found.</string>
+                 <string name="CF_LoseMessage_5">BOB wins, this time.</string>
+                 <string name="CF_LoseMessage_6">Hello darkness my old friend...</string>
+                 <string name="CF_LoseMessage_7">All your base are belong to BOB</string>
+                 <string name="CF_LoseMessage_8">Mistakes were made.</string>
+                 <string name="CF_LoseMessage_9">You died...&#xA;*not actually*</string>
+                
+            </English>
+
+
+            <Portuguese>
+
+                <!-- True Splash Screen -->
+                <string name="TSS_Description">Feito por&#xA;Time Bouncing Dudes&#xA;&#xA;Versão 2.0</string>
+
+               	 <!-- Title Screen ( Short Space ) -->
+                <string name="TS_Balloon">toque para jogar</string>
+                <string name="TS_Sound">Som</string>
+                <string name="TS_Music">Música</string>
+                <string name="TS_Back">voltar</string>
+                <string name="TS_Map">mapa</string>
+                <string name="TS_Credits">créditos</string>
+                <string name="TS_Medals">medalhas</string>
+
+                <!-- Credits Menu -->
+                <string name="CM_Header">CRÉDITOS</string>
+                <string name="CM_Body">ARTE&#xA;César F. Alasmar&#xA;&#xA;MÚSICA, SFX&#xA;Vicenzo R. Canineo&#xA;&#xA;PROGRAMAÇÃO&#xA;Matheus de Almeida&#xA;Victor D. Savariego</string>
+                <string name="CM_FindUs">ACHE-NOS EM</string>
+
+                <!-- Map Menu -->
+                <string name="MM_TroopButton">soldados</string>
+                <string name="MM_PlayButton">jogar</string>
+                <string name="MM_BeatChallenges">termine desafios e libere-os</string>
+
+                <!-- Map Menu // LEVEL DESCRIPTIONS -->
+                <string name="LD_Level00_Title">ELIS QUEREM MEU OURO</string>
+                <string name="LD_Level00_Description">Essas criaturas estão vindo para pegar meu ouro! MAS ELES NUNCA CONSEGUIRÃO! Hehehe</string>
+
+                <string name="LD_Level01_Title">MAU</string>
+                <string name="LD_Level01_Description">Eles são maus :(</string>
+
+                <string name="LD_Level02_Title">MAU VELOZ</string>
+                <string name="LD_Level02_Description">Agora eles são maus e velozes :((</string>
+
+                <string name="LD_Level03_Title">VELOZ</string>
+                <string name="LD_Level03_Description">Agora eu tenho velocidade também! :)</string>
+
+                <string name="LD_Level04_Title">HAHA</string>
+                <string name="LD_Level04_Description">HAHAHAHAHAHAHAHAHA</string>
+
+                <string name="LD_Level05_Title">MAIS MAU</string>
+                <string name="LD_Level05_Description">Não acredito que eles podem voar agora!! :((</string> 
+
+                <string name="LD_Level06_Title">ACERTO</string>
+                <string name="LD_Level06_Description">Deixa eu ~acertar em cheio~ esses tontos :B</string> 
+
+                <string name="LD_Level07_Title">DEVAGA</string>
+                <string name="LD_Level07_Description">~Livre estou, livre estou!~ (Nota pra mim: Eu deveria escrever mais canções!)</string> 
+
+                <string name="LD_Level08_Title">PUXAR</string>
+                <string name="LD_Level08_Description">Espero que não crie um buraco negro... :I</string> 
+
+                <string name="LD_Level09_Title">MAIS TIRO</string>
+                <string name="LD_Level09_Description">Essa invenção é bem bacana! Eu devo ganhar o Festival de Ciência de Rei esse ano também!</string> 
+
+                <string name="LD_Level10_Title">PORTAL</string>
+                <string name="LD_Level10_Description">~Isso foi um triunfo, estou anotando aqui: Grande sucesso.~</string> 
+
+                <string name="LD_Level11_Title">MELHOR TORRE</string>
+                <string name="LD_Level11_Description">Agora ISSO sim vale um o prêmio do FCR! Hehehe, minha favorita :B</string>
+
+                <string name="LD_Level12_Title">MAU SEPARADO</string>
+                <string name="LD_Level12_Description">Dividir e conquistar, do jeito que a Mamãe E. sempre fala!</string>
+
+                <string name="LD_Level13_Title">MUITOS MAU</string>
+                <string name="LD_Level13_Description">Aaargh, quantos maus, irritaaaante :(((</string> 
+
+                <string name="LD_Level14_Title">SAI PFV</string>
+                <string name="LD_Level14_Description">Pfv :((((((((</string>
+
+                <string name="LD_Level15_Title">BOB</string>
+                <string name="LD_Level15_Description">Ah não, já da pra sentir o cheiro dele! D:</string> 
+
+                 <!-- Map Menu // CHALLENGES ( Short Space ) -->
+                 <string name="LD_Challenge_SurviveHP">Survive with {0}+ HP</string>
+                 <string name="LD_Challenge_GetCombo">Get a {0}x Combo</string>
+                 <string name="LD_Challenge_ShootXTimes">Shoot {0} times or less</string>
+                 <string name="LD_Challenge_DefeatEnemies">Defeat {0} enemies</string>
+
+                 <!-- Troop Menu ( Short Space ) -->
+                 <string name="TM_Size">SIZE</string>
+                 <string name="TM_Speed">SPEED</string>
+                 <string name="TM_Armor">ARMOR</string>
+
+                 <!-- Troop Menu // SOLDIER DESCRIPTIONS -->
+                 <string name="TM_Soldier_Helga_Description">Sign: Leo&#xA;Spirit Animal: Horse&#xA;"I need to keep an eye on my brothers, or else... gosh."</string>
+                 <string name="TM_Soldier_Balfur_Description">Sign: Leo&#xA;Spirit Animal: Pig&#xA;"My favorite hobby is not get killed by monsters."</string>
+                 <string name="TM_Soldier_Belfur_Description">Sign: Leo&#xA;Spirit Animal: Michael Cera&#xA;"Launch me, launch me!! Yeeah! :D"</string>
+
+                 <string name="TM_Soldier_Tomiel_Description">Sign: Gemini&#xA;Spirit Animal: Otter&#xA;"I fell a little too big in that cannon :("</string>
+                 <string name="TM_Soldier_Tamiel_Description">Sign: Gemini&#xA;Spirit Animal: Owl&#xA;"Hitting those monsters really isn't for me :("</string>
+                 <string name="TM_Soldier_Tumiel_Description">Sign: Gemini&#xA;Spirit Animal: Courage the Cowardly Dog&#xA;"I get motion sickness when launched :("</string>
+
+                 <string name="TM_Soldier_Marta_Description">Sign: Sagittarius&#xA;Spirit Animal: Ox&#xA;"TRY AND HIT ME, MONSTERS!! :@"</string>
+                 <string name="TM_Soldier_Tyson_Description">Sign: Sagittarius&#xA;Spirit Animal: Chamaleon&#xA;"Well, my mom was right: going to college would've been better."</string>
+                 <string name="TM_Soldier_Taison_Description">Sign: Sagittarius&#xA;Spirit Animal: Bruce Lee&#xA;"I hate this! Argh, argh, AAARGH! ò.ó"</string>
+
+                 <string name="TM_Soldier_Obar_Description">Sign: Cancer&#xA;Spirit Animal: Turtle&#xA;"This armor is great! Hard to go to the bathroom though..."</string>
+                 <string name="TM_Soldier_MEmily_Description">Sign: Scorpio&#xA;Spirit Animal: Muriel Bagge&#xA;"Flying is really fun! (y)"</string>
+
+                 <string name="TM_Soldier_Eshelaa_Description">Sign: Aries&#xA;Spirit Animal: Hawk&#xA;"I do not play on duty."</string>
+                 <string name="TM_Soldier_Legolar_Description">Sign: Libra&#xA;Spirit Animal: Monkey&#xA;"George, george, george of the jungle..."</string>
+
+                 <string name="TM_Soldier_Nilpert_Description">Sign: Capricorn&#xA;Spirit Animal: Magpie&#xA;"Rocking, rocking and rolling, down to the enemy I'm strolling..."</string>
+                 <string name="TM_Soldier_Margaret_Description">Sign: Pisces&#xA;Spirit Animal: Mafalda&#xA;"Err... Ahn... Ok."</string>
+
+                 <string name="TM_Soldier_Skullsmasher_Description">Sign: Taurus&#xA;Spirit Animal: Rock&#xA;"..."</string>
+                 <string name="TM_Soldier_SirBeretta_Description">Sign: Aquarius&#xA;Spirit Animal: Rage&#xA;"ARRRRRGHHHHHHH!!!!!!!"</string>
+
+                 <string name="TM_Soldier_Galadriel_Description">Sign: Scorpio&#xA;Spirit Animal: Lotus Flower&#xA;"Nerf this!"</string>
+                 <string name="TM_Soldier_Saske_Description">Sign: Leo&#xA;Spirit Animal: Naruto&#xA;"Revenge is everything, failure is nothing!"</string>
+
+                 <string name="TM_Soldier_SirVicenzito_Description">Sign: Gemini&#xA;Spirit Animal: Fox&#xA;"I can't really see. But that doesn't change much :I"</string>
+                 <string name="TM_Soldier_LadyCatsby_Description">Sign: Virgo&#xA;Spirit Animal: Cats&#xA;"Meow meow, Hisss hisss :3"</string>
+
+                 <!-- Troop Menu // SOLDIER CLASS -->
+                 <string name="TM_Class_Berserk_Name">BERSERK (Dwarf)</string>
+                 <string name="TM_Class_Berserk_Description">Gets faster when with low Armor.</string>
+
+                 <string name="TM_Class_Precision_Name">PRECISION (Elf)</string>
+                 <string name="TM_Class_Precision_Description">Final blows do not reduce Armor.</string>
+
+  				 <string name="TM_Class_Research_Name">RESEARCH (Human)</string>
+                 <string name="TM_Class_Research_Description">Collects extra Special Cannon Points.</string>
+
+                 <!-- Formation Menu -->
+                 <string name="FM_BattleButton">battle</string>
+
+                 <!-- Combat Field ( Short Space )-->
+                 <string name="CF_Combo">COMBO</string>
+                 <string name="CF_Shots">SHOTS</string>
+                 <string name="CF_Paused">PAUSED</string>
+                 <string name="CF_Unlocked">Unlocked:</string>
+
+                 <!-- Combat Field // LOSE MESSAGES-->
+                 <string name="CF_LoseMessage_0">You get nothing, good day sir!</string>
+                 <string name="CF_LoseMessage_1">Try again :(</string>
+                 <string name="CF_LoseMessage_2">They are not that smart you know...</string>
+                 <string name="CF_LoseMessage_3">YOU SHALL NOT PASS!</string>
+                 <string name="CF_LoseMessage_4">Error 404 Victory not found.</string>
+                 <string name="CF_LoseMessage_5">BOB wins, this time.</string>
+                 <string name="CF_LoseMessage_6">Hello darkness my old friend...</string>
+                 <string name="CF_LoseMessage_7">All your base are belong to BOB</string>
+                 <string name="CF_LoseMessage_8">Mistakes were made.</string>
+                 <string name="CF_LoseMessage_9">You died...&#xA;*not actually*</string>
+
+            </Portuguese>
+
+</languages>
+

@@ -42,7 +42,7 @@ namespace BounceDudes
 
         public void Start()
         {
-			GameManager.Instance.CreateFullSave (true); // FOR TESTS ONLY
+			//GameManager.Instance.CreateFullSave (true); // FOR TESTS ONLY
 
             this._animator = this.GetComponent<Animator>();
 
