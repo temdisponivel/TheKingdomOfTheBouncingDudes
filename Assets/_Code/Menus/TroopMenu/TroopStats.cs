@@ -34,6 +34,8 @@ namespace BounceDudes
 
 		protected bool InfoShown = false;
 
+		protected bool _pressedEscape = false;
+
         public IEnumerator Start()
         {
             TroopStats.Instance = this;
@@ -51,6 +53,14 @@ namespace BounceDudes
             CurrentSoldier = SoldierArray.Instance.First;
             this.UpdateInfo(CurrentSoldier);
         }
+
+		void Update(){
+			
+			if (Input.GetKeyDown (KeyCode.Escape) && !_pressedEscape) {
+				_pressedEscape = true;
+				this.Return ();
+			}
+		}
 
         public void UpdateInfo(Soldier soldier)
         {

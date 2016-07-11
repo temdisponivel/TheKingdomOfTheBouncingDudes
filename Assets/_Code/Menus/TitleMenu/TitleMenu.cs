@@ -38,10 +38,11 @@ namespace BounceDudes
         public int _currentState = 0;
         protected const int ON_SPLASH_SCREEN = 0;
         protected const int ON_MAIN_MENU = 1;
+		protected const int ON_SETTINGS = 2;
 
         public void Start()
         {
-			//GameManager.Instance.CreateFullSave (true); // FOR TESTS ONLY
+			GameManager.Instance.CreateFullSave (true); // FOR TESTS ONLY
 
             this._animator = this.GetComponent<Animator>();
 
@@ -74,6 +75,14 @@ namespace BounceDudes
                 }
 
             }
+
+			if (Input.GetKeyDown(KeyCode.Escape))
+			{
+				if (this._currentState == ON_SETTINGS) {
+					this.HideSetting ();
+				}
+			}
+
         }
 
         // --- To be called in the end of animations
@@ -119,6 +128,11 @@ namespace BounceDudes
             //SceneManager.LoadScene("MapMenu");
         }
 
+		public void ShowAchievements(){
+			this.PlayInterfaceSound(0);
+			GameManager.GPManagerInstance.CallAchievementsUI ();
+		}
+
         public void Credits()
         {
             GameManager.Instance.LoadScene("CreditsMenu");
@@ -128,6 +142,7 @@ namespace BounceDudes
 
         public void ShowSetting()
         {
+			_currentState = ON_SETTINGS;
             this._shade.transform.DOScale(1, 0.2f);
             this.ConfigPanel.transform.DOMove(this.ConfigShownPosition.transform.position, 0.5f);
 			this.PlayInterfaceSound(0);
@@ -135,6 +150,7 @@ namespace BounceDudes
 
         public void HideSetting()
         {
+			_currentState = ON_MAIN_MENU;
             this._shade.transform.DOScale(0, 0.2f);
             this.ConfigPanel.transform.DOMove(this.ConfigHiddenPosition.transform.position, 0.5f);
 			this.PlayInterfaceSound(0);

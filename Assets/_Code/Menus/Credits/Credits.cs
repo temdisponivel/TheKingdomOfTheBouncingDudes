@@ -11,6 +11,17 @@ namespace BounceDudes
 {
     public class Credits : MonoBehaviour
     {
+
+		bool _pressedEscape = false;
+
+		void Update(){
+			if (Input.GetKeyDown(KeyCode.Escape) && !_pressedEscape)
+			{
+				_pressedEscape = true;
+				this.Return ();
+			}
+		}
+
 		public void FacebookButton(){
 			Application.OpenURL ("http://m.facebook.com/KingdomBounceGame");
 		}

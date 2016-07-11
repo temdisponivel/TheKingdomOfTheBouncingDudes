@@ -28,6 +28,8 @@ namespace BounceDudes
         public Text TextNameLevel;
         public Text TextNameSoldier;
 
+		protected bool _pressedEscape = false;
+
         public void Awake()
         {
             Instance = this;
@@ -59,6 +61,15 @@ namespace BounceDudes
             this.BattleButton.enabled = false;
             this.TextNameLevel.text = GameManager.Instance.CurrentLevel.Name;
         }
+
+		void Update(){
+			if (Input.GetKeyDown(KeyCode.Escape) && !_pressedEscape)
+			{
+				_pressedEscape = true;
+				this.Return ();
+			}
+		}
+
 
         public void AddToFormation(Soldier soldier, GameObject representation)
         {

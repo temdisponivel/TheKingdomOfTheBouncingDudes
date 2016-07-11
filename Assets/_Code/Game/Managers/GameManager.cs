@@ -14,6 +14,7 @@ using DigitalRuby.SoundManagerNamespace;
 using UnityEngine.SceneManagement;
 using UnityEngineInternal;
 
+
 namespace BounceDudes
 {
     /// <summary>
@@ -23,6 +24,9 @@ namespace BounceDudes
     {
         static protected GameManager _instance = null;
         static public GameManager Instance { get { return GameManager._instance; } }
+
+		static protected GooglePlayManager _googlePlayManagerInstance = new GooglePlayManager();
+		static public GooglePlayManager GPManagerInstance { get { return GameManager._googlePlayManagerInstance; } }
 
         public event Action OnStateChange;
 
@@ -191,6 +195,10 @@ namespace BounceDudes
 
             DOTween.Init(false, true, LogBehaviour.ErrorsOnly);
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
+			GameManager.GPManagerInstance.AuthenticateUser ();
+			
+
         }
 
         void Start()
