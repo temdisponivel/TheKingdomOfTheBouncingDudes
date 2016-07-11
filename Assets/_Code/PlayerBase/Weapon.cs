@@ -226,8 +226,9 @@ namespace BounceDudes
 				this._waitingForAmmo = true;
 				//UnSetCanShoot();
 				this.UpdateSoldierNameUI();
+			    return;
 			}
-				
+
             this._weaponAnimator.SetTrigger("Reloading"); // Calls CallPrepareAmmunition() in mid animation
         }
 			
@@ -347,10 +348,12 @@ namespace BounceDudes
 			{
 				this._waitingForAmmo = false;
 
+                SetCanShoot();
+
 				if (this._animating)
 					return;
 
-                this.CallReloadAnimation();
+			    this.CallReloadAnimation();
 
             }
         }
