@@ -114,7 +114,8 @@ namespace BounceDudes
 				this.HP -= 1;
 
 				// Dwarf Skill
-				if (this._soldierClass == SoldierClassEnum.BERSERK && this.HP == this._maxHP / 2f) {
+				if (this._soldierClass == SoldierClassEnum.BERSERK && this.HP <= this._maxHP / 2f) {
+					this.IncrementMaxMinSpeed (0.5f);
 					this._rigid.AddForce(this._rigid.velocity.normalized * 100f, ForceMode2D.Force);
 				}
             }
@@ -126,7 +127,7 @@ namespace BounceDudes
 
 			// Human Skill
 			if (this._soldierClass == SoldierClassEnum.RESEARCH) {
-				auxValue *= 1.75f;
+				auxValue *= 2f;
 			}
 
 			Debug.Log (auxValue);

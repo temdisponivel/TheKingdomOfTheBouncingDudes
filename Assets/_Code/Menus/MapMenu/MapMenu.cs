@@ -25,6 +25,8 @@ namespace BounceDudes
 
         public static MapMenu Instance = null;
 
+		protected bool _pressedEscape = false;
+
         public void Awake()
         {
             Instance = this;
@@ -65,6 +67,15 @@ namespace BounceDudes
 
 
         }
+
+		void Update(){
+			if (Input.GetKeyDown(KeyCode.Escape) && !_pressedEscape)
+			{
+				_pressedEscape = true;
+				this.Return ();
+			}
+		}
+
 
         public void SelectNode(LevelNode node)
         {
