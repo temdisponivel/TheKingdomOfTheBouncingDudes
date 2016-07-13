@@ -42,7 +42,7 @@ namespace BounceDudes
 
         public void Start()
         {
-			//GameManager.Instance.CreateFullSave (true); // FOR TESTS ONLY
+			GameManager.Instance.CreateFullSave (true); // FOR TESTS ONLY
 
             this._animator = this.GetComponent<Animator>();
 
@@ -70,6 +70,7 @@ namespace BounceDudes
                 if (this._currentState == ON_SPLASH_SCREEN)
                 {
                     this._animator.SetTrigger("GoSplashToMain");
+					_currentState = ON_MAIN_MENU;
                     this.PlayInterfaceSound(7);
                     AudioManager.Instance.PlayMusic(1);
                 }
@@ -88,7 +89,6 @@ namespace BounceDudes
         // --- To be called in the end of animations
         public void ChangeStateToMainMenu()
         {
-            _currentState = ON_MAIN_MENU;
             _mainMenuAnimator.ResetTrigger("CallIntro");
             GameManager.Instance.PassSplashScreen = true;
         }
@@ -160,14 +160,14 @@ namespace BounceDudes
         public void ToggleMusic(bool on)
         {
             GameManager.Instance.MusicVolume = on;
-            AudioManager.Instance.ToggleMusicVolume();
+			AudioManager.Instance.ToggleMusicVolume();
 			this.PlayInterfaceSound(0);
         }
 
         public void ToggleSound(bool on)
         {
             GameManager.Instance.SoundVolume = on;
-            AudioManager.Instance.ToggleSoundVolume();
+			AudioManager.Instance.ToggleSoundVolume();
 			this.PlayInterfaceSound(0);
         }
 

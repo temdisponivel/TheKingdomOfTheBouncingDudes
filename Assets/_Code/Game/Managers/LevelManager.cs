@@ -28,6 +28,12 @@ namespace BounceDudes
 
         public Text _soldierNameText;
 
+		public Text _currentWaveText;
+		public GameObject _waveTextInitialPosition;
+		public GameObject _waveTextMiddlePosition;
+		public GameObject _waveTextWaitingPosition;
+		public GameObject _waveTextFinalPosition;
+
         public GameObject _colliderPanel = null;
         public PausePanel _pausePanel = null;
         public LooseLevelPanel _loosePanel = null;
@@ -35,6 +41,15 @@ namespace BounceDudes
 
         public GameObject _shownPositionPanels = null;
         public GameObject _hidenPositionPanels = null;
+
+		[Header("Pause Panel")]
+		public Text _challengeOneText;
+		public Text _challengeTwoText;
+		public Text _challengeThreeText;
+		protected bool _updatedOneTime = false;
+
+		protected Tween _panelIdle;
+
 
         public int EnemiesKilled { get; set; }
 
@@ -50,13 +65,31 @@ namespace BounceDudes
             LevelManager._instance = this;
             this._baseHpBakp = this._playerBase.HP;
             GameManager.Instance.OnStateChange += this.StateChangeCallback;
+
         }
 
 		public void Start(){
 			if (GameManager.Instance.CurrentLevel.Id != LevelId.FIFTEEN) // If not the Boss Level
 				AudioManager.Instance.PlayMusic(2);
 
+
+
 			this.UnpauseGame();
+		}
+
+		public void CallWaveText(int waveIndex){
+			
+			_currentWaveText.GetComponent<TextToTraslate> ().TranslateWithOneArgument(waveIndex, true);
+	
+			_currentWaveText.transform.DOMove (_waveTextWaitingPosition.transform.position, 0.7f).OnComplete (() => { 
+				_currentWaveText.transform.DOMove (_waveTextMiddlePosition.transform.position, 1.4f).OnComplete (() => {
+					_currentWaveText.transform.DOMove (_waveTextFinalPosition.transform.position, 0.7f).OnComplete (() => {
+						_currentWaveText.transform.position = _waveTextInitialPosition.transform.position;
+						
+					});
+				});
+			});
+		
 		}
 			
         public void GameOver()
@@ -108,19 +141,35 @@ namespace BounceDudes
 
             info.ChallengesCompleted = soldiersEarned;
             
+			GameObject panelToIdle;
+
+			var musicToStop = 3;
+
+			if (GameManager.Instance.CurrentLevel.Id != LevelId.FIFTEEN)
+				musicToStop = 2;
+
+			AudioManager.Instance.PlayMusic(musicToStop);
+			AudioManager.Instance.StopCurrentMusic (musicToStop);
+
             if (win)
             {
 				AudioManager.Instance.PlayFanfareSound (0);
                 this._winPanel.UpdateInfo(info);
                 this._winPanel.Show();
                 GameManager.Instance.AddLevelInfo(GameManager.Instance.CurrentLevel.Id, info);
+
+				panelToIdle = this._winPanel.gameObject;
             }
             else
             {
 				AudioManager.Instance.PlayFanfareSound (1);
 				this._loosePanel.UpdateInfo (info);
                 this._loosePanel.Show();
+
+				panelToIdle = this._loosePanel.gameObject;
             }
+
+			_panelIdle = panelToIdle.transform.DOMoveY (panelToIdle.transform.position.y - 0.05f, 1.0f).SetLoops (-1, LoopType.Yoyo); 
         }
 
         public void KillEnemy(Character enemy)
@@ -145,12 +194,36 @@ namespace BounceDudes
         public void PauseGame()
         {
             GameManager.Instance.State = GameState.PAUSED;
+			_currentWaveText.transform.DOPause ();
         }
 
         public void UnpauseGame()
         {
             GameManager.Instance.State = GameState.PLAYING;
+			_currentWaveText.transform.DOPlay ();
         }
+
+		public void ButtonPause()
+		{
+			this.PauseGame ();
+			this.PausePanelUpdateInfo ();
+			AudioManager.Instance.PlayInterfaceSound (0);
+		}
+
+		public void ButtonContinue(){
+			this.UnpauseGame ();
+			AudioManager.Instance.PlayInterfaceSound (0);
+		}
+
+		public void ButtonQuit(){
+			this.Quit ();
+			AudioManager.Instance.PlayInterfaceSound (0);
+		}
+
+		public void ButtonRetry(){
+			this.PlayAgain ();
+			AudioManager.Instance.PlayInterfaceSound (0);
+		}
 
         public void FadeOutCollider(Action callback)
         {
@@ -237,5 +310,69 @@ namespace BounceDudes
             if (pauseStatus)
                 this.PauseGame();
         }
+
+
+		public void PausePanelUpdateInfo()
+		{
+			Level level = GameManager.Instance.CurrentLevel;
+
+			var redColor = new Color (221f/255f, 39f/255f, 39f/255f, 1);
+			var greenColor = new Color (62f/255f, 180f/255f, 63f/255f, 1);
+
+			var challenge = GameManager.Instance.CurrentLevel.SoldiersByChallengeHackOne;
+			if (ChallengeManager.ValidateCompletionImpossible(challenge._challenge))
+				_challengeOneText.color = redColor;
+			else
+				if (ChallengeManager.ValidateCompletion(challenge._challenge)) 
+					_challengeOneText.color = greenColor;
+
+			challenge = GameManager.Instance.CurrentLevel.SoldiersByChallengeHackTwo;
+			if (ChallengeManager.ValidateCompletionImpossible(challenge._challenge))
+				_challengeTwoText.color = redColor;
+			else
+				if (ChallengeManager.ValidateCompletion(challenge._challenge)) 
+					_challengeTwoText.color = greenColor;
+
+			challenge = GameManager.Instance.CurrentLevel.SoldiersByChallengeHackThree;
+			if (ChallengeManager.ValidateCompletionImpossible (challenge._challenge))
+				_challengeThreeText.color = redColor;
+			else {
+				if (ChallengeManager.ValidateCompletion(challenge._challenge)) 
+					_challengeThreeText.color = greenColor;
+			}
+
+
+
+
+			Challenge currentChallenge = level.SoldiersByChallengeHackOne._challenge;
+			if (!_updatedOneTime) {
+				currentChallenge.SetDescription ();
+				_challengeOneText.text = currentChallenge.Description;
+				_challengeOneText.GetComponent<TextToTraslate> ().TranslateWithOneArgument (currentChallenge._x);
+			}
+
+			currentChallenge = level.SoldiersByChallengeHackTwo._challenge;
+			if (!_updatedOneTime) {
+				currentChallenge.SetDescription ();
+				_challengeTwoText.text = currentChallenge.Description;
+				_challengeTwoText.GetComponent<TextToTraslate> ().TranslateWithOneArgument (currentChallenge._x);
+			}
+
+			currentChallenge = level.SoldiersByChallengeHackThree._challenge;
+
+			if (!_updatedOneTime) {
+				currentChallenge.SetDescription ();
+				_challengeThreeText.text = currentChallenge.Description;
+				_challengeThreeText.GetComponent<TextToTraslate> ().TranslateWithOneArgument (currentChallenge._x);
+			}
+				
+
+			this._updatedOneTime = true;
+
+		}
+			
+
+
+
     }
 }

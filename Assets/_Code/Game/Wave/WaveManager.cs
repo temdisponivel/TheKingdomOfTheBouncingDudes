@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
+
 namespace BounceDudes
 {
     /// <summary>
@@ -20,6 +21,7 @@ namespace BounceDudes
         public int _dead = 0;
         public int _maxEnemies;
 
+
         public void Start()
         {
             this._maxEnemies = this._waves.Sum(w => w._spawns.Count);
@@ -32,6 +34,10 @@ namespace BounceDudes
             {
                 Wave currentWave = this._waves[i];
                 List<SpawnOption> currentSpaws = currentWave._spawns;
+
+				LevelManager.Instance.CallWaveText (i+1);
+
+				yield return new WaitForSeconds (2.0f); // Wait for wave text animation
 
                 for (int j = 0; j < currentSpaws.Count; j++)
                 {

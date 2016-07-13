@@ -29,6 +29,7 @@ namespace BounceDudes
             base.Start();
 
 			_maxHP = this.HP;
+			this.Sprite.color = Color.white;
 
             if (!_shooted && !_isSpecial)
                 this.TurnIntoAmmunition();
@@ -64,7 +65,7 @@ namespace BounceDudes
 				AudioManager.Instance.PlayInterfaceSound (6);
                 EffectManager.Instance.CreateDieEffect(this.transform);
                 collision.gameObject.GetComponent<Base>().HP -= this.Damage;
-                this.HP -= 1;
+				this.SoldierReceiveHit ();
             }
             else if (collTag == TagAndLayer.WALL || collTag == TagAndLayer.BASE)
             {
@@ -75,7 +76,8 @@ namespace BounceDudes
             {
                 EffectManager.Instance.CreateDieEffect(this.transform);
                 collision.gameObject.GetComponent<BossBehaviour>().BossHP -= this.Damage;
-                this.HP -= 1;
+				this.SoldierReceiveHit ();
+
             }
         }
 
@@ -87,39 +89,59 @@ namespace BounceDudes
                     return;
 
                 Monster monster = collider.gameObject.GetComponent<Monster>();
-                monster.HP -= 1;
-
+				monster.HP -= 1;
 				monster.PlayHitSound ();
 
-                EffectManager.Instance.CreateHitEffect(monster.transform);
+				ComboManager.Instance.AddHit ();
 
-                ComboManager.Instance.AddHit();
+				var monsterKilled = false;
                 if (monster.HP <= 0)
                 {
 					// Elf Skill
 					if (this._soldierClass == SoldierClassEnum.PRECISION) {
-						// TODO: Call elf skill effect
+						EffectManager.Instance.CreatePrecisionHitEffect (monster.transform);
 						this.HP += 1;
+					} 
+					else {
+						EffectManager.Instance.CreateHitEffect (monster.transform);
 					}
+						
+					monsterKilled = true;
 
-					AddSpecialPoints (2f);
+					this.AddSpecialPoints (2f);
 
                     LevelManager.Instance.KillEnemy(this);
                     ComboManager.Instance.AddKill();
                     ComboManager.Instance.AddElementKill();
                 }
 
+				if (!monsterKilled)
+					EffectManager.Instance.CreateHitEffect (monster.transform);
+				
 
-				AddSpecialPoints(2f);
-				this.HP -= 1;
+				this.AddSpecialPoints(2f);
 
-				// Dwarf Skill
-				if (this._soldierClass == SoldierClassEnum.BERSERK && this.HP <= this._maxHP / 2f) {
-					this.IncrementMaxMinSpeed (0.5f);
-					this._rigid.AddForce(this._rigid.velocity.normalized * 100f, ForceMode2D.Force);
-				}
+				this.SoldierReceiveHit ();
+
             }
         }
+
+		protected void SoldierReceiveHit(){
+			this.HP -= 1;
+
+			// Dwarf Skill
+			if (this._soldierClass == SoldierClassEnum.BERSERK && this.HP <= this._maxHP / 2f) {
+				this.IncrementMaxMinSpeed (0.5f);
+				this._rigid.AddForce(this._rigid.velocity.normalized * 100f, ForceMode2D.Force);
+
+				Color newColor = new Color (255f/255f, 128f/255f, 128f/255f, 1f);
+				this.ChangeSpriteColor (newColor);
+			}
+		}
+
+		public void ChangeSpriteColor(Color color){
+			this.Sprite.color = color;
+		}
 
 		protected void AddSpecialPoints(float value){
 
@@ -129,9 +151,7 @@ namespace BounceDudes
 			if (this._soldierClass == SoldierClassEnum.RESEARCH) {
 				auxValue *= 2f;
 			}
-
-			Debug.Log (auxValue);
-			Debug.Log (Weapon.Instance.SpecialCurrentPoints);
+				
 			Weapon.Instance.SpecialCurrentPoints += auxValue;
 		}
 

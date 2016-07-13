@@ -6,6 +6,7 @@ using System.IO;
 public class TextToTraslate : MonoBehaviour {
 	
     Text texto;
+	string originalTagText;
 
 	// Use this for initialization
 	void Awake () {
@@ -14,18 +15,33 @@ public class TextToTraslate : MonoBehaviour {
         {
             texto = gameObject.GetComponent<Text>();
         }
-			
+
+		originalTagText = texto.text;
 		this.Translate ();
 
     }
 
-	public void Translate(){
-		if (texto != null)
-			texto.text = Idioma.GetInstance().getString(texto.text);
+	public void Translate(bool usingOriginalText = false){
+		if (texto != null) {
+			if (!usingOriginalText)
+				texto.text = Idioma.GetInstance ().getString (texto.text);
+			else
+				texto.text = Idioma.GetInstance ().getString (originalTagText);
+
+
+		}
+		else
+			Debug.Log ("Text to be translated is NULL");
 	}
 
-	public void TranslateWithOneArgument(int value){
-		if (texto != null)
-			texto.text = Idioma.GetInstance().getStringWithOneArgument(texto.text, value);
+	public void TranslateWithOneArgument(int value, bool usingOriginalText = false){
+		if (texto != null){
+			if (!usingOriginalText)
+				texto.text = Idioma.GetInstance ().getStringWithOneArgument (texto.text, value);
+			else
+				texto.text = Idioma.GetInstance ().getStringWithOneArgument (originalTagText, value);
+		}
+		else
+			Debug.Log ("Text to be translated is NULL");
 	}
 }

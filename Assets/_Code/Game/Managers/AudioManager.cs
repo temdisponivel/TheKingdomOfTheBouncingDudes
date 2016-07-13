@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour
             SoundManager.MusicVolume = _musicVolume;
         else
             SoundManager.MusicVolume = 0;
-        //SoundManager.MusicVolume = SoundManager.MusicVolume == 0 ? _musicVolume : 0;
+
     }
 
     public void ToggleSoundVolume()
@@ -58,8 +58,6 @@ public class AudioManager : MonoBehaviour
         else
             SoundManager.SoundVolume = 0;
 
-        //SoundManager.SoundVolume = SoundManager.SoundVolume == 0 ? _soundVolume : 0;
-        //GameManager.Instance.SoundVolume = SoundManager.SoundVolume != 0;
     }
 
 	protected void PlaySound(int soundTypeIndex, int soundIndex)
@@ -94,7 +92,6 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(int index)
     {
-        //MusicAudioSources[index].PlayLoopingMusicManaged(1.0f, 1.0f, true);
         this.StartCoroutine(this.PlayMusicAfterFrame(index));
     }
 

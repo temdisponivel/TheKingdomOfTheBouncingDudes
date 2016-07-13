@@ -39,7 +39,7 @@
                 <string name="LD_Level03_Description">Now I am fast too! :)</string>
 
                 <string name="LD_Level04_Title">HAHA</string>
-                <string name="LD_Level04_Description">HAHAHAHAHAHAHAHAHA</string>
+                <string name="LD_Level04_Description">HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA</string>
 
                 <string name="LD_Level05_Title">MOR BAD</string>
                 <string name="LD_Level05_Description">I can't believe that they can fly now!! :((</string>
@@ -90,7 +90,7 @@
                  <string name="TM_Soldier_Balfur_Description">Sign: Leo&#xA;Spirit Animal: Pig&#xA;"My favorite hobby is not get killed by monsters."</string>
                  <string name="TM_Soldier_Belfur_Description">Sign: Leo&#xA;Spirit Animal: Michael Cera&#xA;"Launch me, launch me!! Yeeah! :D"</string>
 
-                 <string name="TM_Soldier_Tomiel_Description">Sign: Gemini&#xA;Spirit Animal: Otter&#xA;"I fell a little too big in that cannon :("</string>
+                 <string name="TM_Soldier_Tomiel_Description">Sign: Gemini&#xA;Spirit Animal: Otter&#xA;"I feel a little too big in that cannon :("</string>
                  <string name="TM_Soldier_Tamiel_Description">Sign: Gemini&#xA;Spirit Animal: Owl&#xA;"Hitting those monsters really isn't for me :("</string>
                  <string name="TM_Soldier_Tumiel_Description">Sign: Gemini&#xA;Spirit Animal: Courage the Cowardly Dog&#xA;"I get motion sickness when launched :("</string>
 
@@ -134,6 +134,8 @@
                  <string name="CF_Shots">SHOTS</string>
                  <string name="CF_Paused">PAUSED</string>
                  <string name="CF_Unlocked">Unlocked:</string>
+                 <string name="CF_Wave">WAVE {0}</string>
+                 <string name="CF_Challenges">CHALLENGES</string>
 
                  <!-- Combat Field // LOSE MESSAGES-->
                  <string name="CF_LoseMessage_0">You get nothing, good day sir!</string>
@@ -141,7 +143,7 @@
                  <string name="CF_LoseMessage_2">They are not that smart you know...</string>
                  <string name="CF_LoseMessage_3">YOU SHALL NOT PASS!</string>
                  <string name="CF_LoseMessage_4">Error 404 Victory not found.</string>
-                 <string name="CF_LoseMessage_5">BOB wins, this time.</string>
+                 <string name="CF_LoseMessage_5">BOB wins, this time...</string>
                  <string name="CF_LoseMessage_6">Hello darkness my old friend...</string>
                  <string name="CF_LoseMessage_7">All your base are belong to BOB</string>
                  <string name="CF_LoseMessage_8">Mistakes were made.</string>
@@ -176,7 +178,7 @@
 
                 <!-- Map Menu // LEVEL DESCRIPTIONS -->
                 <string name="LD_Level00_Title">ELIS QUEREM MEU OURO</string>
-                <string name="LD_Level00_Description">Essas criaturas estão vindo para pegar meu ouro! MAS ELES NUNCA CONSEGUIRÃO! Hehehe</string>
+                <string name="LD_Level00_Description">Essas criaturas estão vindo para pegar meu ouro! MAS ELAS NUNCA CONSEGUIRÃO! Hehehe</string>
 
                 <string name="LD_Level01_Title">MAU</string>
                 <string name="LD_Level01_Description">Eles são maus :(</string>
@@ -188,7 +190,7 @@
                 <string name="LD_Level03_Description">Agora eu tenho velocidade também! :)</string>
 
                 <string name="LD_Level04_Title">HAHA</string>
-                <string name="LD_Level04_Description">HAHAHAHAHAHAHAHAHA</string>
+                <string name="LD_Level04_Description">HAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHA</string>
 
                 <string name="LD_Level05_Title">MAIS MAU</string>
                 <string name="LD_Level05_Description">Não acredito que eles podem voar agora!! :((</string> 
@@ -224,77 +226,79 @@
                 <string name="LD_Level15_Description">Ah não, já da pra sentir o cheiro dele! D:</string> 
 
                  <!-- Map Menu // CHALLENGES ( Short Space ) -->
-                 <string name="LD_Challenge_SurviveHP">Survive with {0}+ HP</string>
-                 <string name="LD_Challenge_GetCombo">Get a {0}x Combo</string>
-                 <string name="LD_Challenge_ShootXTimes">Shoot {0} times or less</string>
-                 <string name="LD_Challenge_DefeatEnemies">Defeat {0} enemies</string>
+                 <string name="LD_Challenge_SurviveHP">Sobreviva com {0}+ HP</string>
+                 <string name="LD_Challenge_GetCombo">Atinja {0}x de Combo</string>
+                 <string name="LD_Challenge_ShootXTimes">Atire {0} vezes ou menos</string>
+                 <string name="LD_Challenge_DefeatEnemies">Derrote {0} inimigos</string>
 
                  <!-- Troop Menu ( Short Space ) -->
-                 <string name="TM_Size">SIZE</string>
-                 <string name="TM_Speed">SPEED</string>
-                 <string name="TM_Armor">ARMOR</string>
+                 <string name="TM_Size">TAMN.</string>
+                 <string name="TM_Speed">VELO.</string>
+                 <string name="TM_Armor">RESC.</string>
 
                  <!-- Troop Menu // SOLDIER DESCRIPTIONS -->
-                 <string name="TM_Soldier_Helga_Description">Sign: Leo&#xA;Spirit Animal: Horse&#xA;"I need to keep an eye on my brothers, or else... gosh."</string>
-                 <string name="TM_Soldier_Balfur_Description">Sign: Leo&#xA;Spirit Animal: Pig&#xA;"My favorite hobby is not get killed by monsters."</string>
-                 <string name="TM_Soldier_Belfur_Description">Sign: Leo&#xA;Spirit Animal: Michael Cera&#xA;"Launch me, launch me!! Yeeah! :D"</string>
+                 <string name="TM_Soldier_Helga_Description">Signo: Leão&#xA;Animal Espiritual: Cavalo&#xA;"Tenho que manter meus irmãos na linha, se não... aff."</string> 
+                 <string name="TM_Soldier_Balfur_Description">Signo: Leão&#xA;Animal Espiritual: Porco&#xA;"Meu hobby favorito é não ser morto por monstros."</string>
+                 <string name="TM_Soldier_Belfur_Description">Signo: Leão&#xA;Animal Espiritual: Michael Cera&#xA;"Me atira, me atira!! Uhuuul! :D"</string>
 
-                 <string name="TM_Soldier_Tomiel_Description">Sign: Gemini&#xA;Spirit Animal: Otter&#xA;"I fell a little too big in that cannon :("</string>
-                 <string name="TM_Soldier_Tamiel_Description">Sign: Gemini&#xA;Spirit Animal: Owl&#xA;"Hitting those monsters really isn't for me :("</string>
-                 <string name="TM_Soldier_Tumiel_Description">Sign: Gemini&#xA;Spirit Animal: Courage the Cowardly Dog&#xA;"I get motion sickness when launched :("</string>
+                 <string name="TM_Soldier_Tomiel_Description">Signo: Gêmeos&#xA;Animal Espiritual: Lontra&#xA;"Me sinto um pouco grande de mais naquele canhão :("</string> 
+                 <string name="TM_Soldier_Tamiel_Description">Signo: Gêmeos&#xA;Animal Espiritual: Coruja&#xA;"Bater naqueles monstros realmente não é pra mim :("</string>
+                 <string name="TM_Soldier_Tumiel_Description">Signo: Gêmeos&#xA;Animal Espiritual: Coragem o Cão Covarde&#xA;"Eu passo mal quando sou atirado :("</string>
 
-                 <string name="TM_Soldier_Marta_Description">Sign: Sagittarius&#xA;Spirit Animal: Ox&#xA;"TRY AND HIT ME, MONSTERS!! :@"</string>
-                 <string name="TM_Soldier_Tyson_Description">Sign: Sagittarius&#xA;Spirit Animal: Chamaleon&#xA;"Well, my mom was right: going to college would've been better."</string>
-                 <string name="TM_Soldier_Taison_Description">Sign: Sagittarius&#xA;Spirit Animal: Bruce Lee&#xA;"I hate this! Argh, argh, AAARGH! ò.ó"</string>
+                 <string name="TM_Soldier_Marta_Description">Signo: Sagitário&#xA;Animal Espiritual: Bisão&#xA;"VEM MONSTROS! PODEM VIR!! :@"</string>
+                 <string name="TM_Soldier_Tyson_Description">Signo: Sagitário&#xA;Animal Espiritual: Camaleão&#xA;"É, minha mãe tava certa: ir pra faculdade teria sido melhor."</string>
+                 <string name="TM_Soldier_Taison_Description">Signo: Sagitário&#xA;Animal Espiritual: Bruce Lee&#xA;"Eu odeio isso! Argh, argh AAAARGH! ò.ó"</string>
 
-                 <string name="TM_Soldier_Obar_Description">Sign: Cancer&#xA;Spirit Animal: Turtle&#xA;"This armor is great! Hard to go to the bathroom though..."</string>
-                 <string name="TM_Soldier_MEmily_Description">Sign: Scorpio&#xA;Spirit Animal: Muriel Bagge&#xA;"Flying is really fun! (y)"</string>
+                 <string name="TM_Soldier_Obar_Description">Signo: Câncer&#xA;Animal Espiritual: Tartaruga&#xA;"Essa armadura é ótima! Só fica difícil ir ao banheiro..."</string>
+                 <string name="TM_Soldier_MEmily_Description">Signo: Escorpião&#xA;Animal Espiritual: Palmirinha&#xA;"Oh meu fiiilho, voar é bem divertido mesmo! (y)"</string>
 
-                 <string name="TM_Soldier_Eshelaa_Description">Sign: Aries&#xA;Spirit Animal: Hawk&#xA;"I do not play on duty."</string>
-                 <string name="TM_Soldier_Legolar_Description">Sign: Libra&#xA;Spirit Animal: Monkey&#xA;"George, george, george of the jungle..."</string>
+                 <string name="TM_Soldier_Eshelaa_Description">Signo: Áries&#xA;Animal Espiritual: Águia&#xA;"Eu não brinco em serviço."</string>
+                 <string name="TM_Soldier_Legolar_Description">Signo: Libra&#xA;Animal Espiritual: Macaco&#xA;"George, george, rei da floresta..."</string>
 
-                 <string name="TM_Soldier_Nilpert_Description">Sign: Capricorn&#xA;Spirit Animal: Magpie&#xA;"Rocking, rocking and rolling, down to the enemy I'm strolling..."</string>
-                 <string name="TM_Soldier_Margaret_Description">Sign: Pisces&#xA;Spirit Animal: Mafalda&#xA;"Err... Ahn... Ok."</string>
+                 <string name="TM_Soldier_Nilpert_Description">Signo: Capricórnio&#xA;Animal Espiritual: Sabiá&#xA;"No dia em que saí de caaasa minha mãe me disse: filho, vai voar lá."</string>
+                 <string name="TM_Soldier_Margaret_Description">Signo: Peixes&#xA;Animal Espiritual: Mafalda&#xA;"Err... Hã... Ok."</string>
 
-                 <string name="TM_Soldier_Skullsmasher_Description">Sign: Taurus&#xA;Spirit Animal: Rock&#xA;"..."</string>
-                 <string name="TM_Soldier_SirBeretta_Description">Sign: Aquarius&#xA;Spirit Animal: Rage&#xA;"ARRRRRGHHHHHHH!!!!!!!"</string>
+                 <string name="TM_Soldier_Skullsmasher_Description">Signo: Touro&#xA;Animal Espiritual: Pedra&#xA;"..."</string>
+                 <string name="TM_Soldier_SirBeretta_Description">Signo: Aquário&#xA;Animal Espiritual: Raiva&#xA;"ARRRRRGHHHHHHH!!!!!!!"</string>
 
-                 <string name="TM_Soldier_Galadriel_Description">Sign: Scorpio&#xA;Spirit Animal: Lotus Flower&#xA;"Nerf this!"</string>
-                 <string name="TM_Soldier_Saske_Description">Sign: Leo&#xA;Spirit Animal: Naruto&#xA;"Revenge is everything, failure is nothing!"</string>
+                 <string name="TM_Soldier_Galadriel_Description">Signo: Escorpião&#xA;Animal Espiritual: Flor de Lotus&#xA;"Pede pra nerfar noob!"</string>
+                 <string name="TM_Soldier_Saske_Description">Signo: Leão&#xA;Animal Espiritual: Naruto&#xA;"Só quem conhece o amor vai entender meu ódio."</string>
 
-                 <string name="TM_Soldier_SirVicenzito_Description">Sign: Gemini&#xA;Spirit Animal: Fox&#xA;"I can't really see. But that doesn't change much :I"</string>
-                 <string name="TM_Soldier_LadyCatsby_Description">Sign: Virgo&#xA;Spirit Animal: Cats&#xA;"Meow meow, Hisss hisss :3"</string>
+                 <string name="TM_Soldier_SirVicenzito_Description">Signo: Gêmeos&#xA;Animal Espiritual: Raposa&#xA;"Eu não enxergo nada com esse elmo. Mas isso não muda muito :I"</string>
+                 <string name="TM_Soldier_LadyCatsby_Description">Signo: Virgem&#xA;Animal Espiritual: Gatos&#xA;"Miau miau, Hisss hisss :3"</string>
 
                  <!-- Troop Menu // SOLDIER CLASS -->
-                 <string name="TM_Class_Berserk_Name">BERSERK (Dwarf)</string>
-                 <string name="TM_Class_Berserk_Description">Gets faster when with low Armor.</string>
+                 <string name="TM_Class_Berserk_Name">FRENESI (Anão)</string>
+                 <string name="TM_Class_Berserk_Description">Fica mais rápido quando estiver com Resistência baixa.</string>
 
-                 <string name="TM_Class_Precision_Name">PRECISION (Elf)</string>
-                 <string name="TM_Class_Precision_Description">Final blows do not reduce Armor.</string>
+                 <string name="TM_Class_Precision_Name">PRECISÃO (Elfo)</string>
+                 <string name="TM_Class_Precision_Description">Golpes finais não reduzem Resistência.</string>
 
-  				 <string name="TM_Class_Research_Name">RESEARCH (Human)</string>
-                 <string name="TM_Class_Research_Description">Collects extra Special Cannon Points.</string>
+  				 <string name="TM_Class_Research_Name">PESQUISA (Humano)</string>
+                 <string name="TM_Class_Research_Description">Coleta de Pontos de Canhão Especial aumentada.</string>
 
                  <!-- Formation Menu -->
-                 <string name="FM_BattleButton">battle</string>
+                 <string name="FM_BattleButton">batalha</string>
 
                  <!-- Combat Field ( Short Space )-->
                  <string name="CF_Combo">COMBO</string>
-                 <string name="CF_Shots">SHOTS</string>
-                 <string name="CF_Paused">PAUSED</string>
-                 <string name="CF_Unlocked">Unlocked:</string>
+                 <string name="CF_Shots">TIROS</string>
+                 <string name="CF_Paused">PAUSADO</string>
+                 <string name="CF_Unlocked">Liberado:</string>
+                 <string name="CF_Wave">HORDA {0}</string>
+                 <string name="CF_Challenges">DESAFIOS</string>
 
                  <!-- Combat Field // LOSE MESSAGES-->
-                 <string name="CF_LoseMessage_0">You get nothing, good day sir!</string>
-                 <string name="CF_LoseMessage_1">Try again :(</string>
-                 <string name="CF_LoseMessage_2">They are not that smart you know...</string>
+                 <string name="CF_LoseMessage_0">Perdeu, mas tenha um bom dia! :)</string>
+                 <string name="CF_LoseMessage_1">Tente de novo :(</string>
+                 <string name="CF_LoseMessage_2">Tu sabe que eles são meio burros né?</string>
                  <string name="CF_LoseMessage_3">YOU SHALL NOT PASS!</string>
-                 <string name="CF_LoseMessage_4">Error 404 Victory not found.</string>
-                 <string name="CF_LoseMessage_5">BOB wins, this time.</string>
+                 <string name="CF_LoseMessage_4">Error 404 Vitória not found.</string>
+                 <string name="CF_LoseMessage_5">BOB venceu, dessa vez...</string>
                  <string name="CF_LoseMessage_6">Hello darkness my old friend...</string>
-                 <string name="CF_LoseMessage_7">All your base are belong to BOB</string>
-                 <string name="CF_LoseMessage_8">Mistakes were made.</string>
-                 <string name="CF_LoseMessage_9">You died...&#xA;*not actually*</string>
+                 <string name="CF_LoseMessage_7">Toda sua base agora é do BOB</string>
+                 <string name="CF_LoseMessage_8">Erros foram cometidos.</string>
+                 <string name="CF_LoseMessage_9">Você morreu...&#xA;*na verdade não*</string>
 
             </Portuguese>
 

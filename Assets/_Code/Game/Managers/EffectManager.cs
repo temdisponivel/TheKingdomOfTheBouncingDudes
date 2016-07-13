@@ -15,6 +15,7 @@ namespace BounceDudes
         public ParticleSystem _dieEffect = null;
         public ParticleSystem _wallHitEffect = null;
         public ParticleSystem _shinyEffect = null;
+		public ParticleSystem _precisionHitEffect = null;
 
         [Header("Object Effects")]
         public GameObject _shadowEffect = null;
@@ -55,7 +56,7 @@ namespace BounceDudes
             objectToAttach.transform.parent = target;
             return objectToAttach;
         }
-
+			
         public void CreateHitEffect(Transform target)
         {
             this.CreateEffect(_hitEffect, target);
@@ -75,6 +76,11 @@ namespace BounceDudes
         {
             this.CreateEffect(_wallHitEffect, target);
         }
+
+		public void CreatePrecisionHitEffect(Transform target)
+		{
+			this.CreateEffect (_precisionHitEffect, target);
+		}
 
         protected void CreateEffect(ParticleSystem effect, Transform target)
         {

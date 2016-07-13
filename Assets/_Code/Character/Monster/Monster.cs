@@ -70,10 +70,10 @@ namespace BounceDudes
             if (_dead)
                 return;
 
-            EffectManager.Instance.CreateDieEffect(this.transform);
-            EffectManager.Instance.CreateSmokeEffect(this.transform);
-
             _dead = true;
+
+			EffectManager.Instance.CreateDieEffect(this.transform);
+			EffectManager.Instance.CreateSmokeEffect(this.transform);
 
             base.Die();
         }

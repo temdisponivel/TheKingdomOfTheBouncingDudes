@@ -28,6 +28,22 @@ public class ChallengeManager
         }
     }
 
+	public static bool ValidateCompletionImpossible(Challenge challenge)
+	{
+		switch (challenge._type)
+		{
+		case ChallengeType.ShootMaxXSoldier:
+			return ChallengeManager.ValidateShootImpossible(challenge._x);
+
+		case ChallengeType.StayWithXHP:
+			return ChallengeManager.ValidateXHPImpossible(challenge._x);
+
+		default:
+			return false;
+		}
+	}
+
+
     protected static bool ValidateKillEnemy(int x)
     {
         return LevelManager.Instance.EnemiesKilled >= x;
@@ -38,6 +54,11 @@ public class ChallengeManager
         return Weapon.Instance.ShootCount <= x;
     }
 
+	protected static bool ValidateShootImpossible(int x)
+	{
+		return Weapon.Instance.ShootCount > x;
+	}
+
     protected static bool ValidateDamage(int x)
     {
         return (LevelManager.Instance._enemyBase._startedHp - LevelManager.Instance._enemyBase.HP) >= x;
@@ -47,6 +68,11 @@ public class ChallengeManager
     {
         return LevelManager.Instance._playerBase.HP >= x;
     }
+
+	protected static bool ValidateXHPImpossible(int x)
+	{
+		return LevelManager.Instance._playerBase.HP < x;
+	}
 
     protected static bool ValidateCombo(int x)
     {

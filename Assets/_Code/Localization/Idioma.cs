@@ -218,8 +218,7 @@ for more information.
         }
 
         if (!strings.ContainsKey(name)) {
-			//Debug.LogError("The specified string does not exist: " + name);
-			
+			//Debug.Log("The specified string does not exist: " + name);
 			return name;
 		}
 	
@@ -233,8 +232,7 @@ for more information.
 		}
 
 		if (!strings.ContainsKey(name)) {
-			//Debug.LogError("The specified string does not exist: " + name);
-
+			//Debug.Log("The specified string does not exist: " + name);
 			return name;
 		}
 		string aux = (string)strings [name];

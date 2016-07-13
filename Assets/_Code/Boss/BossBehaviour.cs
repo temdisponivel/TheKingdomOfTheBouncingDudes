@@ -131,6 +131,7 @@ namespace BounceDudes
             }
 
             // SOUND: Stop Music and Play BOB Voice!
+			AudioManager.Instance.PlayMusic(3);
 			AudioManager.Instance.StopCurrentMusic(3);
 			AudioManager.Instance.PlayCharacterSound (1);
 			this._bossBody.transform.DOMove(this._basePosition.transform.position, 0.5f).OnComplete(this.GameOverComplete).SetEase(Ease.InBack);

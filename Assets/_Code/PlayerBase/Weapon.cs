@@ -112,7 +112,7 @@ namespace BounceDudes
 			//_specialReady = this._specialCurrentPoints >= this._specialLimit;
 			//this._special = (Time.time - (this._specialStartTime + this._specialDuration)) >= this._coolDownBetweenSpecials;
 
-			Debug.Log (this._specialCurrentPoints);
+			AudioManager.Instance.PlayInterfaceSound (0); // TODO: Change to the correct sound when 20nzo do it.
 
 			if (Weapon.Instance.SpecialCurrentPoints >= this._specialLimit)
             {
@@ -335,6 +335,8 @@ namespace BounceDudes
 
         public void RetrieveAll()
         {
+			AudioManager.Instance.PlayInterfaceSound (0); // TODO: Change to the correct sound when 20nzo do it.
+			
             var soldiers = AmmunitionClip.Instance.ShootedSoldiers.ToList();
             for (int i = 0; i < soldiers.Count; i++)
             {
