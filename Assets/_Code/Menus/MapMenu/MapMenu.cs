@@ -32,7 +32,7 @@ namespace BounceDudes
             Instance = this;
         }
 
-        public void Start()
+        void Start()
         {
             LevelNode[] nodes = this.GetComponentsInChildren<LevelNode>();
             LevelInformation[] levelsUnlocked = GameManager.Instance.LevelsInformation.Values.ToArray();

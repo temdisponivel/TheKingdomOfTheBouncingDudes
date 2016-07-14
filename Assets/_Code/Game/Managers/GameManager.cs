@@ -147,6 +147,7 @@ namespace BounceDudes
 
 			Camera.main.aspect = AspectRatio;
 
+
             if (GameManager.Instance == null)
             {
                 GameManager._instance = this;

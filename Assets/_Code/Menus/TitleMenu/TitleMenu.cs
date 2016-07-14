@@ -42,7 +42,7 @@ namespace BounceDudes
 
         public void Start()
         {
-			GameManager.Instance.CreateFullSave (true); // FOR TESTS ONLY
+			//GameManager.Instance.CreateFullSave (true); // FOR TESTS ONLY
 
             this._animator = this.GetComponent<Animator>();
 
@@ -127,6 +127,11 @@ namespace BounceDudes
 			this.PlayInterfaceSound(2);
             //SceneManager.LoadScene("MapMenu");
         }
+
+		public void Arena(){
+			GameManager.Instance.LoadScene("ArenaMenu");
+			this.PlayInterfaceSound(2);
+		}
 
 		public void ShowAchievements(){
 			this.PlayInterfaceSound(0);

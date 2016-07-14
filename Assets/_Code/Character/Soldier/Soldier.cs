@@ -28,7 +28,9 @@ namespace BounceDudes
         {
             base.Start();
 
-			_maxHP = this.HP;
+			if (this._maxHP == 0)
+				_maxHP = this.HP;
+			
 			this.Sprite.color = Color.white;
 
             if (!_shooted && !_isSpecial)

@@ -28,6 +28,7 @@ namespace BounceDudes
 
         public Text _soldierNameText;
 
+		[Header("Wave Text")]
 		public Text _currentWaveText;
 		public GameObject _waveTextInitialPosition;
 		public GameObject _waveTextMiddlePosition;
@@ -47,9 +48,7 @@ namespace BounceDudes
 		public Text _challengeTwoText;
 		public Text _challengeThreeText;
 		protected bool _updatedOneTime = false;
-
 		protected Tween _panelIdle;
-
 
         public int EnemiesKilled { get; set; }
 
@@ -59,12 +58,17 @@ namespace BounceDudes
         public bool LoosePanelShown = false;
         public bool PausePanelShown = false;
 
+
         public void Awake()
         {
+			Camera.main.aspect = GameManager.Instance.AspectRatio;
 			this._uiCamera.aspect = GameManager.Instance.AspectRatio;	
+
             LevelManager._instance = this;
             this._baseHpBakp = this._playerBase.HP;
+
             GameManager.Instance.OnStateChange += this.StateChangeCallback;
+
 
         }
 
@@ -72,26 +76,10 @@ namespace BounceDudes
 			if (GameManager.Instance.CurrentLevel.Id != LevelId.FIFTEEN) // If not the Boss Level
 				AudioManager.Instance.PlayMusic(2);
 
-
-
 			this.UnpauseGame();
 		}
 
-		public void CallWaveText(int waveIndex){
-			
-			_currentWaveText.GetComponent<TextToTraslate> ().TranslateWithOneArgument(waveIndex, true);
-	
-			_currentWaveText.transform.DOMove (_waveTextWaitingPosition.transform.position, 0.7f).OnComplete (() => { 
-				_currentWaveText.transform.DOMove (_waveTextMiddlePosition.transform.position, 1.4f).OnComplete (() => {
-					_currentWaveText.transform.DOMove (_waveTextFinalPosition.transform.position, 0.7f).OnComplete (() => {
-						_currentWaveText.transform.position = _waveTextInitialPosition.transform.position;
-						
-					});
-				});
-			});
-		
-		}
-			
+
         public void GameOver()
         {
             this.EndLevel(false);
@@ -143,13 +131,7 @@ namespace BounceDudes
             
 			GameObject panelToIdle;
 
-			var musicToStop = 3;
-
-			if (GameManager.Instance.CurrentLevel.Id != LevelId.FIFTEEN)
-				musicToStop = 2;
-
-			AudioManager.Instance.PlayMusic(musicToStop);
-			AudioManager.Instance.StopCurrentMusic (musicToStop);
+			AudioManager.Instance.PauseAllSounds ();
 
             if (win)
             {
@@ -195,6 +177,7 @@ namespace BounceDudes
         {
             GameManager.Instance.State = GameState.PAUSED;
 			_currentWaveText.transform.DOPause ();
+			this.PausePanelUpdateInfo ();
         }
 
         public void UnpauseGame()
@@ -206,7 +189,6 @@ namespace BounceDudes
 		public void ButtonPause()
 		{
 			this.PauseGame ();
-			this.PausePanelUpdateInfo ();
 			AudioManager.Instance.PlayInterfaceSound (0);
 		}
 
@@ -225,31 +207,7 @@ namespace BounceDudes
 			AudioManager.Instance.PlayInterfaceSound (0);
 		}
 
-        public void FadeOutCollider(Action callback)
-        {
-            var image = this._colliderPanel.GetComponent<Image>();
-            Color color = image.color;
-            color.a = 0;
-            image.DOBlendableColor(color, .5f).OnComplete(() =>
-            {
-                if (callback != null)
-                    callback();
-                this._colliderPanel.SetActive(false);
-            });
-        }
-
-        public void FadeInCollider(Action callback)
-        {
-            this._colliderPanel.SetActive(true);
-            var image = this._colliderPanel.GetComponent<Image>();
-            Color color = image.color;
-            color.a = .7f;
-            image.DOBlendableColor(color, .5f).OnComplete(() =>
-            {
-                if (callback != null)
-                    callback();
-            });
-        }
+      
 
         public void Quit()
         {
@@ -310,6 +268,32 @@ namespace BounceDudes
             if (pauseStatus)
                 this.PauseGame();
         }
+
+		public void FadeOutCollider(Action callback)
+		{
+			var image = this._colliderPanel.GetComponent<Image>();
+			Color color = image.color;
+			color.a = 0;
+			image.DOBlendableColor(color, .5f).OnComplete(() =>
+				{
+					if (callback != null)
+						callback();
+					this._colliderPanel.SetActive(false);
+				});
+		}
+
+		public void FadeInCollider(Action callback)
+		{
+			this._colliderPanel.SetActive(true);
+			var image = this._colliderPanel.GetComponent<Image>();
+			Color color = image.color;
+			color.a = .7f;
+			image.DOBlendableColor(color, .5f).OnComplete(() =>
+				{
+					if (callback != null)
+						callback();
+				});
+		}
 
 
 		public void PausePanelUpdateInfo()
@@ -372,6 +356,20 @@ namespace BounceDudes
 		}
 			
 
+		public void CallWaveText(int waveIndex){
+
+			_currentWaveText.GetComponent<TextToTraslate> ().TranslateWithOneArgument(waveIndex, true);
+
+			_currentWaveText.transform.DOMove (_waveTextWaitingPosition.transform.position, 0.7f).OnComplete (() => { 
+				_currentWaveText.transform.DOMove (_waveTextMiddlePosition.transform.position, 1.4f).OnComplete (() => {
+					_currentWaveText.transform.DOMove (_waveTextFinalPosition.transform.position, 0.7f).OnComplete (() => {
+						_currentWaveText.transform.position = _waveTextInitialPosition.transform.position;
+
+					});
+				});
+			});
+
+		}
 
 
     }

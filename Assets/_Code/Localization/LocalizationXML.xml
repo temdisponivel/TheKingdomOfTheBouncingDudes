@@ -11,7 +11,8 @@
                 <string name="TS_Sound">Sound</string>
                 <string name="TS_Music">Music</string>
                 <string name="TS_Back">back</string>
-                <string name="TS_Map">map</string>
+                <string name="TS_Campaign">campaign</string>
+                <string name="TS_Arena">arena</string>
                 <string name="TS_Credits">credits</string>
                 <string name="TS_Medals">medals</string>
 
@@ -162,7 +163,8 @@
                 <string name="TS_Sound">Som</string>
                 <string name="TS_Music">Música</string>
                 <string name="TS_Back">voltar</string>
-                <string name="TS_Map">mapa</string>
+                <string name="TS_Campaign">campanha</string>
+                <string name="TS_Arena">arena</string>
                 <string name="TS_Credits">créditos</string>
                 <string name="TS_Medals">medalhas</string>
 
@@ -198,14 +200,14 @@
                 <string name="LD_Level06_Title">ACERTO</string>
                 <string name="LD_Level06_Description">Deixa eu ~acertar em cheio~ esses tontos :B</string> 
 
-                <string name="LD_Level07_Title">DEVAGA</string>
+                <string name="LD_Level07_Title">DEVAGAR</string>
                 <string name="LD_Level07_Description">~Livre estou, livre estou!~ (Nota pra mim: Eu deveria escrever mais canções!)</string> 
 
                 <string name="LD_Level08_Title">PUXAR</string>
                 <string name="LD_Level08_Description">Espero que não crie um buraco negro... :I</string> 
 
                 <string name="LD_Level09_Title">MAIS TIRO</string>
-                <string name="LD_Level09_Description">Essa invenção é bem bacana! Eu devo ganhar o Festival de Ciência de Rei esse ano também!</string> 
+                <string name="LD_Level09_Description">Essa invenção é bem bacana! Acho que ganho o Festival de Ciência de Rei esse ano também!</string> 
 
                 <string name="LD_Level10_Title">PORTAL</string>
                 <string name="LD_Level10_Description">~Isso foi um triunfo, estou anotando aqui: Grande sucesso.~</string> 
@@ -232,9 +234,9 @@
                  <string name="LD_Challenge_DefeatEnemies">Derrote {0} inimigos</string>
 
                  <!-- Troop Menu ( Short Space ) -->
-                 <string name="TM_Size">TAMN.</string>
-                 <string name="TM_Speed">VELO.</string>
-                 <string name="TM_Armor">RESC.</string>
+                 <string name="TM_Size">TAM.</string>
+                 <string name="TM_Speed">VEL.</string>
+                 <string name="TM_Armor">RES.</string>
 
                  <!-- Troop Menu // SOLDIER DESCRIPTIONS -->
                  <string name="TM_Soldier_Helga_Description">Signo: Leão&#xA;Animal Espiritual: Cavalo&#xA;"Tenho que manter meus irmãos na linha, se não... aff."</string> 

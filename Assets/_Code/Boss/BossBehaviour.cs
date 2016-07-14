@@ -131,8 +131,7 @@ namespace BounceDudes
             }
 
             // SOUND: Stop Music and Play BOB Voice!
-			AudioManager.Instance.PlayMusic(3);
-			AudioManager.Instance.StopCurrentMusic(3);
+			AudioManager.Instance.PauseAllSounds ();
 			AudioManager.Instance.PlayCharacterSound (1);
 			this._bossBody.transform.DOMove(this._basePosition.transform.position, 0.5f).OnComplete(this.GameOverComplete).SetEase(Ease.InBack);
 			_bossTween = null;
@@ -181,7 +180,7 @@ namespace BounceDudes
             SpawnOption currentSpawn = this._bossWave[this._nextSpawnIndex];
 
             this._spawner.transform.position = currentSpawn._spawnPoint.transform.position;
-            this._spawner.transform.rotation = Quaternion.LookRotation(Vector3.forward, (currentSpawn._target.transform.position - this._spawner.transform.position).normalized);
+            this._spawner.transform.rotation = Quaternion.LookRotation(Vector3.forward, (currentSpawn._targetPoint.transform.position - this._spawner.transform.position).normalized);
 
             var monster = (GameObject)GameObject.Instantiate(currentSpawn._toSpawn, this._spawner.transform.position, this._spawner.transform.rotation);
             var character = monster.GetComponent<Character>();

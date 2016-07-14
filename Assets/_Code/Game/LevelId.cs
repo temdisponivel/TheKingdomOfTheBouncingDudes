@@ -23,6 +23,6 @@ namespace Assets._Code.Game
         THIRTEEN,
         FOURTEEN,
         FIFTEEN,
-        SIXTEEN,
+        ARENA,
     }
 }

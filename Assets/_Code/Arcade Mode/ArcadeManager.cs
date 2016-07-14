@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Random = UnityEngine.Random;
 using System.Collections;
 using System;
 using System.Linq;
@@ -6,65 +7,172 @@ using System.Collections.Generic;
 
 namespace BounceDudes{
 
+	[Serializable]
 	public class ArcadeManager : MonoBehaviour {
 
-		protected ArcadeWave _arcadeWave;
+		public static ArcadeManager Instance;
+
+		protected Wave _arcadeWave = null;
+		protected Wave ArcadeWave { get { return _arcadeWave; } set { _arcadeWave = value; } }
+
+		protected int _arcadePoints = 0;
+		public int ArcadePoints { get { return _arcadePoints; } set { _arcadePoints = value; } }
+
+		[Header("Wave Factory")]
+		public List<GameObject> _allLv1Monsters;
+		public List<GameObject> _allLv2Monsters;
+		protected List<List<GameObject>> _allMonsters;
+		public List<GameObject> _spawnPoints;
+		public List<GameObject> _targetPoints;
+		public float _minIntervalTime = 1.4f;
+		public float _maxIntervalTime = 5.4f;
+		protected int _minMonsterLevel = 0;
+		protected int _maxMonsterLevel = 0;
+		protected int _maxMonsterQuantity = 2;
+		protected int _intervalPseudoChanceModifier = 0;
+		protected int _intervalMaxPseudoChance = 3;
+		protected int _waveNumber = 0;
 
 		public GameObject _spawner;
-		public float _startDelay = 1f;
-		public Character _last;
 
-		public int _dead = 0;
-		public int _maxEnemies;
+		protected int _waveEnemiesDefeated = 0;
+		protected int _waveEnemiesCount;
 
-		protected IEnumerator RunWave(List<Wave> waves)
+
+		void Awake(){
+			Instance = this;
+			ArcadeWave = new Wave (new List<SpawnOption> ());
+
+			// Populate All Monsters
+			_allMonsters = new List<List<GameObject>>();
+			_allMonsters.Add(_allLv1Monsters);
+			_allMonsters.Add (_allLv2Monsters);
+		}
+
+		void Start(){
+			this.StartCoroutine(this.WaitSeconds(0.1f, this.StartNextArcadeWave));
+		}
+
+
+		public void AddArcadePoints(int value){
+			
+		}
+
+
+
+		protected IEnumerator RunWave()
 		{
-			for (int i = 0; i < waves.Count; i++)
+			List<SpawnOption> currentSpaws = ArcadeWave._spawns;
+
+			LevelManager.Instance.CallWaveText (_waveNumber);
+
+			yield return new WaitForSeconds (2.0f); // Wait for wave text animation
+
+			for (int j = 0; j < currentSpaws.Count; j++)
 			{
-				Wave currentWave = waves[i];
-				List<SpawnOption> currentSpaws = currentWave._spawns;
+				SpawnOption currentSpawn = currentSpaws[j];
+				this._spawner.transform.position = currentSpawn._spawnPoint.transform.position;
+				this._spawner.transform.rotation = Quaternion.LookRotation(Vector3.forward, (currentSpawn._targetPoint.transform.position - this._spawner.transform.position).normalized);
 
-				LevelManager.Instance.CallWaveText (i+1);
+				var monster = (GameObject)GameObject.Instantiate(currentSpawn._toSpawn, this._spawner.transform.position, this._spawner.transform.rotation);
 
-				yield return new WaitForSeconds (2.0f); // Wait for wave text animation
+				var character = monster.GetComponent<Character>();
+				character.Shoot();
 
-				for (int j = 0; j < currentSpaws.Count; j++)
-				{
-					SpawnOption currentSpawn = currentSpaws[j];
-					this._spawner.transform.position = currentSpawn._spawnPoint.transform.position;
-					this._spawner.transform.rotation = Quaternion.LookRotation(Vector3.forward, (currentSpawn._target.transform.position - this._spawner.transform.position).normalized);
+				character.OnDie += this.OnLastDie;
 
-					var monster = (GameObject)GameObject.Instantiate(currentSpawn._toSpawn, this._spawner.transform.position, this._spawner.transform.rotation);
+				yield return new WaitForSeconds(currentSpawn._timeToNextSpawn);
+			}
+				
+			this.StartNextArcadeWave ();
+		}
 
-					var character = monster.GetComponent<Character>();
-					character.Shoot();
+		public void OnLastDie(Character last)
+		{
+			last.OnDie -= this.OnLastDie;
+			_waveEnemiesDefeated++;
+			if (_waveEnemiesDefeated == _waveEnemiesCount) {
+			}
+				//StartNextArcadeWave ();
+		}
 
-					character.OnDie += this.OnLastDie;
+		public void StartNextArcadeWave()
+		{
+			this.MakeNewWave ();
+			this.StartCoroutine(this.RunWave());
+		}
 
-					yield return new WaitForSeconds(currentSpawn._timeToNextSpawn);
+		protected void MakeNewWave(){
+
+			ArcadeWave._spawns.Clear ();
+
+			_waveNumber++;
+
+			if (_waveNumber % 5 == 0 && _waveNumber != 1) {
+				// Reduce the pseudo max chance, improving the rate of occurrence.
+				_intervalMaxPseudoChance -= (int)(_intervalMaxPseudoChance * 0.2f); // -20%
+				_intervalMaxPseudoChance = Mathf.Clamp (_intervalMaxPseudoChance, 1, 3);
+				_maxMonsterQuantity++;
+
+				_maxIntervalTime -= 0.1f;
+				_maxIntervalTime = Mathf.Clamp(_maxIntervalTime, _minIntervalTime, 5.4f);
+
+				Debug.Log ("Increase!");
+			}
+
+			if (_waveNumber % 10 == 0 && _waveNumber != 1) {
+				// BOB SHOWS UP!
+			}
+
+			if (_waveNumber >= 10) {
+				_maxMonsterLevel = 1;
+			}
+
+
+			for (var i = 0; i < _maxMonsterQuantity; i++) {
+				
+				int pickedMonsterLevel = Random.Range (_minMonsterLevel, _maxMonsterLevel+1);
+				List<GameObject> monsterListAux;
+				monsterListAux = _allMonsters.ElementAt(pickedMonsterLevel);
+
+				GameObject pickedMonster = monsterListAux [Random.Range (0, monsterListAux.Count)];
+				GameObject pickedSpawnPoint = _spawnPoints [Random.Range (0, _spawnPoints.Count)];
+				GameObject pickedTargetPoint = _targetPoints [Random.Range (0, _targetPoints.Count)];
+				float pickedIntervalTime = Random.Range (_minIntervalTime, _maxIntervalTime);
+
+				// If monster picked is not a CHUBBY, re-roll for a chance to change into a CHUBBY.
+				if (pickedMonster != monsterListAux [0]) { 
+					if (Random.Range (0, 3) == 2) { // 33%
+						pickedMonster = monsterListAux [0];
+						Debug.Log ("Chubbyply");
+					}
 				}
 
-				yield return new WaitForSeconds(currentWave._timeToNextWave);
-			}
-		}
+				// Creates the pseudo chance of spawning the next monster in a shorter period of time.
+				if (Random.Range (_intervalPseudoChanceModifier, _intervalMaxPseudoChance+1) == _intervalMaxPseudoChance) {
+					_intervalPseudoChanceModifier = 0;
+					pickedIntervalTime = 0.7f;
+					Debug.Log ("Double!");
+				}
+				else {
+					_intervalPseudoChanceModifier++;
+				}
 
-		public void StartNextWave()
-		{
-			this.StartCoroutine(this.RunWave(_arcadeWave.NextWave));
+				SpawnOption newSpawn = new SpawnOption (pickedMonster, pickedSpawnPoint, pickedTargetPoint, pickedIntervalTime);
+
+				this.ArcadeWave._spawns.Add (newSpawn);
+			}
+
+			Debug.Log (this.ArcadeWave._spawns.Count);
+			this._waveEnemiesCount = this.ArcadeWave._spawns.Count;
 		}
+			
 
 		public IEnumerator WaitSeconds(float seconds, Action callback)
 		{
 			yield return new WaitForSeconds(seconds);
 			callback();
 		}
-
-		public void OnLastDie(Character last)
-		{
-			last.OnDie -= this.OnLastDie;
-			_dead++;
-			if (_dead == _maxEnemies)
-				LevelManager.Instance.FinishLevel();
-		}
+			
 	}
 }

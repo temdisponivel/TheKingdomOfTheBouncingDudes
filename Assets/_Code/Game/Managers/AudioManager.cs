@@ -25,8 +25,8 @@ public class AudioManager : MonoBehaviour
     void Awake()
     {
         AudioManager._instance = this;
-        AllSFXSources = new AudioSource[4][];
 
+        AllSFXSources = new AudioSource[4][];
         AllSFXSources[0] = InterfaceSFXSources;
         AllSFXSources[1] = MonsterSFXSources;
         AllSFXSources[2] = FanfareSFXSources;
@@ -90,24 +90,26 @@ public class AudioManager : MonoBehaviour
 	}
 
 
-    public void PlayMusic(int index)
+	public void PlayMusic(int index)
     {
         this.StartCoroutine(this.PlayMusicAfterFrame(index));
+		Debug.Log(!GameManager.Instance.MusicVolume);
     }
 
-	public void StopCurrentMusic(int musicIndex)
+	public void PauseAllSounds()
     {
-		SoundManager.StopLoopingMusic(MusicAudioSources[musicIndex]);
+		//SoundManager.StopLoopingMusic(MusicAudioSources[musicIndex]);
+		SoundManager.PauseAll();
     }
 
-    public IEnumerator PlayAfterFrame(int soundTypeIndex, int soundIndex)
+	protected IEnumerator PlayAfterFrame(int soundTypeIndex, int soundIndex)
     {
         yield return new WaitForEndOfFrame();
         AudioSource aux = AllSFXSources[soundTypeIndex][soundIndex];
         aux.PlayOneShotSoundManaged(aux.clip);
     }
 
-    public IEnumerator PlayMusicAfterFrame(int soundIndex)
+	protected IEnumerator PlayMusicAfterFrame(int soundIndex)
     {
         yield return new WaitForEndOfFrame();
         MusicAudioSources[soundIndex].PlayLoopingMusicManaged(1.0f, 1.0f, true);
