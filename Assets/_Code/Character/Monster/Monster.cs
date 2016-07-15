@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using DG.Tweening;
+using Assets._Code.Game;
 
 namespace BounceDudes
 {
@@ -11,18 +12,26 @@ namespace BounceDudes
 		public int _monsterType;
 		protected int _soundMinValue, _soundMaxValue;
 
+		protected Quaternion _shootRotation;
         protected Quaternion _fixedRotation;
+		protected bool _shooted = false;
+
         public bool _dead = false;
         
         public override void Start()
         {
             base.Start();
 
+			this._shootRotation = this.transform.rotation;
             this._fixedRotation = new Quaternion(0, 0, 0, 1.0f);
             //this.transform.position = Vector3.zero;
 
-            //this.CurrentSortingOrder = 1;
 
+			if (GameManager.Instance.CurrentLevel.Id != LevelId.FIFTEEN)
+				this.JumpOverTheFenceAnimation ();
+			else
+				this.Shoot ();
+				
             _maxSpeed /= 3;
             _minSpeed /= 3;
         }
@@ -31,17 +40,40 @@ namespace BounceDudes
         {
             base.LateUpdate();
 
-            if (this.transform.rotation != this._fixedRotation)
+			if (this.transform.rotation != this._fixedRotation && _shooted)
             {
                 this.transform.rotation = this._fixedRotation;
             }
 
         }
 
+		public void JumpOverTheFenceAnimation(){
+			this.Collider.enabled = false;
+			this.StartCoroutine (this.WaitSecondsAndCall (0.000001f, () => { // I used this because for some reason SpriteOrder goes to 0 after Start
+				this.transform.rotation = this._fixedRotation;
+				this.CurrentSortingOrder = -2;
+			}));
+
+			this.transform.DOMoveY (this.transform.position.y + 1.5f, 0.4f).SetEase(Ease.OutBack).OnComplete(() => {
+				this.CurrentSortingOrder = 1;
+				this.PlaySpawnSound ();
+				this.transform.DOMoveY (this.transform.position.y - 3f, 0.4f).SetEase(Ease.OutSine).OnComplete(() => {
+					this.Shoot();
+				});
+			});
+		}
+
         public override void Shoot()
         {
-			this.PlaySpawnSound ();
+			if (GameManager.Instance.CurrentLevel.Id == LevelId.FIFTEEN)
+				this.PlaySpawnSound ();
+
+			this.CurrentSortingOrder = 1;
+			this.transform.rotation = _shootRotation;
+			this.Collider.enabled = true;
+
             this.RigidBody.AddForce(this.transform.up * this._maxSpeed * 0.8f, ForceMode2D.Impulse);
+			_shooted = true;
         }
 
         public virtual void OnCollisionEnter2D(Collision2D collision)
@@ -71,6 +103,9 @@ namespace BounceDudes
                 return;
 
             _dead = true;
+
+			if (ArcadeManager.Instance != null)
+				ArcadeManager.Instance.AddArcadePoints (100);
 
 			EffectManager.Instance.CreateDieEffect(this.transform);
 			EffectManager.Instance.CreateSmokeEffect(this.transform);

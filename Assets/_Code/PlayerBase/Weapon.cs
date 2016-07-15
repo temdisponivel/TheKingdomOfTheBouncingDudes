@@ -51,7 +51,8 @@ namespace BounceDudes
 		public GameObject _specialCover;
 		public GameObject _specialCoverPosition;
 
-		public float _specialLimit = 100;
+		protected float _specialLimit = 200;
+		public float SpecialMaxValue {get { return _specialLimit; } set { _specialLimit = value; } }
 		protected float _specialCurrentPoints = 0;
 
         public float _coolDownBetweenSpecials = 3f;
@@ -166,7 +167,7 @@ namespace BounceDudes
             {
                 var hit = Physics2D.Raycast(this._cameraUi.ScreenToWorldPoint(Input.mousePosition), Vector3.forward, Mathf.Infinity, 1 << LayerMask.NameToLayer("UI"));
 
-                if (hit.collider != null)
+				if (hit.collider != null)
                 {
                     return;
                 }

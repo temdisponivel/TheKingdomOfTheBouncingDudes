@@ -50,7 +50,7 @@ namespace BounceDudes
                     var monster = (GameObject)GameObject.Instantiate(currentSpawn._toSpawn, this._spawner.transform.position, this._spawner.transform.rotation);
 
                     var character = monster.GetComponent<Character>();
-                    character.Shoot();
+                    //character.Shoot(); // WILL BE CALLED ON THE INTRO ANIMATION
 
                     character.OnDie += this.OnLastDie;
 

@@ -9,7 +9,7 @@ namespace BounceDudes
     public class SpecialTimer : MonoBehaviour
     {
         public float MaxSizeX = 0;
-        public float CoolDownSpecial = 0;
+        public float SpecialMaxValue = 0;
         public float SpecialDuration = 0;
 
         public bool IsInSpecial = false;
@@ -17,14 +17,14 @@ namespace BounceDudes
         public void Start()
         {
             this.MaxSizeX = this.transform.localScale.x;
-			this.CoolDownSpecial = Weapon.Instance._specialLimit;
+			this.SpecialMaxValue = Weapon.Instance.SpecialMaxValue;
         }
 
         public void LateUpdate()
         {
             var newScale = new Vector3()
             {
-				x = MaxSizeX * Weapon.Instance.SpecialCurrentPoints / CoolDownSpecial,
+				x = MaxSizeX * Weapon.Instance.SpecialCurrentPoints / SpecialMaxValue,
                 y = this.transform.localScale.y,
                 z = this.transform.localScale.z
             };

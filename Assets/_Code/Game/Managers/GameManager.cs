@@ -142,6 +142,9 @@ namespace BounceDudes
 		public float AspectRatio = 10f / 16f;
 		public bool FromMainMenuToMapMenu = true;
 
+		public bool SoundVolume { get; set; }
+		public bool MusicVolume { get; set; }
+
         public void Awake()
         {
 
@@ -453,7 +456,6 @@ namespace BounceDudes
             this.SaveGame();
         }
 
-        public bool SoundVolume { get; set; }
-        public bool MusicVolume { get; set; }
+
     }
 }

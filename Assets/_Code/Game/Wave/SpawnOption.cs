@@ -16,7 +16,7 @@ namespace BounceDudes
         public GameObject _toSpawn;
         public GameObject _spawnPoint = null;
 
-		[FormerlySerializedAs("_target")]
+		//[FormerlySerializedAs("_target")]
         public GameObject _targetPoint = null;
         public float _timeToNextSpawn = 1f;
 

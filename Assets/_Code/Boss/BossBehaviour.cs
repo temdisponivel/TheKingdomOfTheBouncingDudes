@@ -182,9 +182,11 @@ namespace BounceDudes
             this._spawner.transform.position = currentSpawn._spawnPoint.transform.position;
             this._spawner.transform.rotation = Quaternion.LookRotation(Vector3.forward, (currentSpawn._targetPoint.transform.position - this._spawner.transform.position).normalized);
 
-            var monster = (GameObject)GameObject.Instantiate(currentSpawn._toSpawn, this._spawner.transform.position, this._spawner.transform.rotation);
-            var character = monster.GetComponent<Character>();
-            character.Shoot();
+			GameObject.Instantiate(currentSpawn._toSpawn, this._spawner.transform.position, this._spawner.transform.rotation);
+
+			//var monster = (GameObject)
+			//var character = monster.GetComponent<Character>();
+            //character.Shoot(); // Call in Monster Class
 
             this._nextSpawnIndex++;
         }

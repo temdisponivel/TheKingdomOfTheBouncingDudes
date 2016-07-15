@@ -4,6 +4,7 @@ using System.Collections;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace BounceDudes{
 
@@ -18,17 +19,23 @@ namespace BounceDudes{
 		protected int _arcadePoints = 0;
 		public int ArcadePoints { get { return _arcadePoints; } set { _arcadePoints = value; } }
 
+		[Header("UI")]
+		public Text _arcadeValueText;
+
+
 		[Header("Wave Factory")]
 		public List<GameObject> _allLv1Monsters;
 		public List<GameObject> _allLv2Monsters;
 		protected List<List<GameObject>> _allMonsters;
 		public List<GameObject> _spawnPoints;
 		public List<GameObject> _targetPoints;
-		public float _minIntervalTime = 1.4f;
-		public float _maxIntervalTime = 5.4f;
+		protected float _minIntervalTime = 0.6f;
+		protected float _maxIntervalTime = 5.4f;
+		protected float _intervalTimeBkp = 0f;
 		protected int _minMonsterLevel = 0;
 		protected int _maxMonsterLevel = 0;
 		protected int _maxMonsterQuantity = 2;
+		protected int _monsterQuantityBkp = 0;
 		protected int _intervalPseudoChanceModifier = 0;
 		protected int _intervalMaxPseudoChance = 3;
 		protected int _waveNumber = 0;
@@ -46,16 +53,20 @@ namespace BounceDudes{
 			// Populate All Monsters
 			_allMonsters = new List<List<GameObject>>();
 			_allMonsters.Add(_allLv1Monsters);
-			_allMonsters.Add (_allLv2Monsters);
+			_allMonsters.Add(_allLv2Monsters);
 		}
 
 		void Start(){
+			_intervalTimeBkp = _maxIntervalTime;
+			_monsterQuantityBkp = _maxMonsterQuantity;
+			AddArcadePoints (0); // Init the Point Text
 			this.StartCoroutine(this.WaitSeconds(0.1f, this.StartNextArcadeWave));
 		}
 
 
 		public void AddArcadePoints(int value){
-			
+			this.ArcadePoints += value;
+			this._arcadeValueText.text = this.ArcadePoints.ToString();
 		}
 
 
@@ -77,14 +88,14 @@ namespace BounceDudes{
 				var monster = (GameObject)GameObject.Instantiate(currentSpawn._toSpawn, this._spawner.transform.position, this._spawner.transform.rotation);
 
 				var character = monster.GetComponent<Character>();
-				character.Shoot();
+				//character.Shoot(); // Call this on Monster class
 
 				character.OnDie += this.OnLastDie;
 
 				yield return new WaitForSeconds(currentSpawn._timeToNextSpawn);
 			}
 				
-			this.StartNextArcadeWave ();
+			//this.StartNextArcadeWave ();
 		}
 
 		public void OnLastDie(Character last)
@@ -92,17 +103,19 @@ namespace BounceDudes{
 			last.OnDie -= this.OnLastDie;
 			_waveEnemiesDefeated++;
 			if (_waveEnemiesDefeated == _waveEnemiesCount) {
+				_waveEnemiesDefeated = 0;
+				StartNextArcadeWave ();
 			}
-				//StartNextArcadeWave ();
+
 		}
 
 		public void StartNextArcadeWave()
 		{
-			this.MakeNewWave ();
+			this.MakeWave ();
 			this.StartCoroutine(this.RunWave());
 		}
 
-		protected void MakeNewWave(){
+		protected void MakeWave(){
 
 			ArcadeWave._spawns.Clear ();
 
@@ -114,8 +127,15 @@ namespace BounceDudes{
 				_intervalMaxPseudoChance = Mathf.Clamp (_intervalMaxPseudoChance, 1, 3);
 				_maxMonsterQuantity++;
 
-				_maxIntervalTime -= 0.1f;
-				_maxIntervalTime = Mathf.Clamp(_maxIntervalTime, _minIntervalTime, 5.4f);
+				_maxIntervalTime -= 0.7f;
+				_maxIntervalTime = Mathf.Clamp(_maxIntervalTime, _minIntervalTime * 2f, _intervalTimeBkp);
+
+				// ASSAULT!
+				_intervalTimeBkp = _maxIntervalTime;
+				_maxIntervalTime = _minIntervalTime;
+
+				_monsterQuantityBkp = _maxMonsterQuantity;
+				_maxMonsterQuantity *= 2;
 
 				Debug.Log ("Increase!");
 			}
@@ -124,7 +144,7 @@ namespace BounceDudes{
 				// BOB SHOWS UP!
 			}
 
-			if (_waveNumber >= 10) {
+			if (_waveNumber >= 20) {
 				_maxMonsterLevel = 1;
 			}
 
@@ -151,7 +171,7 @@ namespace BounceDudes{
 				// Creates the pseudo chance of spawning the next monster in a shorter period of time.
 				if (Random.Range (_intervalPseudoChanceModifier, _intervalMaxPseudoChance+1) == _intervalMaxPseudoChance) {
 					_intervalPseudoChanceModifier = 0;
-					pickedIntervalTime = 0.7f;
+					pickedIntervalTime = _minIntervalTime / 2f;
 					Debug.Log ("Double!");
 				}
 				else {
@@ -162,8 +182,9 @@ namespace BounceDudes{
 
 				this.ArcadeWave._spawns.Add (newSpawn);
 			}
-
-			Debug.Log (this.ArcadeWave._spawns.Count);
+		
+			this._maxIntervalTime = this._intervalTimeBkp;
+			this._maxMonsterQuantity = this._monsterQuantityBkp;
 			this._waveEnemiesCount = this.ArcadeWave._spawns.Count;
 		}
 			

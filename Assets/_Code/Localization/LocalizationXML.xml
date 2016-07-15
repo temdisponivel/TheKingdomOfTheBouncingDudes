@@ -138,6 +138,9 @@
                  <string name="CF_Wave">WAVE {0}</string>
                  <string name="CF_Challenges">CHALLENGES</string>
 
+                 <!-- Arcade Field ( Short Space )-->
+                 <string name="AF_Score">SCORE</string>
+
                  <!-- Combat Field // LOSE MESSAGES-->
                  <string name="CF_LoseMessage_0">You get nothing, good day sir!</string>
                  <string name="CF_LoseMessage_1">Try again :(</string>
@@ -289,6 +292,9 @@
                  <string name="CF_Unlocked">Liberado:</string>
                  <string name="CF_Wave">HORDA {0}</string>
                  <string name="CF_Challenges">DESAFIOS</string>
+
+                 <!-- Arcade Field ( Short Space )-->
+                 <string name="AF_Score">PONTOS</string>
 
                  <!-- Combat Field // LOSE MESSAGES-->
                  <string name="CF_LoseMessage_0">Perdeu, mas tenha um bom dia! :)</string>

@@ -35,6 +35,7 @@ namespace BounceDudes
 		public GameObject _waveTextWaitingPosition;
 		public GameObject _waveTextFinalPosition;
 
+		[Header("Panels")]
         public GameObject _colliderPanel = null;
         public PausePanel _pausePanel = null;
         public LooseLevelPanel _loosePanel = null;
@@ -49,6 +50,10 @@ namespace BounceDudes
 		public Text _challengeThreeText;
 		protected bool _updatedOneTime = false;
 		protected Tween _panelIdle;
+
+		[Header("Spawn Points")]
+		public List<GameObject> _spawnPoints;
+		public float _spawnPointsTrueY;
 
         public int EnemiesKilled { get; set; }
 
@@ -75,6 +80,12 @@ namespace BounceDudes
 		public void Start(){
 			if (GameManager.Instance.CurrentLevel.Id != LevelId.FIFTEEN) // If not the Boss Level
 				AudioManager.Instance.PlayMusic(2);
+
+			if (_spawnPoints != null) {
+				foreach (GameObject sp in _spawnPoints) {
+					sp.transform.position = new Vector3 (sp.transform.position.x, _spawnPointsTrueY, 0f);
+				}
+			}
 
 			this.UnpauseGame();
 		}
@@ -151,7 +162,7 @@ namespace BounceDudes
 				panelToIdle = this._loosePanel.gameObject;
             }
 
-			_panelIdle = panelToIdle.transform.DOMoveY (panelToIdle.transform.position.y - 0.05f, 1.0f).SetLoops (-1, LoopType.Yoyo); 
+			_panelIdle = panelToIdle.transform.DOMoveY (panelToIdle.transform.position.y - 0.05f, 1.0f).SetEase(Ease.InOutCubic).SetLoops (-1, LoopType.Yoyo); 
         }
 
         public void KillEnemy(Character enemy)
@@ -175,15 +186,15 @@ namespace BounceDudes
 
         public void PauseGame()
         {
+			DOTween.PauseAll ();
             GameManager.Instance.State = GameState.PAUSED;
-			_currentWaveText.transform.DOPause ();
 			this.PausePanelUpdateInfo ();
         }
 
         public void UnpauseGame()
         {
+			DOTween.PlayAll ();
             GameManager.Instance.State = GameState.PLAYING;
-			_currentWaveText.transform.DOPlay ();
         }
 
 		public void ButtonPause()
@@ -206,9 +217,7 @@ namespace BounceDudes
 			this.PlayAgain ();
 			AudioManager.Instance.PlayInterfaceSound (0);
 		}
-
-      
-
+			
         public void Quit()
         {
         
@@ -360,6 +369,16 @@ namespace BounceDudes
 
 			_currentWaveText.GetComponent<TextToTraslate> ().TranslateWithOneArgument(waveIndex, true);
 
+
+			_currentWaveText.transform.DOMove (_waveTextMiddlePosition.transform.position, 2.1f).SetEase(Ease.OutExpo).OnComplete(() => {
+				_currentWaveText.transform.DOMove(_waveTextFinalPosition.transform.position, 0.7f).SetEase(Ease.InOutBack).OnComplete(() => {
+					_currentWaveText.transform.position = _waveTextInitialPosition.transform.position;
+				});
+
+			});
+
+			/*
+
 			_currentWaveText.transform.DOMove (_waveTextWaitingPosition.transform.position, 0.7f).OnComplete (() => { 
 				_currentWaveText.transform.DOMove (_waveTextMiddlePosition.transform.position, 1.4f).OnComplete (() => {
 					_currentWaveText.transform.DOMove (_waveTextFinalPosition.transform.position, 0.7f).OnComplete (() => {
@@ -368,6 +387,7 @@ namespace BounceDudes
 					});
 				});
 			});
+			*/
 
 		}
 

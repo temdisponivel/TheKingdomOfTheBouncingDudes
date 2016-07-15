@@ -32,8 +32,6 @@ namespace BounceDudes
         protected bool _isShinyAttached = false;
         protected float _timeToTravel = 1.0f;
 
-        private int _currentSortingOrder = 0;
-
         protected GameObject _originalGameObject;
 
         protected Rigidbody2D _rigid = null;
@@ -65,12 +63,11 @@ namespace BounceDudes
         {
             get
             {
-                return this._currentSortingOrder;
+				return this.Sprite.sortingOrder;
             }
             set
             {
-                this._currentSortingOrder = value;
-                this.Sprite.sortingOrder = _currentSortingOrder;
+				this.Sprite.sortingOrder = value;
             }
         
         }
