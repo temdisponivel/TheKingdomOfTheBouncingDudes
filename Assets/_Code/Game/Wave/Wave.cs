@@ -16,8 +16,8 @@ namespace BounceDudes
         public List<SpawnOption> _spawns = null;
         public float _timeToNextWave = 1f;
 
-		public Wave(List<SpawnOption> spawns){
-			_spawns = spawns;
+		public Wave(){
+			_spawns = new List<SpawnOption>();
 		}
     }
 }

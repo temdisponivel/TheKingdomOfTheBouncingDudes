@@ -77,7 +77,7 @@ namespace BounceDudes
         public float ForceMultiplier { get { return this._currentForceMultiplier; } }
         public Quaternion WeaponRotation { get { return this.transform.rotation; } }
 
-		public float SpecialCurrentPoints { get { return this._specialCurrentPoints; } set { _specialCurrentPoints = Mathf.Clamp (value, 0, 100); } }
+		public float SpecialCurrentPoints { get { return this._specialCurrentPoints; } set { _specialCurrentPoints = Mathf.Clamp (value, 0, _specialLimit); } }
 
         public LineRenderer LineRenderer = null;
 

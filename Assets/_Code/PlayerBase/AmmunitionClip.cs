@@ -65,13 +65,13 @@ namespace BounceDudes
         {
             Soldier ammoSoldier = ammunition.GetComponent<Soldier>();
           
+			this.ShootedSoldiers.Remove(ammoSoldier);
 
 			ammoSoldier.transform.DOMove (this._othersPoint.transform.position, ammoSoldier.TimeToTravel / 2).OnComplete (() => {
 
 				ammoSoldier.AmmunitionPosition = this._ammoClipCount;
 				this._ammunitionClip.Enqueue(ammoSoldier);
 				_ammoClipCount++;
-				this.ShootedSoldiers.Remove(ammoSoldier);
 
 				ammoSoldier.transform.DOMove(this.GetAmmunitionPositionOnWorld(ammoSoldier.AmmunitionPosition).position, ammoSoldier.TimeToTravel / 4).OnComplete(() => {
 
