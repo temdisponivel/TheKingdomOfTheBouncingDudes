@@ -93,7 +93,7 @@ public class AudioManager : MonoBehaviour
 	public void PlayMusic(int index)
     {
         this.StartCoroutine(this.PlayMusicAfterFrame(index));
-		Debug.Log(!GameManager.Instance.MusicVolume);
+		//Debug.Log(!GameManager.Instance.MusicVolume);
     }
 
 	public void PauseAllSounds()

@@ -9,7 +9,7 @@ public class TextToTraslate : MonoBehaviour {
 	string originalTagText;
 
 	// Use this for initialization
-	void Awake () {
+	void Awake() {
 		
         if (texto == null)
         {
@@ -22,13 +22,12 @@ public class TextToTraslate : MonoBehaviour {
     }
 
 	public void Translate(bool usingOriginalText = false){
+		
 		if (texto != null) {
 			if (!usingOriginalText)
-				texto.text = Idioma.GetInstance ().getString (texto.text);
+				texto.text = SetLanguage.Instance.LanguageReference.getString (texto.text);
 			else
-				texto.text = Idioma.GetInstance ().getString (originalTagText);
-
-
+				texto.text = SetLanguage.Instance.LanguageReference.getString (originalTagText);
 		}
 		else
 			Debug.Log ("Text to be translated is NULL");
@@ -37,9 +36,9 @@ public class TextToTraslate : MonoBehaviour {
 	public void TranslateWithOneArgument(int value, bool usingOriginalText = false){
 		if (texto != null){
 			if (!usingOriginalText)
-				texto.text = Idioma.GetInstance ().getStringWithOneArgument (texto.text, value);
+				texto.text = SetLanguage.Instance.LanguageReference.getStringWithOneArgument (texto.text, value);
 			else
-				texto.text = Idioma.GetInstance ().getStringWithOneArgument (originalTagText, value);
+				texto.text = SetLanguage.Instance.LanguageReference.getStringWithOneArgument (originalTagText, value);
 		}
 		else
 			Debug.Log ("Text to be translated is NULL");

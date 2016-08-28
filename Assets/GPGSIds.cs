@@ -24,7 +24,17 @@
 
 public static class GPGSIds
 {
-        public const string leaderboard_arcade_mode = "CgkIucH5j-8YEAIQAQ"; // <GPGSID>
+        public const string achievement_bob_is_no_more = "CgkIucH5j-8YEAIQBg"; // <GPGSID>
+        public const string achievement_kings_true_power = "CgkIucH5j-8YEAIQBw"; // <GPGSID>
+        public const string achievement_monster_repelent_silver = "CgkIucH5j-8YEAIQAw"; // <GPGSID>
+        public const string achievement_completionist = "CgkIucH5j-8YEAIQCg"; // <GPGSID>
+        public const string achievement_monster_repelent_gold = "CgkIucH5j-8YEAIQBA"; // <GPGSID>
+        public const string achievement_one_man_army = "CgkIucH5j-8YEAIQDA"; // <GPGSID>
+        public const string achievement_monster_repelent_bronze = "CgkIucH5j-8YEAIQAg"; // <GPGSID>
+        public const string achievement_put_your_friends__cat_in_the_game = "CgkIucH5j-8YEAIQCQ"; // <GPGSID>
+        public const string achievement_true_one_man_army = "CgkIucH5j-8YEAIQDQ"; // <GPGSID>
+        public const string achievement_who_made_this_piece_of_game = "CgkIucH5j-8YEAIQCw"; // <GPGSID>
+        public const string achievement_monster_repelent_master = "CgkIucH5j-8YEAIQBQ"; // <GPGSID>
 
 }
 

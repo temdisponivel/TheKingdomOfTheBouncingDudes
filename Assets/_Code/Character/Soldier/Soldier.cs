@@ -115,6 +115,7 @@ namespace BounceDudes
                     LevelManager.Instance.KillEnemy(this);
                     ComboManager.Instance.AddKill();
                     ComboManager.Instance.AddElementKill();
+					GameManager.GPManagerInstance.AddMonsterDefeated (); // ACHIEVEMENT PORPOUSES
                 }
 
 				if (!monsterKilled)

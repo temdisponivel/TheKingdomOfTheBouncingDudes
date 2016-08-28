@@ -35,7 +35,6 @@ for more information.
 
         setLanguageReference(reference, language);
            
-     
     }
 
     public Idioma(string path, string language,bool web)
@@ -241,13 +240,15 @@ for more information.
 		return aux;
 	}
 
+	// Not used anymore. Why are this here then? To remember the past. Cheers from 28/08/2016.
     public static Idioma GetInstance()
     {
 
         if (lman == null)
         {
-            Debug.LogWarning("Carregando lingua ingles Padrao; Rode O jogo do inicio para carregar a lingua adequada");
-			lman= new Idioma(Path.Combine(Application.dataPath, "lang.xml"), currentLang, false);
+            //Debug.LogWarning("Carregando lingua ingles Padrao; Rode O jogo do inicio para carregar a lingua adequada");
+			//lman = new Idioma(Path.Combine(Application.dataPath, "lang.xml"), currentLang, false);
+			return SetLanguage.Instance.LanguageReference;
         }
         return lman;
     }

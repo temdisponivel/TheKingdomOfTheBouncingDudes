@@ -199,8 +199,6 @@ namespace BounceDudes
 
             DOTween.Init(false, true, LogBehaviour.ErrorsOnly);
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
-
-			GameManager.GPManagerInstance.AuthenticateUser ();
 			
 
         }

@@ -56,9 +56,10 @@ namespace BounceDudes
             set
             {
                 _hp = value;
-                if (_hp == 0)
+                if (_hp <= 0)
                 {
                     LevelManager.Instance.FinishLevel();
+					GameManager.GPManagerInstance.UnlockAchievement (GPGSIds.achievement_bob_is_no_more);
                 }
                 else
                     this.GetHit();

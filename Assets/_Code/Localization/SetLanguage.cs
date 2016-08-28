@@ -5,16 +5,32 @@ using System.IO;
 #pragma warning disable 0414
 
 public class SetLanguage : MonoBehaviour {
-	
-    public string Language="English";
+
+	static protected SetLanguage _instance = null;
+	static public SetLanguage Instance { get { return SetLanguage._instance; } }
+
+    public string Language = "English";
     public bool useSystemLanguage;
-	private Idioma LMan;
-    public TextAsset tt;
+	private Idioma _languageReference;
+	public Idioma LanguageReference { get { return _languageReference; } }
+    public TextAsset textFile;
 
 	protected string[] _supportedLanguages = new string[] {"English", "Portuguese"};
 
     // Use this for initialization
     void Awake () {
+
+		if (SetLanguage.Instance == null)
+		{
+			SetLanguage._instance = this;
+			GameObject.DontDestroyOnLoad(this.gameObject);
+		}
+		else
+		{
+			GameObject.Destroy(this.gameObject);
+			return;
+		}
+
 
 		bool langFoundInSupported = false;
 
@@ -34,7 +50,7 @@ public class SetLanguage : MonoBehaviour {
 
         }
 
-		LMan = new Idioma(tt, Language, false);
+		_languageReference = new Idioma(textFile, Language, false);
 
 	}
 

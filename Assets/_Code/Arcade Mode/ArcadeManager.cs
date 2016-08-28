@@ -122,7 +122,7 @@ namespace BounceDudes{
 			_waveNumber++;
 
 			if (_waveNumber % 5 == 0 && _waveNumber != 1) {
-				// Reduce the pseudo max chance, improving the rate of occurrence.
+				// Reduce the pseudo max chance, improving the rate of occurrence of Double Spawn.
 				_intervalMaxPseudoChance -= (int)(_intervalMaxPseudoChance * 0.3f); // -30%
 				_intervalMaxPseudoChance = Mathf.Clamp (_intervalMaxPseudoChance, 1, 3);
 
@@ -145,6 +145,7 @@ namespace BounceDudes{
 				// BOB SHOWS UP!
 			}
 
+			// Monster Level Up
 			if (_waveNumber >= 20) {
 				_maxMonsterLevel = 1;
 			}

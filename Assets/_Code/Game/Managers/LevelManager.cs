@@ -9,6 +9,7 @@ using Assets.Code.Game;
 using DG.Tweening;
 using Assets._Code.Game;
 
+
 namespace BounceDudes
 {
     /// <summary>
@@ -87,6 +88,9 @@ namespace BounceDudes
 				}
 			}
 
+			if (GameManager.Instance.NextLevelSoldiersDefinition.Count == 1)
+				GameManager.GPManagerInstance.UnlockAchievement (GPGSIds.achievement_one_man_army);
+
 			this.UnpauseGame();
 		}
 
@@ -137,6 +141,7 @@ namespace BounceDudes
             {
                 soldiersEarned.Add(challenge._challenge, challenge._soldierToGive);
             }
+				
 
             info.ChallengesCompleted = soldiersEarned;
             
@@ -146,6 +151,9 @@ namespace BounceDudes
 
             if (win)
             {
+				if (GameManager.Instance.NextLevelSoldiersDefinition.Count == 1)
+					GameManager.GPManagerInstance.UnlockAchievement (GPGSIds.achievement_true_one_man_army);
+				
 				AudioManager.Instance.PlayFanfareSound (0);
                 this._winPanel.UpdateInfo(info);
                 this._winPanel.Show();
