@@ -96,6 +96,11 @@ public class AudioManager : MonoBehaviour
 		//Debug.Log(!GameManager.Instance.MusicVolume);
     }
 
+	public void StopMusic(int index)
+	{
+		MusicAudioSources [index].StopLoopingMusicManaged();
+	}
+
 	public void PauseAllSounds()
     {
 		//SoundManager.StopLoopingMusic(MusicAudioSources[musicIndex]);

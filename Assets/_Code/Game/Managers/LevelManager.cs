@@ -102,75 +102,95 @@ namespace BounceDudes
 
         public void FinishLevel()
         {
-            this.EndLevel(true);
+	         this.EndLevel(true);
         }
 
         protected void EndLevel(bool win)
         {
-            LevelInformation info = new LevelInformation();
-            info.EnemiesKilled = this.EnemiesKilled;
-            info.Finished = win;
-            info.ShootCount = Weapon.Instance.ShootCount;
-            info.LevelId = GameManager.Instance.CurrentLevel.Id;
 
-            int biggest = 0;
-            for (int i = 0; i < GameManager.Instance.StarsPercent.Count; i++)
-            {
-                if (this._playerBase.HP/this._baseHpBakp >= GameManager.Instance.StarsPercent[i])
-                    biggest = i + 1;
-            }
+			if (GameManager.Instance.CurrentLevel.Id != LevelId.FIFTEEN) // If not the Boss Level
+				AudioManager.Instance.StopMusic (2);
+			else
+				AudioManager.Instance.StopMusic (3);
 
-            info.Star = biggest;
+			var bkpTimeScale = Time.timeScale;
+			var newTimeScale = 0.5f;
+			var waitTime = 1.0f;
 
-            Dictionary<Challenge, int[]> soldiersEarned = new Dictionary<Challenge, int[]>();
+			DOTween.To (() => Time.timeScale, x => Time.timeScale = x, newTimeScale, waitTime);
 
-            var challenge = GameManager.Instance.CurrentLevel.SoldiersByChallengeHackOne;
-            if (ChallengeManager.ValidateCompletion(challenge._challenge))
-            {
-                soldiersEarned.Add(challenge._challenge, challenge._soldierToGive);
-            }
+			this.StartCoroutine(this.WaitForAndCall(waitTime, () =>
+			{
+				Time.timeScale = bkpTimeScale;
 
-            challenge = GameManager.Instance.CurrentLevel.SoldiersByChallengeHackTwo;
-            if (ChallengeManager.ValidateCompletion(challenge._challenge))
-            {
-                soldiersEarned.Add(challenge._challenge, challenge._soldierToGive);
-            }
+				AudioManager.Instance.PauseAllSounds ();
 
-            challenge = GameManager.Instance.CurrentLevel.SoldiersByChallengeHackThree;
-            if (ChallengeManager.ValidateCompletion(challenge._challenge))
-            {
-                soldiersEarned.Add(challenge._challenge, challenge._soldierToGive);
-            }
-				
+	        	LevelInformation info = new LevelInformation();
+	            info.EnemiesKilled = this.EnemiesKilled;
+	            info.Finished = win;
+	            info.ShootCount = Weapon.Instance.ShootCount;
+	            info.LevelId = GameManager.Instance.CurrentLevel.Id;
 
-            info.ChallengesCompleted = soldiersEarned;
-            
-			GameObject panelToIdle;
+	            int biggest = 0;
+	            for (int i = 0; i < GameManager.Instance.StarsPercent.Count; i++)
+	            {
+	                if (this._playerBase.HP/this._baseHpBakp >= GameManager.Instance.StarsPercent[i])
+	                    biggest = i + 1;
+	            }
 
-			AudioManager.Instance.PauseAllSounds ();
+	            info.Star = biggest;
 
-            if (win)
-            {
-				if (GameManager.Instance.NextLevelSoldiersDefinition.Count == 1)
-					GameManager.GPManagerInstance.UnlockAchievement (GPGSIds.achievement_true_one_man_army);
-				
-				AudioManager.Instance.PlayFanfareSound (0);
-                this._winPanel.UpdateInfo(info);
-                this._winPanel.Show();
-                GameManager.Instance.AddLevelInfo(GameManager.Instance.CurrentLevel.Id, info);
+	            Dictionary<Challenge, int[]> soldiersEarned = new Dictionary<Challenge, int[]>();
 
-				panelToIdle = this._winPanel.gameObject;
-            }
-            else
-            {
-				AudioManager.Instance.PlayFanfareSound (1);
-				this._loosePanel.UpdateInfo (info);
-                this._loosePanel.Show();
+	            var challenge = GameManager.Instance.CurrentLevel.SoldiersByChallengeHackOne;
+	            if (ChallengeManager.ValidateCompletion(challenge._challenge))
+	            {
+	                soldiersEarned.Add(challenge._challenge, challenge._soldierToGive);
+	            }
 
-				panelToIdle = this._loosePanel.gameObject;
-            }
+	            challenge = GameManager.Instance.CurrentLevel.SoldiersByChallengeHackTwo;
+	            if (ChallengeManager.ValidateCompletion(challenge._challenge))
+	            {
+	                soldiersEarned.Add(challenge._challenge, challenge._soldierToGive);
+	            }
 
-			_panelIdle = panelToIdle.transform.DOMoveY (panelToIdle.transform.position.y - 0.05f, 1.0f).SetEase(Ease.InOutCubic).SetLoops (-1, LoopType.Yoyo); 
+	            challenge = GameManager.Instance.CurrentLevel.SoldiersByChallengeHackThree;
+	            if (ChallengeManager.ValidateCompletion(challenge._challenge))
+	            {
+	                soldiersEarned.Add(challenge._challenge, challenge._soldierToGive);
+	            }
+					
+
+	            info.ChallengesCompleted = soldiersEarned;
+	            
+				GameObject panelToIdle;
+
+				GameManager.GPManagerInstance.CommitMonstersDefeated (this.EnemiesKilled);
+
+	            if (win)
+	            {
+					if (GameManager.Instance.NextLevelSoldiersDefinition.Count == 1)
+						GameManager.GPManagerInstance.UnlockAchievement (GPGSIds.achievement_true_one_man_army);
+					
+					AudioManager.Instance.PlayFanfareSound (0);
+	                this._winPanel.UpdateInfo(info);
+	                this._winPanel.Show();
+	                GameManager.Instance.AddLevelInfo(GameManager.Instance.CurrentLevel.Id, info);
+
+					panelToIdle = this._winPanel.gameObject;
+	            }
+	            else
+	            {
+					AudioManager.Instance.PlayFanfareSound (1);
+					this._loosePanel.UpdateInfo (info);
+	                this._loosePanel.Show();
+
+					panelToIdle = this._loosePanel.gameObject;
+	            }
+
+				_panelIdle = panelToIdle.transform.DOMoveY (panelToIdle.transform.position.y - 0.05f, 1.0f).SetEase(Ease.InOutCubic).SetLoops (-1, LoopType.Yoyo);
+
+			}));
         }
 
         public void KillEnemy(Character enemy)
@@ -180,17 +200,28 @@ namespace BounceDudes
 
         public void StateChangeCallback()
         {
-            if (GameManager.Instance.State == GameState.PAUSED)
-            {
-                if (!WinPanelShown && !LoosePanelShown)
-                    this._pausePanel.Show();
-            }
-            else
-            {
-                if (PausePanelShown)
-                    this._pausePanel.Hide();
-            }
+
+			if (GameManager.Instance.State == GameState.PAUSED)
+			{
+				if (!WinPanelShown && !LoosePanelShown)
+					this._pausePanel.Show();
+			}
+			else
+			{
+				if (PausePanelShown)
+					this._pausePanel.Hide();
+			}
+				
         }
+
+		public IEnumerator WaitForAndCall(float seconds, Action callback)
+		{
+
+			yield return new WaitForSeconds(seconds);
+			if (callback != null)
+				callback();
+		}
+
 
         public void PauseGame()
         {
@@ -384,19 +415,7 @@ namespace BounceDudes
 				});
 
 			});
-
-			/*
-
-			_currentWaveText.transform.DOMove (_waveTextWaitingPosition.transform.position, 0.7f).OnComplete (() => { 
-				_currentWaveText.transform.DOMove (_waveTextMiddlePosition.transform.position, 1.4f).OnComplete (() => {
-					_currentWaveText.transform.DOMove (_waveTextFinalPosition.transform.position, 0.7f).OnComplete (() => {
-						_currentWaveText.transform.position = _waveTextInitialPosition.transform.position;
-
-					});
-				});
-			});
-			*/
-
+				
 		}
 
 

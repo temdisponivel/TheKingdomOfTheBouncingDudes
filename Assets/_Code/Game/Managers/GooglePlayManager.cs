@@ -12,19 +12,11 @@ namespace BounceDudes
 	/// </summary>
 	public class GooglePlayManager {
 
-		public int _totalMonstersDefeated = 0;
-		public void AddMonsterDefeated(){
-
-			var incrementValue = 10;
-
-			GameManager.GPManagerInstance._totalMonstersDefeated += 1;
-
-			if (GameManager.GPManagerInstance._totalMonstersDefeated % incrementValue == 0) {
-				GameManager.GPManagerInstance.IncrementAchievement (GPGSIds.achievement_monster_repelent_bronze, incrementValue);
-				GameManager.GPManagerInstance.IncrementAchievement (GPGSIds.achievement_monster_repelent_silver, incrementValue);
-				GameManager.GPManagerInstance.IncrementAchievement (GPGSIds.achievement_monster_repelent_gold, incrementValue);
-				GameManager.GPManagerInstance.IncrementAchievement (GPGSIds.achievement_monster_repelent_master, incrementValue);
-			}
+		public void CommitMonstersDefeated(int increment){
+			this.IncrementAchievement (GPGSIds.achievement_monster_repelent_bronze, increment);
+			this.IncrementAchievement (GPGSIds.achievement_monster_repelent_silver, increment);
+			this.IncrementAchievement (GPGSIds.achievement_monster_repelent_gold, increment);
+			this.IncrementAchievement (GPGSIds.achievement_monster_repelent_master, increment);
 		}
 
 		public void AuthenticateUser(){
@@ -58,6 +50,11 @@ namespace BounceDudes
 			});
 		}
 
+		public void RevealAchievement(string achievementID){
+			Social.ReportProgress (achievementID, 0f, (bool success) => {
+
+			});
+		}
 
 		public void IncrementAchievement (string achievementID, int value){
 			PlayGamesPlatform.Instance.IncrementAchievement (achievementID, value, (bool success) => {

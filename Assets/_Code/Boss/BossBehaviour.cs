@@ -205,7 +205,7 @@ namespace BounceDudes
             }
             else if (_hp <= _secondHpThreshold && _hp > _thirdHpThreshold)
             {
-				AudioManager.Instance.PlayMonsterSound (12);
+				//AudioManager.Instance.PlayMonsterSound (12);
                 this._bossFaceSprite.sprite = this._faceAngry;
                 this._bossAnimator.SetBool("Angry", true);
                 this._bossArmAngry.GetComponent<SpriteRenderer>().enabled = true;

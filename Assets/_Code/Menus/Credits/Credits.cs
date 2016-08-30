@@ -14,6 +14,10 @@ namespace BounceDudes
 
 		bool _pressedEscape = false;
 
+		void Start(){
+			GameManager.GPManagerInstance.UnlockAchievement (GPGSIds.achievement_who_made_this_piece_of_game);
+		}
+
 		void Update(){
 			if (Input.GetKeyDown(KeyCode.Escape) && !_pressedEscape)
 			{
