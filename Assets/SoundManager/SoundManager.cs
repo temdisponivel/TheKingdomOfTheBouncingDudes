@@ -463,7 +463,7 @@ namespace DigitalRuby.SoundManagerNamespace
             {
                 source.gameObject.SetActive(true);
                 LoopingAudioSource s = new LoopingAudioSource(source, fadeSeconds, fadeSeconds, persist);
-                s.Play(volumeScale, true);
+				s.Play(volumeScale, true);
                 s.Tag = persistTag;
                 sources.Add(s);
 

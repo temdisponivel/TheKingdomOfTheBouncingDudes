@@ -17,6 +17,7 @@ namespace BounceDudes
 		protected bool _shooted = false;
 
         public bool _dead = false;
+	
         
         public override void Start()
         {

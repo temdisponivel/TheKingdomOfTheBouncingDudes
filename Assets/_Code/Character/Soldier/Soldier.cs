@@ -121,14 +121,14 @@ namespace BounceDudes
 					EffectManager.Instance.CreateHitEffect (monster.transform);
 				
 
-				this.AddSpecialPoints(2f);
-
 				this.SoldierReceiveHit ();
 
             }
         }
 
 		protected void SoldierReceiveHit(){
+			
+			this.AddSpecialPoints (2f);
 			this.HP -= 1;
 
 			// Dwarf Skill

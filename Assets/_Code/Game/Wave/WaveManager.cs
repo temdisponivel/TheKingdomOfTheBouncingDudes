@@ -16,7 +16,7 @@ namespace BounceDudes
 		public GameObject _spawner;
         public List<Wave> _waves = null;
         public float _startDelay = 1f;
-        public Character _last;
+        public Character _lastMonster;
         
         public int _dead = 0;
         public int _maxEnemies;
@@ -49,10 +49,12 @@ namespace BounceDudes
 
                     var monster = (GameObject)GameObject.Instantiate(currentSpawn._toSpawn, this._spawner.transform.position, this._spawner.transform.rotation);
 
-                    var character = monster.GetComponent<Character>();
+					var character = monster.GetComponent<Character> ();
                     //character.Shoot(); // WILL BE CALLED ON THE INTRO ANIMATION
+					if (j == currentSpaws.Count - 1)
+						_lastMonster = character;
 
-                    character.OnDie += this.OnLastDie;
+					character.OnDie += this.OnDie;
 
                     yield return new WaitForSeconds(currentSpawn._timeToNextSpawn);
                 }
@@ -72,12 +74,14 @@ namespace BounceDudes
             callback();
         }
 
-        public void OnLastDie(Character last)
+        public void OnDie(Character charToDie)
         {
-            last.OnDie -= this.OnLastDie;
+            charToDie.OnDie -= this.OnDie;
             _dead++;
+
             if (_dead == _maxEnemies)
-                LevelManager.Instance.FinishLevel();
+				if (charToDie != _lastMonster)
+               		LevelManager.Instance.FinishLevel();
         }
     }
 }

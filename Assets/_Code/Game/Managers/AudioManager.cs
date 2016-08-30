@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        AudioManager._instance = this;
+		AudioManager._instance = this;
 
         AllSFXSources = new AudioSource[4][];
         AllSFXSources[0] = InterfaceSFXSources;
@@ -36,10 +36,10 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         if (!GameManager.Instance.SoundVolume)
-            SoundManager.SoundVolume = 0;
+            SoundManager.SoundVolume = 0f;
 
         if (!GameManager.Instance.MusicVolume)
-            SoundManager.MusicVolume = 0;
+            SoundManager.MusicVolume = 0f;
     }
 
     public void ToggleMusicVolume()
@@ -47,7 +47,7 @@ public class AudioManager : MonoBehaviour
         if (GameManager.Instance.MusicVolume)
             SoundManager.MusicVolume = _musicVolume;
         else
-            SoundManager.MusicVolume = 0;
+            SoundManager.MusicVolume = 0f;
 
     }
 
@@ -56,7 +56,7 @@ public class AudioManager : MonoBehaviour
         if (GameManager.Instance.SoundVolume)
             SoundManager.SoundVolume = _soundVolume;
         else
-            SoundManager.SoundVolume = 0;
+            SoundManager.SoundVolume = 0f;
 
     }
 
@@ -103,7 +103,6 @@ public class AudioManager : MonoBehaviour
 
 	public void PauseAllSounds()
     {
-		//SoundManager.StopLoopingMusic(MusicAudioSources[musicIndex]);
 		SoundManager.PauseAll();
     }
 
@@ -117,6 +116,8 @@ public class AudioManager : MonoBehaviour
 	protected IEnumerator PlayMusicAfterFrame(int soundIndex)
     {
         yield return new WaitForEndOfFrame();
-        MusicAudioSources[soundIndex].PlayLoopingMusicManaged(1.0f, 1.0f, true);
+		MusicAudioSources [soundIndex].PlayLoopingMusicManaged(SoundManager.MusicVolume, 1.0f, true);
+
+
     }
 }

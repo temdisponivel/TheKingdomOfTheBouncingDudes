@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.SocialPlatforms;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+using Assets._Code.Game;
 
 
 namespace BounceDudes
@@ -11,6 +12,26 @@ namespace BounceDudes
 	/// Handles all the Google Play actions.
 	/// </summary>
 	public class GooglePlayManager {
+
+		public void CheckKingTruePower(){
+			var info = GameManager.Instance.LevelsInformation[LevelId.FIFTEEN];
+			if (info.GetCountChallengesCompleted == 3) {
+				this.UnlockAchievement (GPGSIds.achievement_bob_is_no_more);
+			}
+		}
+
+
+		public void CheckFullComplete(){
+
+			foreach (LevelInformation levelInfo in GameManager.Instance.LevelsInformation.Values) {
+				if (levelInfo.GetCountChallengesCompleted < 3 || levelInfo.Star < 3) {
+					return;
+				}
+
+				this.UnlockAchievement (GPGSIds.achievement_completionist);
+			}
+				
+		}
 
 		public void CommitMonstersDefeated(int increment){
 			this.IncrementAchievement (GPGSIds.achievement_monster_repelent_bronze, increment);

@@ -4,7 +4,7 @@
             <English>
 
             	 <!-- True Splash Screen -->
-                <string name="TSS_Description">Made by&#xA;Team Bouncing Dudes&#xA;&#xA;Version 2.0</string>
+                <string name="TSS_Description">Made by&#xA;Team Bouncing Dudes&#xA;&#xA;Version 1.5</string>
 
                	 <!-- Title Screen ( Short Space ) -->
                 <string name="TS_Balloon">tap to start</string>
@@ -159,7 +159,7 @@
             <Portuguese>
 
                 <!-- True Splash Screen -->
-                <string name="TSS_Description">Feito por&#xA;Time Bouncing Dudes&#xA;&#xA;Versão 2.0</string>
+                <string name="TSS_Description">Feito por&#xA;Team Bouncing Dudes&#xA;&#xA;Versão 1.5</string>
 
                	 <!-- Title Screen ( Short Space ) -->
                 <string name="TS_Balloon">toque para jogar</string>

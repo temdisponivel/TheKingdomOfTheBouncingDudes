@@ -101,7 +101,7 @@ namespace BounceDudes
 
         public virtual void Die()
         {
-            if (this.OnDie != null)
+			if (this.OnDie != null)
                 this.OnDie(this);
 
             if (this._shouldRecycle)

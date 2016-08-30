@@ -114,10 +114,10 @@ namespace BounceDudes
 				AudioManager.Instance.StopMusic (3);
 
 			var bkpTimeScale = Time.timeScale;
-			var newTimeScale = 0.5f;
+			var newTimeScale = 0.6f;
 			var waitTime = 1.0f;
 
-			DOTween.To (() => Time.timeScale, x => Time.timeScale = x, newTimeScale, waitTime);
+			DOTween.To (() => Time.timeScale, x => Time.timeScale = x, newTimeScale, waitTime).SetEase(Ease.OutExpo);
 
 			this.StartCoroutine(this.WaitForAndCall(waitTime, () =>
 			{
@@ -165,7 +165,6 @@ namespace BounceDudes
 	            
 				GameObject panelToIdle;
 
-				GameManager.GPManagerInstance.CommitMonstersDefeated (this.EnemiesKilled);
 
 	            if (win)
 	            {
@@ -188,8 +187,12 @@ namespace BounceDudes
 					panelToIdle = this._loosePanel.gameObject;
 	            }
 
-				_panelIdle = panelToIdle.transform.DOMoveY (panelToIdle.transform.position.y - 0.05f, 1.0f).SetEase(Ease.InOutCubic).SetLoops (-1, LoopType.Yoyo);
-
+				_panelIdle = panelToIdle.transform.DOMoveY (panelToIdle.transform.position.y - 0.07f, 1.0f).SetEase(Ease.InOutCubic).SetLoops (-1, LoopType.Yoyo);
+				
+				GameManager.GPManagerInstance.CommitMonstersDefeated (this.EnemiesKilled);
+				GameManager.GPManagerInstance.CheckFullComplete();
+				GameManager.GPManagerInstance.CheckKingTruePower();
+				
 			}));
         }
 
@@ -242,17 +245,20 @@ namespace BounceDudes
 			AudioManager.Instance.PlayInterfaceSound (0);
 		}
 
-		public void ButtonContinue(){
+		public void ButtonContinue()
+		{
 			this.UnpauseGame ();
 			AudioManager.Instance.PlayInterfaceSound (0);
 		}
 
-		public void ButtonQuit(){
+		public void ButtonQuit()
+		{
 			this.Quit ();
 			AudioManager.Instance.PlayInterfaceSound (0);
 		}
 
-		public void ButtonRetry(){
+		public void ButtonRetry()
+		{
 			this.PlayAgain ();
 			AudioManager.Instance.PlayInterfaceSound (0);
 		}
@@ -269,15 +275,16 @@ namespace BounceDudes
             else if (PausePanelShown)
                 _pausePanel.Hide();
 
+
+			UnityAds.CallAd ();
+
             GameManager.Instance.LoadScene("MapMenu");
 			AudioManager.Instance.PlayMusic (1);
 
 			this.UnpauseGame();
-
             this.Dispose();
-            /*
-            this.GameOver();
-             */
+
+	
         }
 
         public void PlayAgain()
