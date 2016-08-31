@@ -65,7 +65,8 @@ namespace BounceDudes
             if (collTag == TagAndLayer.ENEMY_BASE)
             {
 				AudioManager.Instance.PlayInterfaceSound (6);
-                EffectManager.Instance.CreateDieEffect(this.transform);
+
+				this.CreateDieEffect ();
                 collision.gameObject.GetComponent<Base>().HP -= this.Damage;
 				this.SoldierReceiveHit ();
             }
@@ -76,12 +77,14 @@ namespace BounceDudes
             }
             else if (collTag == TagAndLayer.BOSS)
             {
-                EffectManager.Instance.CreateDieEffect(this.transform);
+				this.CreateDieEffect ();
                 collision.gameObject.GetComponent<BossBehaviour>().BossHP -= this.Damage;
 				this.SoldierReceiveHit ();
 
             }
         }
+
+
 
         public virtual void OnTriggerEnter2D(Collider2D collider)
         {
@@ -105,7 +108,7 @@ namespace BounceDudes
 						this.HP += 1;
 					} 
 					else {
-						EffectManager.Instance.CreateHitEffect (monster.transform);
+						this.CreateHitEffect (monster);
 					}
 						
 					monsterKilled = true;
@@ -117,8 +120,9 @@ namespace BounceDudes
                     ComboManager.Instance.AddElementKill();
                 }
 
-				if (!monsterKilled)
-					EffectManager.Instance.CreateHitEffect (monster.transform);
+				if (!monsterKilled) {
+					this.CreateHitEffect (monster);
+				}
 				
 
 				this.SoldierReceiveHit ();
@@ -133,10 +137,10 @@ namespace BounceDudes
 
 			// Dwarf Skill
 			if (this._soldierClass == SoldierClassEnum.BERSERK && this.HP <= this._maxHP / 2f) {
-				this.IncrementMaxMinSpeed (0.5f);
+				this.IncrementMaxMinSpeed (1.5f);
 				this._rigid.AddForce(this._rigid.velocity.normalized * 100f, ForceMode2D.Force);
 
-				Color newColor = new Color (255f/255f, 128f/255f, 128f/255f, 1f);
+				Color newColor = new Color (255f/255f, 128f/255f, 128f/255f, 1f); // RAGE RED
 				this.ChangeSpriteColor (newColor);
 			}
 		}
@@ -144,6 +148,8 @@ namespace BounceDudes
 		public void ChangeSpriteColor(Color color){
 			this.Sprite.color = color;
 		}
+
+
 
 		protected void AddSpecialPoints(float value){
 
@@ -184,5 +190,28 @@ namespace BounceDudes
             this.transform.localScale = _scaleBkp;
             AmmunitionClip.Instance.AddAmmunition(this.gameObject);
         }
+
+
+		protected void CreateDieEffect(){
+			// Human Skill Effect
+			if (this._soldierClass == SoldierClassEnum.RESEARCH) {
+				EffectManager.Instance.CreateResearchDieEffect (this.transform);
+			} 
+			else {
+				EffectManager.Instance.CreateDieEffect(this.transform);
+			}
+		}
+
+		protected void CreateHitEffect(Monster monster){
+			// Human Skill Effect
+			if (this._soldierClass == SoldierClassEnum.RESEARCH){
+				EffectManager.Instance.CreateResearchHitEffect (monster.transform);
+			}
+			else
+				EffectManager.Instance.CreateHitEffect (monster.transform);
+		}
     }
+
+
+
 }

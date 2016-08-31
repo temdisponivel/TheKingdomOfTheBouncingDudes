@@ -60,8 +60,8 @@ namespace BounceDudes
 				this.PlaySpawnSound ();
 				this.transform.DOMoveY (this.transform.position.y - 3f, 0.4f).SetEase(Ease.OutSine).OnComplete(() => {
 					this.Shoot();
-				});
-			});
+				}).SetId("Transform");
+			}).SetId("Transform");
 		}
 
         public override void Shoot()

@@ -19,7 +19,7 @@ namespace BounceDudes
 		public void CheckKingTruePower(){
 			var info = GameManager.Instance.LevelsInformation[LevelId.FIFTEEN];
 			if (info.GetCountChallengesCompleted == 3) {
-				this.UnlockAchievement (GPGSIds.achievement_bob_is_no_more);
+				this.UnlockAchievement (GPGSIds.achievement_kings_true_power);
 			}
 		}
 
@@ -30,9 +30,9 @@ namespace BounceDudes
 					if (levelInfo.GetCountChallengesCompleted < 3 || levelInfo.Star < 3) {
 						return;
 					}
-
-					this.UnlockAchievement (GPGSIds.achievement_completionist);
 				}
+
+				this.UnlockAchievement (GPGSIds.achievement_completionist);
 			}
 				
 		}

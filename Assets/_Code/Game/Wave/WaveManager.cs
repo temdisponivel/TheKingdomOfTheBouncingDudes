@@ -16,7 +16,6 @@ namespace BounceDudes
 		public GameObject _spawner;
         public List<Wave> _waves = null;
         public float _startDelay = 1f;
-        public Character _lastMonster;
         
         public int _dead = 0;
         public int _maxEnemies;

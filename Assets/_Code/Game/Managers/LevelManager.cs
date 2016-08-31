@@ -64,6 +64,8 @@ namespace BounceDudes
         public bool LoosePanelShown = false;
         public bool PausePanelShown = false;
 
+		protected bool _wonLostScreenON = false;
+
 
         public void Awake()
         {
@@ -75,14 +77,13 @@ namespace BounceDudes
 
             GameManager.Instance.OnStateChange += this.StateChangeCallback;
 
-
         }
 
 		public void Start(){
 			if (GameManager.Instance.CurrentLevel.Id != LevelId.FIFTEEN) // If not the Boss Level
 				AudioManager.Instance.PlayMusic(2);
 
-			if (_spawnPoints != null) {
+			if (_spawnPoints[0] != null) {
 				foreach (GameObject sp in _spawnPoints) {
 					sp.transform.position = new Vector3 (sp.transform.position.x, _spawnPointsTrueY, 0f);
 				}
@@ -97,16 +98,20 @@ namespace BounceDudes
 
         public void GameOver()
         {
-            this.EndLevel(false);
+			if (!_wonLostScreenON)
+            	this.EndLevel(false);
         }
 
         public void FinishLevel()
         {
-	         this.EndLevel(true);
+			if (!_wonLostScreenON)
+	        	this.EndLevel(true);
         }
 
         protected void EndLevel(bool win)
         {
+
+			_wonLostScreenON = true;
 
 			if (GameManager.Instance.CurrentLevel.Id != LevelId.FIFTEEN) // If not the Boss Level
 				AudioManager.Instance.StopMusic (2);
@@ -117,7 +122,13 @@ namespace BounceDudes
 			var newTimeScale = 0.6f;
 			var waitTime = 1.0f;
 
-			DOTween.To (() => Time.timeScale, x => Time.timeScale = x, newTimeScale, waitTime).SetEase(Ease.OutExpo);
+			Tweener auxTween = DOTween.To (() => Time.timeScale, x => Time.timeScale = x, newTimeScale, waitTime);
+			auxTween.OnComplete (() => {
+				Time.timeScale = bkpTimeScale;
+			});
+			auxTween.SetEase (Ease.OutExpo);
+			auxTween.SetId ("TimeScale");
+
 
 			this.StartCoroutine(this.WaitForAndCall(waitTime, () =>
 			{
@@ -187,7 +198,7 @@ namespace BounceDudes
 					panelToIdle = this._loosePanel.gameObject;
 	            }
 
-				_panelIdle = panelToIdle.transform.DOMoveY (panelToIdle.transform.position.y - 0.07f, 1.0f).SetEase(Ease.InOutCubic).SetLoops (-1, LoopType.Yoyo);
+				_panelIdle = panelToIdle.transform.DOMoveY (panelToIdle.transform.position.y - 0.07f, 1.0f).SetEase(Ease.InOutCubic).SetLoops (-1, LoopType.Yoyo).SetId("Idle");
 				
 				GameManager.GPManagerInstance.CommitMonstersDefeated (this.EnemiesKilled);
 				GameManager.GPManagerInstance.CheckFullComplete();
@@ -228,16 +239,21 @@ namespace BounceDudes
 
         public void PauseGame()
         {
-			DOTween.PauseAll ();
+			DOTween.Pause ("Transform");
             GameManager.Instance.State = GameState.PAUSED;
 			this.PausePanelUpdateInfo ();
         }
 
         public void UnpauseGame()
         {
-			DOTween.PlayAll ();
+			DOTween.Play ("Transform");
             GameManager.Instance.State = GameState.PLAYING;
         }
+
+		public void InCommonButtonActions(){
+			AudioManager.Instance.PlayInterfaceSound (0);
+			_wonLostScreenON = false;
+		}
 
 		public void ButtonPause()
 		{
@@ -248,19 +264,19 @@ namespace BounceDudes
 		public void ButtonContinue()
 		{
 			this.UnpauseGame ();
-			AudioManager.Instance.PlayInterfaceSound (0);
+			this.InCommonButtonActions ();
 		}
 
 		public void ButtonQuit()
 		{
 			this.Quit ();
-			AudioManager.Instance.PlayInterfaceSound (0);
+			this.InCommonButtonActions ();
 		}
 
 		public void ButtonRetry()
 		{
 			this.PlayAgain ();
-			AudioManager.Instance.PlayInterfaceSound (0);
+			this.InCommonButtonActions ();
 		}
 			
         public void Quit()
@@ -296,11 +312,8 @@ namespace BounceDudes
                 _pausePanel.Hide();
 			
             GameManager.Instance.LoadScene(GameManager.Instance.CurrentLevel.SceneName);
-
-			//AudioManager.Instance.PlayMusic (2);
-
             this.Dispose();
-            //SceneManager.LoadScene(GameManager.Instance.LastLevel.SceneName);
+
         }
 
         public void Dispose()
@@ -376,8 +389,7 @@ namespace BounceDudes
 					_challengeThreeText.color = greenColor;
 			}
 
-
-
+		
 
 			Challenge currentChallenge = level.SoldiersByChallengeHackOne._challenge;
 			if (!_updatedOneTime) {
@@ -415,9 +427,9 @@ namespace BounceDudes
 			_currentWaveText.transform.DOMove (_waveTextMiddlePosition.transform.position, 2.1f).SetEase(Ease.OutExpo).OnComplete(() => {
 				_currentWaveText.transform.DOMove(_waveTextFinalPosition.transform.position, 0.7f).SetEase(Ease.InOutBack).OnComplete(() => {
 					_currentWaveText.transform.position = _waveTextInitialPosition.transform.position;
-				});
+				}).SetId("Transform");
 
-			});
+			}).SetId("Transform");
 				
 		}
 

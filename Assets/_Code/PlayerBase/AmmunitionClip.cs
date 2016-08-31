@@ -78,9 +78,9 @@ namespace BounceDudes
 					if (this.AmmoCountChanged != null)
 						this.AmmoCountChanged();
 
-				}); 
+				}).SetId("Transform"); 
 
-			});
+			}).SetId("Transform");
 				
         }
 

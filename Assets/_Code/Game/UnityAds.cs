@@ -9,8 +9,8 @@ namespace BounceDudes{
 		protected static float _pseudoModifier = 0f;
 
 		public static void CallAd(){
-			if (Random.Range (0f + _pseudoModifier, 1f) >= 0.6f) {
-				_pseudoModifier = 0;
+			if (Random.Range (0f + _pseudoModifier, 1f) >= 0.9f) {
+				_pseudoModifier = 0f;
 				ShowAd ();
 			}
 			else {

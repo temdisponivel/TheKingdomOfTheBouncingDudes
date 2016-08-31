@@ -274,13 +274,13 @@
 
                  <!-- Troop Menu // SOLDIER CLASS -->
                  <string name="TM_Class_Berserk_Name">FRENESI (Anão)</string>
-                 <string name="TM_Class_Berserk_Description">Fica mais rápido quando estiver com Resistência baixa.</string>
+                 <string name="TM_Class_Berserk_Description">Fica mais rápido com Resistência baixa.</string>
 
                  <string name="TM_Class_Precision_Name">PRECISÃO (Elfo)</string>
                  <string name="TM_Class_Precision_Description">Golpes finais não reduzem Resistência.</string>
 
   				 <string name="TM_Class_Research_Name">PESQUISA (Humano)</string>
-                 <string name="TM_Class_Research_Description">Coleta de Pontos de Canhão Especial aumentada.</string>
+             <string name="TM_Class_Research_Description">Coleta mais Pontos de Canhão Especial.</string>
 
                  <!-- Formation Menu -->
                  <string name="FM_BattleButton">batalha</string>
