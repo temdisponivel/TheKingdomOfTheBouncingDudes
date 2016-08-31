@@ -4,6 +4,7 @@ using System.Linq;
 using Assets._Code.Game;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DG.Tweening;
 
 
 namespace BounceDudes
@@ -34,6 +35,10 @@ namespace BounceDudes
 
         void Start()
         {
+			
+			float waitTime = 0f;
+			DOTween.To (() => waitTime, x => waitTime = x, 1f, 0.2f).OnComplete(() => { UnityAds.CallAd (); });
+
             LevelNode[] nodes = this.GetComponentsInChildren<LevelNode>();
             LevelInformation[] levelsUnlocked = GameManager.Instance.LevelsInformation.Values.ToArray();
 

@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+
 
 namespace BounceDudes{
 
@@ -11,9 +13,21 @@ namespace BounceDudes{
 		// Use this for initialization
 		void Start () {
 			
-			SceneManager.LoadScene ("TrueSplashScreen");
+			this.StartCoroutine (this.WaitForAndCall (0.5f, () => {
+				SceneManager.LoadSceneAsync ("TrueSplashScreen");
+			}));
+
 		}
-		
+
+
+		public IEnumerator WaitForAndCall(float seconds, Action callback)
+		{
+
+			yield return new WaitForSeconds(seconds);
+			if (callback != null)
+				callback();
+		}
+
 		// Update is called once per frame
 		void Update () {
 		

@@ -265,7 +265,7 @@ namespace BounceDudes
 			
         public void Quit()
         {
-        
+
             if (WinPanelShown)
                 _winPanel.Hide();
 			
@@ -275,15 +275,11 @@ namespace BounceDudes
             else if (PausePanelShown)
                 _pausePanel.Hide();
 
-
-			UnityAds.CallAd ();
-
             GameManager.Instance.LoadScene("MapMenu");
 			AudioManager.Instance.PlayMusic (1);
 
 			this.UnpauseGame();
             this.Dispose();
-
 	
         }
 

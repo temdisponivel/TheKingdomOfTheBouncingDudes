@@ -51,8 +51,6 @@ namespace BounceDudes
 
 					var character = monster.GetComponent<Character> ();
                     //character.Shoot(); // WILL BE CALLED ON THE INTRO ANIMATION
-					if (j == currentSpaws.Count - 1)
-						_lastMonster = character;
 
 					character.OnDie += this.OnDie;
 
@@ -80,7 +78,7 @@ namespace BounceDudes
             _dead++;
 
             if (_dead == _maxEnemies)
-				if (charToDie != _lastMonster)
+				if (LevelManager.Instance._playerBase.HP >= 1)
                		LevelManager.Instance.FinishLevel();
         }
     }
