@@ -17,6 +17,7 @@ namespace BounceDudes
 		protected bool _shooted = false;
 
         public bool _dead = false;
+
 	
         
         public override void Start()
@@ -28,10 +29,10 @@ namespace BounceDudes
             //this.transform.position = Vector3.zero;
 
 
-			if (GameManager.Instance.CurrentLevel.Id != LevelId.FIFTEEN)
-				this.JumpOverTheFenceAnimation ();
-			else
+			if (GameManager.Instance.CurrentLevel.Id == LevelId.FIFTEEN || this._isSpecial)
 				this.Shoot ();
+			else
+				this.JumpOverTheFenceAnimation ();
 				
             _maxSpeed /= 3;
             _minSpeed /= 3;
