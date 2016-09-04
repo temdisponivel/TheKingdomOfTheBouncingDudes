@@ -44,6 +44,8 @@ namespace BounceDudes
 
         protected bool _free = true;
 
+		protected bool _isMonster = false;
+
         Vector3 diff;
 
         public void Start()
@@ -103,7 +105,9 @@ namespace BounceDudes
             this._currentShootCount++;
             charScript._shouldRecycle = false;
             charScript._isSpecial = true;
-            charScript.Shoot();
+
+			if (!_isMonster)
+           		charScript.Shoot();
         }
 
         public void OnTriggerEnter2D(Collider2D collider)
@@ -135,6 +139,7 @@ namespace BounceDudes
             this._inside = gameObject;
             if (gameObject.gameObject.layer == TagAndLayer.PLAYER_OBJECTS)
             {
+				this._isMonster = false;
                 this._targets = this._targetsPlayer;
                 this._shootPoint = this._shootPointPlayer;
                 this._toShoot = gameObject.OriginalGameObject;
@@ -142,6 +147,7 @@ namespace BounceDudes
             }
             else
             {
+				this._isMonster = true;
                 this._targets = this._targetsEnemy;
                 this._shootPoint = this._shootPointEnemy;
                 this._toShoot = GameManager.Instance.Monsters[gameObject.GetComponent<Character>()._id];

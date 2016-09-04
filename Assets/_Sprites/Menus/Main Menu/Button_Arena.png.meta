@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: c366020e45f4cd4438d2c825970ddfc5
-timeCreated: 1468183072
+guid: 121fe5da84018a84499a2b9b989b227a
+timeCreated: 1472959442
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -44,18 +44,18 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 600
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   buildTargetSettings:
-  - buildTarget: Standalone
-    maxTextureSize: 2048
+  - buildTarget: Android
+    maxTextureSize: 512
     textureFormat: -1
     compressionQuality: 50
     allowsAlphaSplitting: 0
-  - buildTarget: Android
-    maxTextureSize: 512
+  - buildTarget: Standalone
+    maxTextureSize: 2048
     textureFormat: -1
     compressionQuality: 50
     allowsAlphaSplitting: 0
@@ -63,7 +63,7 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline: []
-  spritePackingTag: BounceDudesIcons
+  spritePackingTag: BounceDudesUI
   userData: 
   assetBundleName: 
   assetBundleVariant: 
