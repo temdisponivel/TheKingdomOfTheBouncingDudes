@@ -184,6 +184,7 @@
         <e p="Easy Save 3" t="Include">
           <e p="Types" t="Include">
             <e p="ES3Type_GameInfomation.cs" t="Include" />
+            <e p="ES3Type_LevelInformation.cs" t="Include" />
           </e>
         </e>
         <e p="GooglePlayGames" t="Include">

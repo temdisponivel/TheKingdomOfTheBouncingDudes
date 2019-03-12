@@ -71,12 +71,12 @@ namespace BounceDudes
             yield return new WaitForSeconds(this._holdTime);
             if (this._object != null)
             {
-                Rigidbody2D body = this._object.GetComponent<Rigidbody2D>();
-                body.isKinematic = false;
+                
+                _rigidBody2d.isKinematic = false;
 
                 this._animator.SetTrigger("Open");
                 this._animator.ResetTrigger("Close");
-                body.AddForce(this._object.transform.up * this._object.GetComponent<Character>().Speed * -this._forceMultiplier, ForceMode2D.Impulse);
+                _rigidBody2d.AddForce(this._object.transform.up * this._object.GetComponent<Character>().Speed * -this._forceMultiplier, ForceMode2D.Impulse);
 
             }
             else

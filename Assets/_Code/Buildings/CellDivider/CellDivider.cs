@@ -32,6 +32,8 @@ namespace BounceDudes
         [Tooltip("Quantity to shoot.")]
         public int _maxShoots = 3;
 
+        protected Rigidbody2D _rigidBody2d = null;
+        
         protected Animator _animator = null;
         protected GameObject _shootPoint = null;
         protected GameObject _toShoot = null;
@@ -125,8 +127,14 @@ namespace BounceDudes
             character.OnDie += OnDie;
 
             this._animator.SetBool("Shooting", true); // Inicia animação de atirando
-            collider.gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+
+            this._rigidBody2d = collider.gameObject.GetComponent<Rigidbody2D>();
+            this._rigidBody2d.isKinematic = true;
+            this._rigidBody2d.angularVelocity = 0f;
+            this._rigidBody2d.velocity = Vector2.zero;
+
             collider.gameObject.transform.position = this._slimeObject.transform.position;
+            
             this.Add(character);
         }
 

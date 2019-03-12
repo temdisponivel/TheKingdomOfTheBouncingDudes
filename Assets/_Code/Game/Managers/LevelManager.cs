@@ -181,10 +181,10 @@ namespace BounceDudes
 
 	            if (win)
 	            {
+					#if UNITY_ANDROID
 					if (GameManager.Instance.NextLevelSoldiersDefinition.Count == 1)
-						#if UNITY_ANDROID
 						GameManager.GPManagerInstance.UnlockAchievement (GPGSIds.achievement_true_one_man_army);
-						#endif
+					#endif
 					
 					AudioManager.Instance.PlayFanfareSound (0);
 	                this._winPanel.UpdateInfo(info);
