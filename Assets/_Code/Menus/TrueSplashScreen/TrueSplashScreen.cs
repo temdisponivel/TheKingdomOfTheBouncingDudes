@@ -21,8 +21,10 @@ namespace BounceDudes
 
 		// Use this for initialization
 		void Start () {
-
+			
+			#if UNITY_ANDROID
 			GameManager.GPManagerInstance.AuthenticateUser ();
+			#endif
 
 			DescriptionText.GetComponent<TextToTraslate> ().Translate();
 

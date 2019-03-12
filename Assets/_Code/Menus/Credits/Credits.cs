@@ -15,7 +15,9 @@ namespace BounceDudes
 		bool _pressedEscape = false;
 
 		void Start(){
+			#if UNITY_ANDROID
 			GameManager.GPManagerInstance.UnlockAchievement (GPGSIds.achievement_who_made_this_piece_of_game);
+			#endif
 		}
 
 		void Update(){
@@ -27,7 +29,7 @@ namespace BounceDudes
 		}
 
 		public void FacebookButton(){
-			Application.OpenURL ("http://m.facebook.com/KingdomBounceGame");
+			//Application.OpenURL ("http://m.facebook.com/KingdomBounceGame");
 		}
        
         public void Return()

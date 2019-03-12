@@ -1,10 +1,19 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using Assets.Code.Game;
 using UnityEngine;
 
 namespace BounceDudes
 {
-    public class FileUtil
+    public static class FileUtil
     {
+
+        public static void WriteToPlayerPrefs<T>()
+        {
+            
+        }
+
         /// <summary>
         /// Writes the given object instance to a binary file.
         /// <para>Object type (and all child types) must be decorated with the [Serializable] attribute.</para>
@@ -14,14 +23,23 @@ namespace BounceDudes
         /// <param name="filePath">The file path to write the object instance to.</param>
         /// <param name="objectToWrite">The object instance to write to the XML file.</param>
         /// <param name="append">If false the file will be overwritten if it already exists. If true the contents will be appended to the file.</param>
-        public static void WriteToBinaryFile<T>(string filePath, T objectToWrite, bool append = false)
+        public static void WriteToJsonFile<T>(string filePath, T objectToWrite, bool append = false)
         {
+            Debug.Log(filePath);
+
+            ES3.Save<T>(filePath, objectToWrite);
+            
+            //var objString = JsonUtility.ToJson(objectToWrite);
+           // File.WriteAllText(filePath, objString, Encoding.UTF8);
+            
+            /*
             using (Stream stream = File.Open(filePath, append ? FileMode.Append : FileMode.Create))
             {
                 Debug.Log(filePath);
-                var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                binaryFormatter.Serialize(stream, objectToWrite);
+                var objString = JsonUtility.ToJson(objectToWrite);
+                File.WriteAllText(filePath, objString);
             }
+            */
         }
 
         /// <summary>
@@ -30,13 +48,22 @@ namespace BounceDudes
         /// <typeparam name="T">The type of object to read from the XML.</typeparam>
         /// <param name="filePath">The file path to read the object instance from.</param>
         /// <returns>Returns a new instance of the object read from the binary file.</returns>
-        public static T ReadFromBinaryFile<T>(string filePath)
+        public static T ReadFromJsonFile<T>(string filePath)
         {
+            return ES3.Load<T>(filePath);
+            
+           // string fileContent = File.ReadAllText(filePath, Encoding.UTF8);
+          //  var jsonToReturn = JsonUtility.FromJson<T>(fileContent);
+           // return jsonToReturn;
+            
+            /*
             using (Stream stream = File.Open(filePath, FileMode.Open))
             {
-                var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                return (T)binaryFormatter.Deserialize(stream);
+                string fileContent = File.ReadAllText(filePath);
+                var jsonToReturn = JsonUtility.FromJson<T>(fileContent);
+                return jsonToReturn;
             }
+            */
         }
     }
 }

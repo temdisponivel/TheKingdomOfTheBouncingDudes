@@ -37,7 +37,7 @@ namespace BounceDudes
         {
 			
 			float waitTime = 0f;
-			DOTween.To (() => waitTime, x => waitTime = x, 1f, 0.2f).OnComplete(() => { UnityAds.CallAd (); });
+			//DOTween.To (() => waitTime, x => waitTime = x, 1f, 0.2f).OnComplete(() => { UnityAds.CallAd (); });
 
             LevelNode[] nodes = this.GetComponentsInChildren<LevelNode>();
             LevelInformation[] levelsUnlocked = GameManager.Instance.LevelsInformation.Values.ToArray();

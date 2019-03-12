@@ -16,6 +16,7 @@ namespace BounceDudes
         public float _forceMultiplier = 1f;
 
         protected GameObject _object = null;
+        protected Rigidbody2D _rigidBody2d = null;
         protected Animator _animator = null;
 
         protected int _objOrder = 0;
@@ -45,7 +46,12 @@ namespace BounceDudes
             this._animator.SetTrigger("Close");
             this._animator.ResetTrigger("Open");
             this._object = collider.gameObject;
-            this._object.GetComponent<Rigidbody2D>().isKinematic = true;
+            
+            this._rigidBody2d = this._object.GetComponent<Rigidbody2D>();
+            this._rigidBody2d.isKinematic = true;
+            this._rigidBody2d.angularVelocity = 0f;
+            this._rigidBody2d.velocity = Vector2.zero;
+            
             this._object.transform.position = this.transform.position;
             this.StartCoroutine(this.Shoot(this._object));
 

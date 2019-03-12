@@ -39,7 +39,7 @@ namespace BounceDudes
         protected Collider2D _collider = null;
         protected SpriteRenderer _sprite = null;
 
-        protected int _spriteOnBarrelOrder = 7, _spriteOnFieldOrder = 2;
+        protected int _spriteOnBarrelOrder = 7, _spriteOnFieldOrder = 3;
         
         protected float _hpBkp = 1f;
         protected Quaternion _rotationBkp = Quaternion.identity;
@@ -162,10 +162,12 @@ namespace BounceDudes
         /// </summary>
         public void TurnIntoProjectile()
         {
+            
             this.StartCoroutine(this.WaitSecondsAndCall(.5f, () =>
             {
                 this.CurrentSortingOrder = this._spriteOnFieldOrder;
                 _transitioning = false;
+               // this._collider.enabled = true;
             }));
 
             this._onBarrel = false;

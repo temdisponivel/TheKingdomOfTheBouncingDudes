@@ -135,7 +135,9 @@ namespace BounceDudes
 
 		public void ShowAchievements(){
 			this.PlayInterfaceSound(0);
+			#if UNITY_ANDROID
 			GameManager.GPManagerInstance.CallAchievementsUI ();
+			#endif
 		}
 
         public void Credits()

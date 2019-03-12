@@ -8,6 +8,10 @@ using Assets._Code.Game;
 
 namespace BounceDudes
 {
+	
+	
+	#if UNITY_ANDROID
+	
 	/// <summary>
 	/// Handles all the Google Play actions.
 	/// </summary>
@@ -45,11 +49,14 @@ namespace BounceDudes
 		}
 
 		public void AuthenticateUser(){
-
+		
+			
+					
 			PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder ().Build ();
 			PlayGamesPlatform.InitializeInstance (config);
 			PlayGamesPlatform.DebugLogEnabled = true;
 			PlayGamesPlatform.Activate ();
+			
 
 			//authenticate user on Google Play
 			Social.localUser.Authenticate ((bool success) => {
@@ -105,10 +112,12 @@ namespace BounceDudes
 
 			PlayGamesPlatform.Instance.IncrementAchievement (achievementID, value, (bool success) => {
 			
-			});
+			//});
 		}
 
-
+		
+		
+		
 		public void CallLeaderboardUI(){
 			
 			if (!UserLogged)
@@ -127,4 +136,5 @@ namespace BounceDudes
 		
 
 	}
+	#endif
 }

@@ -91,9 +91,9 @@ namespace BounceDudes
 
         public void Start()
         {
-
+	        Time.timeScale = 1.0f;
 			this._timeWhenLoaded = Time.time;
-
+		
             AmmunitionClip.Instance.AmmoCountChanged += this.NewAmmo;
             this._projectilesSpecial = GameManager.Instance._specialProjectiles;
             this.ShootCountText.text = string.Empty;

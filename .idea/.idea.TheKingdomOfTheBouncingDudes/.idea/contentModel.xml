@@ -1,0 +1,860 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\CLIENTE\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\CLIENTE\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_TheKingdomOfTheBouncingDudes.343845153.00" t="ExcludeRecursive" />
+    <e p="F:\Unity Projects\TheKingdomOfTheBouncingDudes" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="_Code" t="Include">
+          <e p="Arcade Mode" t="Include">
+            <e p="ArcadeManager.cs" t="Include" />
+            <e p="ArcadeUIController.cs" t="Include" />
+          </e>
+          <e p="Boss" t="Include">
+            <e p="BossBehaviour.cs" t="Include" />
+          </e>
+          <e p="Buildings" t="Include">
+            <e p="BearTrap" t="Include">
+              <e p="BearTrap.cs" t="Include" />
+            </e>
+            <e p="CellDivider" t="Include">
+              <e p="CellDivider.cs" t="Include" />
+            </e>
+            <e p="Dropper" t="Include">
+              <e p="Dropper.cs" t="Include" />
+            </e>
+            <e p="Hitter" t="Include">
+              <e p="Hitter.cs" t="Include" />
+            </e>
+            <e p="Portal" t="Include">
+              <e p="Portal.cs" t="Include" />
+            </e>
+            <e p="SmartHitter" t="Include">
+              <e p="SmartHitter.cs" t="Include" />
+            </e>
+            <e p="Towers" t="Include">
+              <e p="AccelerationTower.cs" t="Include" />
+              <e p="GravityTower.cs" t="Include" />
+              <e p="ShinyTower.cs" t="Include" />
+              <e p="SlowTower.cs" t="Include" />
+              <e p="Tower.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Character" t="Include">
+            <e p="Character.cs" t="Include" />
+            <e p="Monster" t="Include">
+              <e p="Monster.cs" t="Include" />
+            </e>
+            <e p="Soldier" t="Include">
+              <e p="Soldier.cs" t="Include" />
+              <e p="SoldierClass.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Effects" t="Include">
+            <e p="ParticleAutoDestroy.cs" t="Include" />
+            <e p="ShadowEffect.cs" t="Include" />
+          </e>
+          <e p="Game" t="Include">
+            <e p="Achivment.cs" t="Include" />
+            <e p="AchivmentId.cs" t="Include" />
+            <e p="Challenges" t="Include">
+              <e p="Challenge.cs" t="Include" />
+              <e p="ChallengeManager.cs" t="Include" />
+              <e p="ChallengeType.cs" t="Include" />
+              <e p="SoldierByChallengeDictionaryHack.cs" t="Include" />
+            </e>
+            <e p="DayTimeChanger.cs" t="Include" />
+            <e p="DayTimeSequence.cs" t="Include" />
+            <e p="Drops" t="Include">
+              <e p="LifeRegen.cs" t="Include" />
+            </e>
+            <e p="GameInfomation.cs" t="Include" />
+            <e p="GameState.cs" t="Include" />
+            <e p="Level.cs" t="Include" />
+            <e p="LevelId.cs" t="Include" />
+            <e p="LevelInformation.cs" t="Include" />
+            <e p="Managers" t="Include">
+              <e p="AudioManager.cs" t="Include" />
+              <e p="ComboManager.cs" t="Include" />
+              <e p="EffectManager.cs" t="Include" />
+              <e p="GameManager.cs" t="Include" />
+              <e p="GooglePlayManager.cs" t="Include" />
+              <e p="LevelManager.cs" t="Include" />
+            </e>
+            <e p="StatefulMonobehaviour.cs" t="Include" />
+            <e p="TagAndLayer.cs" t="Include" />
+            <e p="UnityAds.cs" t="Include" />
+            <e p="Wave" t="Include">
+              <e p="SpawnOption.cs" t="Include" />
+              <e p="Wave.cs" t="Include" />
+              <e p="WaveManager.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Localization" t="Include">
+            <e p="Idioma.cs" t="Include" />
+            <e p="LocalizationXML.xml" t="Include" />
+            <e p="SetLanguage.cs" t="Include" />
+            <e p="TextToTraslate.cs" t="Include" />
+          </e>
+          <e p="Menus" t="Include">
+            <e p="ArenaMenu" t="Include">
+              <e p="ArenaMenu.cs" t="Include" />
+            </e>
+            <e p="Credits" t="Include">
+              <e p="Credits.cs" t="Include" />
+            </e>
+            <e p="Formation" t="Include">
+              <e p="Formation.cs" t="Include" />
+              <e p="TroopCell.cs" t="Include" />
+            </e>
+            <e p="HorizontalScrollSnap.cs" t="Include" />
+            <e p="MapMenu" t="Include">
+              <e p="DiaryController.cs" t="Include" />
+              <e p="LevelNode.cs" t="Include" />
+              <e p="MapMenu.cs" t="Include" />
+            </e>
+            <e p="TitleMenu" t="Include">
+              <e p="FlyingSoldier.cs" t="Include" />
+              <e p="TitleMenu.cs" t="Include" />
+            </e>
+            <e p="TroopMenu" t="Include">
+              <e p="SoldierArray.cs" t="Include" />
+              <e p="TroopStats.cs" t="Include" />
+            </e>
+            <e p="TrueSplashScreen" t="Include">
+              <e p="BlankAndFirstScreen.cs" t="Include" />
+              <e p="TrueSplashScreen.cs" t="Include" />
+            </e>
+          </e>
+          <e p="PlayerBase" t="Include">
+            <e p="AmmunitionClip.cs" t="Include" />
+            <e p="Base.cs" t="Include" />
+            <e p="ShootObject.cs" t="Include" />
+            <e p="Weapon.cs" t="Include" />
+          </e>
+          <e p="Shader" t="Include">
+            <e p="ShaderMask.shader" t="Include" />
+          </e>
+          <e p="UI" t="Include">
+            <e p="CameraFade.cs" t="Include" />
+            <e p="HPTimer.cs" t="Include" />
+            <e p="InputHandler.cs" t="Include" />
+            <e p="LevelChooser.cs" t="Include" />
+            <e p="LooseLevelPanel.cs" t="Include" />
+            <e p="PausePanel.cs" t="Include" />
+            <e p="SpecialTimer.cs" t="Include" />
+            <e p="Troop.cs" t="Include" />
+            <e p="WinLevelPanel.cs" t="Include" />
+          </e>
+          <e p="Util" t="Include">
+            <e p="FileUtil.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Demigiant" t="Include">
+          <e p="DOTween" t="Include">
+            <e p="DOTween43.xml" t="Include" />
+            <e p="DOTween46.xml" t="Include" />
+            <e p="DOTween50.xml" t="Include" />
+            <e p="Examples" t="Include">
+              <e p="Basics.cs" t="Include" />
+              <e p="Sequences.cs" t="Include" />
+            </e>
+            <e p="readme.txt" t="Include" />
+          </e>
+        </e>
+        <e p="Easy Save 2" t="Include">
+          <e p="changelog.txt" t="Include" />
+          <e p="ES2Init.cs" t="Include" />
+          <e p="readme.txt" t="Include" />
+          <e p="Types" t="Include">
+            <e p="ES2_AudioClip.cs" t="Include" />
+            <e p="ES2_GameObject.cs" t="Include" />
+            <e p="ES2_RawTexture2D.cs" t="Include" />
+            <e p="ES2_Sprite.cs" t="Include" />
+            <e p="ES2UserType_UnityEngineCanvasRenderer.cs" t="Include" />
+            <e p="ES2UserType_UnityEngineLineRenderer.cs" t="Include" />
+            <e p="ES2UserType_UnityEngineRectTransform.cs" t="Include" />
+            <e p="ES2UserType_UnityEngineUIText.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Easy Save 3" t="Include">
+          <e p="Types" t="Include">
+            <e p="ES3Type_GameInfomation.cs" t="Include" />
+          </e>
+        </e>
+        <e p="GooglePlayGames" t="Include">
+          <e p="BasicApi" t="Include">
+            <e p="Achievement.cs" t="Include" />
+            <e p="CommonStatusCodes.cs" t="Include" />
+            <e p="CommonTypes.cs" t="Include" />
+            <e p="DummyClient.cs" t="Include" />
+            <e p="Events" t="Include">
+              <e p="IEvent.cs" t="Include" />
+              <e p="IEventsClient.cs" t="Include" />
+            </e>
+            <e p="IPlayGamesClient.cs" t="Include" />
+            <e p="LeaderboardScoreData.cs" t="Include" />
+            <e p="Multiplayer" t="Include">
+              <e p="Invitation.cs" t="Include" />
+              <e p="IRealTimeMultiplayerClient.cs" t="Include" />
+              <e p="ITurnBasedMultiplayerClient.cs" t="Include" />
+              <e p="MatchOutcome.cs" t="Include" />
+              <e p="Participant.cs" t="Include" />
+              <e p="Player.cs" t="Include" />
+              <e p="RealTimeMultiplayerListener.cs" t="Include" />
+              <e p="TurnBasedMatch.cs" t="Include" />
+            </e>
+            <e p="Nearby" t="Include">
+              <e p="AdvertisingResult.cs" t="Include" />
+              <e p="ConnectionRequest.cs" t="Include" />
+              <e p="ConnectionResponse.cs" t="Include" />
+              <e p="DummyNearbyConnectionClient.cs" t="Include" />
+              <e p="EndpointDetails.cs" t="Include" />
+              <e p="INearbyConnectionClient.cs" t="Include" />
+              <e p="NearbyConnectionConfiguration.cs" t="Include" />
+            </e>
+            <e p="PlayerStats.cs" t="Include" />
+            <e p="PlayGamesClientConfiguration.cs" t="Include" />
+            <e p="Quests" t="Include">
+              <e p="IQuest.cs" t="Include" />
+              <e p="IQuestMilestone.cs" t="Include" />
+              <e p="IQuestsClient.cs" t="Include" />
+            </e>
+            <e p="SavedGame" t="Include">
+              <e p="ISavedGameClient.cs" t="Include" />
+              <e p="ISavedGameMetadata.cs" t="Include" />
+              <e p="SavedGameMetadataUpdate.cs" t="Include" />
+            </e>
+            <e p="ScorePageToken.cs" t="Include" />
+          </e>
+          <e p="Editor" t="Include">
+            <e p="CocoaPodHelper.cs" t="Include" />
+            <e p="GPGSAndroidSetupUI.cs" t="Include" />
+            <e p="GPGSDependencies.cs" t="Include" />
+            <e p="GPGSDocsUI.cs" t="Include" />
+            <e p="GPGSInstructionWindow.cs" t="Include" />
+            <e p="GPGSIOSSetupUI.cs" t="Include" />
+            <e p="GPGSPostBuild.cs" t="Include" />
+            <e p="GPGSProjectSettings.cs" t="Include" />
+            <e p="GPGSStrings.cs" t="Include" />
+            <e p="GPGSUpgrader.cs" t="Include" />
+            <e p="GPGSUtil.cs" t="Include" />
+            <e p="NearbyConnectionUI.cs" t="Include" />
+            <e p="PlistBuddyHelper.cs" t="Include" />
+            <e p="Podfile.txt" t="Include" />
+            <e p="template-AndroidManifest.txt" t="Include" />
+            <e p="template-Constants.txt" t="Include" />
+            <e p="template-GameInfo.txt" t="Include" />
+            <e p="xcode" t="Include">
+              <e p="Elements.cs" t="Include" />
+              <e p="Lexer.cs" t="Include" />
+              <e p="Objects.cs" t="Include" />
+              <e p="Parser.cs" t="Include" />
+              <e p="PBXProject.cs" t="Include" />
+              <e p="Sections.cs" t="Include" />
+              <e p="Serializer.cs" t="Include" />
+              <e p="Utils.cs" t="Include" />
+            </e>
+          </e>
+          <e p="GameInfo.cs" t="Include" />
+          <e p="ISocialPlatform" t="Include">
+            <e p="PlayGamesAchievement.cs" t="Include" />
+            <e p="PlayGamesLeaderboard.cs" t="Include" />
+            <e p="PlayGamesLocalUser.cs" t="Include" />
+            <e p="PlayGamesPlatform.cs" t="Include" />
+            <e p="PlayGamesScore.cs" t="Include" />
+            <e p="PlayGamesUserProfile.cs" t="Include" />
+          </e>
+          <e p="OurUtils" t="Include">
+            <e p="Logger.cs" t="Include" />
+            <e p="Misc.cs" t="Include" />
+            <e p="PlayGamesHelperObject.cs" t="Include" />
+          </e>
+          <e p="Platforms" t="Include">
+            <e p="Android" t="Include">
+              <e p="AndroidClient.cs" t="Include" />
+              <e p="AndroidTokenClient.cs" t="Include" />
+              <e p="Developers" t="Include">
+                <e p="JavaInterfaceProxy.cs" t="Include" />
+                <e p="JavaObjWrapper.cs" t="Include" />
+              </e>
+              <e p="Gms" t="Include">
+                <e p="Common" t="Include">
+                  <e p="Api" t="Include">
+                    <e p="GoogleApiClient.cs" t="Include" />
+                    <e p="PendingResult.cs" t="Include" />
+                    <e p="Result.cs" t="Include" />
+                    <e p="ResultCallback.cs" t="Include" />
+                    <e p="ResultCallbackProxy.cs" t="Include" />
+                    <e p="Status.cs" t="Include" />
+                  </e>
+                  <e p="ConnectionResult.cs" t="Include" />
+                </e>
+                <e p="Games" t="Include">
+                  <e p="Games.cs" t="Include" />
+                  <e p="Stats" t="Include">
+                    <e p="LoadPlayerStatsResultObject.cs" t="Include" />
+                    <e p="PlayerStats.cs" t="Include" />
+                    <e p="PlayerStatsObject.cs" t="Include" />
+                    <e p="Stats.cs" t="Include" />
+                    <e p="StatsObject.cs" t="Include" />
+                  </e>
+                </e>
+              </e>
+            </e>
+            <e p="IClientImpl.cs" t="Include" />
+            <e p="IOS" t="Include">
+              <e p="IOSClient.cs" t="Include" />
+              <e p="IOSTokenClient.cs" t="Include" />
+            </e>
+            <e p="Native" t="Include">
+              <e p="CallbackUtils.cs" t="Include" />
+              <e p="ConversionUtils.cs" t="Include" />
+              <e p="Cwrapper" t="Include">
+                <e p="Achievement.cs" t="Include" />
+                <e p="AchievementManager.cs" t="Include" />
+                <e p="AndroidPlatformConfiguration.cs" t="Include" />
+                <e p="Builder.cs" t="Include" />
+                <e p="CommonErrorStatus.cs" t="Include" />
+                <e p="EndpointDiscoveryListenerHelper.cs" t="Include" />
+                <e p="Event.cs" t="Include" />
+                <e p="EventManager.cs" t="Include" />
+                <e p="GameServices.cs" t="Include" />
+                <e p="InternalHooks.cs" t="Include" />
+                <e p="IosPlatformConfiguration.cs" t="Include" />
+                <e p="Leaderboard.cs" t="Include" />
+                <e p="LeaderboardManager.cs" t="Include" />
+                <e p="MessageListenerHelper.cs" t="Include" />
+                <e p="MultiplayerInvitation.cs" t="Include" />
+                <e p="MultiplayerParticipant.cs" t="Include" />
+                <e p="NearbyConnections.cs" t="Include" />
+                <e p="NearbyConnectionsBuilder.cs" t="Include" />
+                <e p="NearbyConnectionsStatus.cs" t="Include" />
+                <e p="NearbyConnectionTypes.cs" t="Include" />
+                <e p="ParticipantResults.cs" t="Include" />
+                <e p="Player.cs" t="Include" />
+                <e p="PlayerManager.cs" t="Include" />
+                <e p="PlayerStats.cs" t="Include" />
+                <e p="Quest.cs" t="Include" />
+                <e p="QuestManager.cs" t="Include" />
+                <e p="QuestMilestone.cs" t="Include" />
+                <e p="RealTimeEventListenerHelper.cs" t="Include" />
+                <e p="RealTimeMultiplayerManager.cs" t="Include" />
+                <e p="RealTimeRoom.cs" t="Include" />
+                <e p="RealTimeRoomConfig.cs" t="Include" />
+                <e p="RealTimeRoomConfigBuilder.cs" t="Include" />
+                <e p="Score.cs" t="Include" />
+                <e p="ScorePage.cs" t="Include" />
+                <e p="ScoreSummary.cs" t="Include" />
+                <e p="Sentinels.cs" t="Include" />
+                <e p="SnapshotManager.cs" t="Include" />
+                <e p="SnapshotMetadata.cs" t="Include" />
+                <e p="SnapshotMetadataChange.cs" t="Include" />
+                <e p="SnapshotMetadataChangeBuilder.cs" t="Include" />
+                <e p="StatsManager.cs" t="Include" />
+                <e p="Status.cs" t="Include" />
+                <e p="SymbolLocation.cs" t="Include" />
+                <e p="TurnBasedMatch.cs" t="Include" />
+                <e p="TurnBasedMatchConfig.cs" t="Include" />
+                <e p="TurnBasedMatchConfigBuilder.cs" t="Include" />
+                <e p="TurnBasedMultiplayerManager.cs" t="Include" />
+                <e p="Types.cs" t="Include" />
+              </e>
+              <e p="JavaUtils.cs" t="Include" />
+              <e p="NativeClient.cs" t="Include" />
+              <e p="NativeEventClient.cs" t="Include" />
+              <e p="NativeNearbyConnectionClientFactory.cs" t="Include" />
+              <e p="NativeNearbyConnectionsClient.cs" t="Include" />
+              <e p="NativeQuestClient.cs" t="Include" />
+              <e p="NativeRealtimeMultiplayerClient.cs" t="Include" />
+              <e p="NativeSavedGameClient.cs" t="Include" />
+              <e p="NativeTurnBasedMultiplayerClient.cs" t="Include" />
+              <e p="PInvoke" t="Include">
+                <e p="AchievementManager.cs" t="Include" />
+                <e p="AndroidPlatformConfiguration.cs" t="Include" />
+                <e p="BaseReferenceHolder.cs" t="Include" />
+                <e p="Callbacks.cs" t="Include" />
+                <e p="EventManager.cs" t="Include" />
+                <e p="GameServices.cs" t="Include" />
+                <e p="GameServicesBuilder.cs" t="Include" />
+                <e p="IosPlatformConfiguration.cs" t="Include" />
+                <e p="LeaderboardManager.cs" t="Include" />
+                <e p="MultiplayerInvitation.cs" t="Include" />
+                <e p="MultiplayerParticipant.cs" t="Include" />
+                <e p="NativeAchievement.cs" t="Include" />
+                <e p="NativeAppIdentifier.cs" t="Include" />
+                <e p="NativeConnectionRequest.cs" t="Include" />
+                <e p="NativeConnectionResponse.cs" t="Include" />
+                <e p="NativeEndpointDetails.cs" t="Include" />
+                <e p="NativeEndpointDiscoveryListenerHelper.cs" t="Include" />
+                <e p="NativeEvent.cs" t="Include" />
+                <e p="NativeLeaderboard.cs" t="Include" />
+                <e p="NativeMessageListenerHelper.cs" t="Include" />
+                <e p="NativePlayer.cs" t="Include" />
+                <e p="NativePlayerStats.cs" t="Include" />
+                <e p="NativeQuest.cs" t="Include" />
+                <e p="NativeQuestMilestone.cs" t="Include" />
+                <e p="NativeRealTimeRoom.cs" t="Include" />
+                <e p="NativeScore.cs" t="Include" />
+                <e p="NativeScoreEntry.cs" t="Include" />
+                <e p="NativeScorePage.cs" t="Include" />
+                <e p="NativeScorePageToken.cs" t="Include" />
+                <e p="NativeScoreSummary.cs" t="Include" />
+                <e p="NativeSnapshotMetadata.cs" t="Include" />
+                <e p="NativeSnapshotMetadataChange.cs" t="Include" />
+                <e p="NativeStartAdvertisingResult.cs" t="Include" />
+                <e p="NativeTurnBasedMatch.cs" t="Include" />
+                <e p="NearbyConnectionsManager.cs" t="Include" />
+                <e p="NearbyConnectionsManagerBuilder.cs" t="Include" />
+                <e p="ParticipantResults.cs" t="Include" />
+                <e p="PInvokeUtilities.cs" t="Include" />
+                <e p="PlatformConfiguration.cs" t="Include" />
+                <e p="PlayerManager.cs" t="Include" />
+                <e p="PlayerSelectUIResponse.cs" t="Include" />
+                <e p="QuestManager.cs" t="Include" />
+                <e p="RealTimeEventListenerHelper.cs" t="Include" />
+                <e p="RealtimeManager.cs" t="Include" />
+                <e p="RealTimeRoomConfig.cs" t="Include" />
+                <e p="RealTimeRoomConfigBuilder.cs" t="Include" />
+                <e p="SnapshotManager.cs" t="Include" />
+                <e p="StatsManager.cs" t="Include" />
+                <e p="TurnBasedManager.cs" t="Include" />
+                <e p="TurnBasedMatchConfig.cs" t="Include" />
+                <e p="TurnBasedMatchConfigBuilder.cs" t="Include" />
+              </e>
+              <e p="UnsupportedSavedGamesClient.cs" t="Include" />
+            </e>
+            <e p="NearbyConnectionClientFactory.cs" t="Include" />
+            <e p="PlayGamesClientFactory.cs" t="Include" />
+            <e p="TokenClient.cs" t="Include" />
+          </e>
+          <e p="PluginVersion.cs" t="Include" />
+        </e>
+        <e p="GPGSIds.cs" t="Include" />
+        <e p="link.xml" t="Include" />
+        <e p="PlayServicesResolver" t="Include">
+          <e p="Editor" t="Include">
+            <e p="DefaultResolver.cs" t="Include" />
+            <e p="IResolver.cs" t="Include" />
+            <e p="PlayServicesResolver.cs" t="Include" />
+            <e p="ResolverVer1_1.cs" t="Include" />
+            <e p="ResolverVer1_2.cs" t="Include" />
+            <e p="SampleDependencies.cs" t="Include" />
+            <e p="SettingsDialog.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Plugins" t="Include">
+          <e p="Android" t="Include">
+            <e p="MainLibProj" t="Include">
+              <e p="AndroidManifest.xml" t="Include" />
+            </e>
+          </e>
+          <e p="Easy Save 2" t="Include">
+            <e p="Editor" t="Include">
+              <e p="AutoSave" t="Include">
+                <e p="ES2EditorAutoSaveHierarchy.cs" t="Include" />
+                <e p="ES2EditorAutoSaveInspector.cs" t="Include" />
+                <e p="ES2EditorAutoSavePrefabs.cs" t="Include" />
+                <e p="ES2EditorAutoSaveScene.cs" t="Include" />
+                <e p="ES2EditorAutoSaveSettings.cs" t="Include" />
+                <e p="ES2EditorAutoSaveUtility.cs" t="Include" />
+              </e>
+              <e p="ES2AutoInspector.cs" t="Include" />
+              <e p="ES2DefaultSettingsInspector.cs" t="Include" />
+              <e p="ES2EditorFileEditor.cs" t="Include" />
+              <e p="ES2EditorManageTypes.cs" t="Include" />
+              <e p="ES2EditorReflection.cs" t="Include" />
+              <e p="ES2EditorSettings.cs" t="Include" />
+              <e p="ES2EditorTools.cs" t="Include" />
+              <e p="ES2EditorUninstall.cs" t="Include" />
+              <e p="GUI" t="Include">
+                <e p="ES2EditorColumn.cs" t="Include" />
+                <e p="ES2EditorMenu.cs" t="Include" />
+                <e p="ES2EditorUtility.cs" t="Include" />
+                <e p="ES2EditorWindow.cs" t="Include" />
+              </e>
+              <e p="Settings" t="Include">
+                <e p="ES2EditorSettingsChangeLog.cs" t="Include" />
+                <e p="ES2EditorSettingsGeneral.cs" t="Include" />
+                <e p="ES2EditorSettingsInformation.cs" t="Include" />
+                <e p="ES2EditorSettingsReadme.cs" t="Include" />
+                <e p="ES2EditorSettingsTools.cs" t="Include" />
+              </e>
+              <e p="Templates" t="Include">
+                <e p="ES2EditorTemplates.cs" t="Include" />
+              </e>
+              <e p="Types" t="Include">
+                <e p="Basic Types" t="Include">
+                  <e p="ES2Editor_AudioClip.cs" t="Include" />
+                  <e p="ES2Editor_BoneWeight.cs" t="Include" />
+                  <e p="ES2Editor_Bounds.cs" t="Include" />
+                  <e p="ES2Editor_Color.cs" t="Include" />
+                  <e p="ES2Editor_Color32.cs" t="Include" />
+                  <e p="ES2Editor_Enum.cs" t="Include" />
+                  <e p="ES2Editor_Material.cs" t="Include" />
+                  <e p="ES2Editor_Matrix4x4.cs" t="Include" />
+                  <e p="ES2Editor_Mesh.cs" t="Include" />
+                  <e p="ES2Editor_Quaternion.cs" t="Include" />
+                  <e p="ES2Editor_Rect.cs" t="Include" />
+                  <e p="ES2Editor_Texture2D.cs" t="Include" />
+                  <e p="ES2Editor_Vector2.cs" t="Include" />
+                  <e p="ES2Editor_Vector3.cs" t="Include" />
+                  <e p="ES2Editor_Vector4.cs" t="Include" />
+                </e>
+                <e p="Components" t="Include">
+                  <e p="ES2Editor_BoxCollider.cs" t="Include" />
+                  <e p="ES2Editor_CapsuleCollider.cs" t="Include" />
+                  <e p="ES2Editor_MeshCollider.cs" t="Include" />
+                  <e p="ES2Editor_SkinnedMeshRenderer.cs" t="Include" />
+                  <e p="ES2Editor_SphereCollider.cs" t="Include" />
+                  <e p="ES2Editor_Transform.cs" t="Include" />
+                </e>
+                <e p="ES2EditorType.cs" t="Include" />
+                <e p="ES2EditorTypeUtility.cs" t="Include" />
+                <e p="Primitives" t="Include">
+                  <e p="ES2Editor_bool.cs" t="Include" />
+                  <e p="ES2Editor_byte.cs" t="Include" />
+                  <e p="ES2Editor_char.cs" t="Include" />
+                  <e p="ES2Editor_decimal.cs" t="Include" />
+                  <e p="ES2Editor_double.cs" t="Include" />
+                  <e p="ES2Editor_float.cs" t="Include" />
+                  <e p="ES2Editor_int.cs" t="Include" />
+                  <e p="ES2Editor_long.cs" t="Include" />
+                  <e p="ES2Editor_sbyte.cs" t="Include" />
+                  <e p="ES2Editor_short.cs" t="Include" />
+                  <e p="ES2Editor_string.cs" t="Include" />
+                  <e p="ES2Editor_uint.cs" t="Include" />
+                  <e p="ES2Editor_ulong.cs" t="Include" />
+                  <e p="ES2Editor_ushort.cs" t="Include" />
+                </e>
+              </e>
+            </e>
+            <e p="Playmaker" t="Include">
+              <e p="ES2PlayMaker.cs" t="Include" />
+            </e>
+            <e p="Scripts" t="Include">
+              <e p="AutoSave" t="Include">
+                <e p="ES2AutoSave.cs" t="Include" />
+                <e p="ES2AutoSaveGlobalManager.cs" t="Include" />
+                <e p="ES2AutoSaveManager.cs" t="Include" />
+              </e>
+              <e p="Crossplatform" t="Include">
+                <e p="ES2DirectoryUtility.cs" t="Include" />
+                <e p="ES2Dispose.cs" t="Include" />
+                <e p="ES2FileUtility.cs" t="Include" />
+                <e p="ES2TypeUtility.cs" t="Include" />
+              </e>
+              <e p="ES2.cs" t="Include" />
+              <e p="ES2Auto.cs" t="Include" />
+              <e p="ES2Cache.cs" t="Include" />
+              <e p="ES2Data.cs" t="Include" />
+              <e p="ES2EditorWindowStyle.cs" t="Include" />
+              <e p="ES2File.cs" t="Include" />
+              <e p="ES2Reflection.cs" t="Include" />
+              <e p="ES2Spreadsheet.cs" t="Include" />
+              <e p="ES2Web.cs" t="Include" />
+              <e p="MoodkieSecurity" t="Include">
+                <e p="AESBits.cs" t="Include" />
+                <e p="AESEncryptor.cs" t="Include" />
+                <e p="MD5.cs" t="Include" />
+                <e p="MD5Encryptor.cs" t="Include" />
+                <e p="Obfuscate.cs" t="Include" />
+              </e>
+              <e p="Readers" t="Include">
+                <e p="ES2Header.cs" t="Include" />
+                <e p="ES2Reader.cs" t="Include" />
+              </e>
+              <e p="Settings" t="Include">
+                <e p="ES2FilenameData.cs" t="Include" />
+                <e p="ES2GlobalSettings.cs" t="Include" />
+                <e p="ES2Keys.cs" t="Include" />
+                <e p="ES2Settings.cs" t="Include" />
+              </e>
+              <e p="Streams" t="Include">
+                <e p="ES2FileStream.cs" t="Include" />
+                <e p="ES2MemoryStream.cs" t="Include" />
+                <e p="ES2PlayerPrefsStream.cs" t="Include" />
+                <e p="ES2ResourcesStream.cs" t="Include" />
+                <e p="ES2Stream.cs" t="Include" />
+              </e>
+              <e p="Types" t="Include">
+                <e p="Basic Types" t="Include">
+                  <e p="ES2_BoneWeight.cs" t="Include" />
+                  <e p="ES2_Bounds.cs" t="Include" />
+                  <e p="ES2_Color.cs" t="Include" />
+                  <e p="ES2_Color32.cs" t="Include" />
+                  <e p="ES2_DateTime.cs" t="Include" />
+                  <e p="ES2_Enum.cs" t="Include" />
+                  <e p="ES2_ES2AutoSaveManager.cs" t="Include" />
+                  <e p="ES2_GameObject.cs" t="Include" />
+                  <e p="ES2_Gradient.cs" t="Include" />
+                  <e p="ES2_GradientAlphaKey.cs" t="Include" />
+                  <e p="ES2_GradientColorKey.cs" t="Include" />
+                  <e p="ES2_Material.cs" t="Include" />
+                  <e p="ES2_Matrix4x4.cs" t="Include" />
+                  <e p="ES2_Mesh.cs" t="Include" />
+                  <e p="ES2_Quaternion.cs" t="Include" />
+                  <e p="ES2_Rect.cs" t="Include" />
+                  <e p="ES2_Sprite.cs" t="Include" />
+                  <e p="ES2_Texture.cs" t="Include" />
+                  <e p="ES2_Texture2D.cs" t="Include" />
+                  <e p="ES2_Vector2.cs" t="Include" />
+                  <e p="ES2_Vector3.cs" t="Include" />
+                  <e p="ES2_Vector4.cs" t="Include" />
+                </e>
+                <e p="Components" t="Include">
+                  <e p="ES2_BoxCollider.cs" t="Include" />
+                  <e p="ES2_CapsuleCollider.cs" t="Include" />
+                  <e p="ES2_MeshCollider.cs" t="Include" />
+                  <e p="ES2_PolygonCollider2D.cs" t="Include" />
+                  <e p="ES2_SkinnedMeshRenderer.cs" t="Include" />
+                  <e p="ES2_SphereCollider.cs" t="Include" />
+                  <e p="ES2_Transform.cs" t="Include" />
+                </e>
+                <e p="ES2Type.cs" t="Include" />
+                <e p="ES2TypeManager.cs" t="Include" />
+                <e p="Primitives" t="Include">
+                  <e p="ES2_bool.cs" t="Include" />
+                  <e p="ES2_byte.cs" t="Include" />
+                  <e p="ES2_char.cs" t="Include" />
+                  <e p="ES2_decimal.cs" t="Include" />
+                  <e p="ES2_double.cs" t="Include" />
+                  <e p="ES2_float.cs" t="Include" />
+                  <e p="ES2_int.cs" t="Include" />
+                  <e p="ES2_long.cs" t="Include" />
+                  <e p="ES2_object.cs" t="Include" />
+                  <e p="ES2_sbyte.cs" t="Include" />
+                  <e p="ES2_short.cs" t="Include" />
+                  <e p="ES2_string.cs" t="Include" />
+                  <e p="ES2_uint.cs" t="Include" />
+                  <e p="ES2_ulong.cs" t="Include" />
+                  <e p="ES2_ushort.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Writers" t="Include">
+                <e p="ES2Writer.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Types" t="Include">
+              <e p="ES2_Sprite.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Easy Save 3" t="Include">
+            <e p="Editor" t="Include">
+              <e p="AddES3Prefab.cs" t="Include" />
+              <e p="AutoSaveWindow.cs" t="Include" />
+              <e p="ES3AutoSaveEditor.cs" t="Include" />
+              <e p="ES3AutoSaveMgrEditor.cs" t="Include" />
+              <e p="ES3ClassTypeTemplate.txt" t="Include" />
+              <e p="ES3ComponentTypeTemplate.txt" t="Include" />
+              <e p="ES3EditorStyle.cs" t="Include" />
+              <e p="ES3EditorUtility.cs" t="Include" />
+              <e p="ES3InspectorInfoEditor.cs" t="Include" />
+              <e p="ES3PlayMakerEditor.cs" t="Include" />
+              <e p="ES3Postprocessor.cs" t="Include" />
+              <e p="ES3PrefabEditor.cs" t="Include" />
+              <e p="ES3ReferenceMgrEditor.cs" t="Include" />
+              <e p="ES3ScriptableObjectTypeTemplate.txt" t="Include" />
+              <e p="ES3SettingsEditor.cs" t="Include" />
+              <e p="ES3Type_MaterialTemplate.txt" t="Include" />
+              <e p="ES3TypeTemplate.txt" t="Include" />
+              <e p="ES3ValueTypeTemplate.txt" t="Include" />
+              <e p="ES3Window.cs" t="Include" />
+              <e p="HomeWindow.cs" t="Include" />
+              <e p="SettingsWindow.cs" t="Include" />
+              <e p="ToolsWindow.cs" t="Include" />
+              <e p="TypesWindow.cs" t="Include" />
+            </e>
+            <e p="link.xml" t="Include" />
+            <e p="Playmaker" t="Include">
+              <e p="ES3PlayMaker.cs" t="Include" />
+            </e>
+            <e p="Scripts" t="Include">
+              <e p="Auto Save" t="Include">
+                <e p="ES3AutoSave.cs" t="Include" />
+                <e p="ES3AutoSaveMgr.cs" t="Include" />
+              </e>
+              <e p="Debugging" t="Include">
+                <e p="ES3Debug.cs" t="Include" />
+              </e>
+              <e p="ES3.cs" t="Include" />
+              <e p="ES3Crypto.cs" t="Include" />
+              <e p="ES3File.cs" t="Include" />
+              <e p="ES3InspectorInfo.cs" t="Include" />
+              <e p="ES3IO.cs" t="Include" />
+              <e p="ES3Prefab.cs" t="Include" />
+              <e p="ES3ReferenceMgr.cs" t="Include" />
+              <e p="ES3ReferenceMgrBase.cs" t="Include" />
+              <e p="ES3Reflection.cs" t="Include" />
+              <e p="ES3SerializableDictionary.cs" t="Include" />
+              <e p="ES3Spreadsheet.cs" t="Include" />
+              <e p="Readers" t="Include">
+                <e p="ES3JSONReader.cs" t="Include" />
+                <e p="ES3Reader.cs" t="Include" />
+              </e>
+              <e p="Settings" t="Include">
+                <e p="ES3DefaultSettings.cs" t="Include" />
+                <e p="ES3Settings.cs" t="Include" />
+              </e>
+              <e p="Streams" t="Include">
+                <e p="ES3FileStream.cs" t="Include" />
+                <e p="ES3PlayerPrefsStream.cs" t="Include" />
+                <e p="ES3ResourcesStream.cs" t="Include" />
+                <e p="ES3Stream.cs" t="Include" />
+              </e>
+              <e p="Types" t="Include">
+                <e p="Collection Types" t="Include">
+                  <e p="ES32DArrayType.cs" t="Include" />
+                  <e p="ES33DArrayType.cs" t="Include" />
+                  <e p="ES3ArrayType.cs" t="Include" />
+                  <e p="ES3CollectionType.cs" t="Include" />
+                  <e p="ES3DictionaryType.cs" t="Include" />
+                  <e p="ES3HashSetType.cs" t="Include" />
+                  <e p="ES3ListType.cs" t="Include" />
+                  <e p="ES3QueueType.cs" t="Include" />
+                  <e p="ES3StackType.cs" t="Include" />
+                </e>
+                <e p="ES3ComponentType.cs" t="Include" />
+                <e p="ES3ObjectType.cs" t="Include" />
+                <e p="ES3Property.cs" t="Include" />
+                <e p="ES3ScriptableObjectType.cs" t="Include" />
+                <e p="ES3Type.cs" t="Include" />
+                <e p="ES3TypeMgr.cs" t="Include" />
+                <e p="ES3UnityObjectType.cs" t="Include" />
+                <e p="Primitive Types" t="Include">
+                  <e p="ES3Type_bool.cs" t="Include" />
+                  <e p="ES3Type_byte.cs" t="Include" />
+                  <e p="ES3Type_byteArray.cs" t="Include" />
+                  <e p="ES3Type_char.cs" t="Include" />
+                  <e p="ES3Type_DateTime.cs" t="Include" />
+                  <e p="ES3Type_decimal.cs" t="Include" />
+                  <e p="ES3Type_double.cs" t="Include" />
+                  <e p="ES3Type_enum.cs" t="Include" />
+                  <e p="ES3Type_float.cs" t="Include" />
+                  <e p="ES3Type_int.cs" t="Include" />
+                  <e p="ES3Type_intptr.cs" t="Include" />
+                  <e p="ES3Type_long.cs" t="Include" />
+                  <e p="ES3Type_sbyte.cs" t="Include" />
+                  <e p="ES3Type_short.cs" t="Include" />
+                  <e p="ES3Type_string.cs" t="Include" />
+                  <e p="ES3Type_uint.cs" t="Include" />
+                  <e p="ES3Type_UIntPtr.cs" t="Include" />
+                  <e p="ES3Type_ulong.cs" t="Include" />
+                  <e p="ES3Type_ushort.cs" t="Include" />
+                </e>
+                <e p="Reflected Types" t="Include">
+                  <e p="ES3ReflectedComponentType.cs" t="Include" />
+                  <e p="ES3ReflectedObjectType.cs" t="Include" />
+                  <e p="ES3ReflectedScriptableObjectType.cs" t="Include" />
+                  <e p="ES3ReflectedType.cs" t="Include" />
+                  <e p="ES3ReflectedUnityObjectType.cs" t="Include" />
+                  <e p="ES3ReflectedValueType.cs" t="Include" />
+                </e>
+                <e p="Unity Types" t="Include">
+                  <e p="Component Types" t="Include">
+                    <e p="ES3Type_BoxCollider.cs" t="Include" />
+                    <e p="ES3Type_BoxCollider2D.cs" t="Include" />
+                    <e p="ES3Type_Camera.cs" t="Include" />
+                    <e p="ES3Type_CapsuleCollider.cs" t="Include" />
+                    <e p="ES3Type_EventSystem.cs" t="Include" />
+                    <e p="ES3Type_MeshCollider.cs" t="Include" />
+                    <e p="ES3Type_MeshFilter.cs" t="Include" />
+                    <e p="ES3Type_MeshRenderer.cs" t="Include" />
+                    <e p="ES3Type_ParticleSystem.cs" t="Include" />
+                    <e p="ES3Type_PolygonCollider2D.cs" t="Include" />
+                    <e p="ES3Type_SphereCollider.cs" t="Include" />
+                    <e p="ES3Type_Text.cs" t="Include" />
+                    <e p="ES3Type_Transform.cs" t="Include" />
+                  </e>
+                  <e p="ES3Type_AnimationCurve.cs" t="Include" />
+                  <e p="ES3Type_AudioClip.cs" t="Include" />
+                  <e p="ES3Type_BoneWeight.cs" t="Include" />
+                  <e p="ES3Type_Bounds.cs" t="Include" />
+                  <e p="ES3Type_CollisionModule.cs" t="Include" />
+                  <e p="ES3Type_Color.cs" t="Include" />
+                  <e p="ES3Type_Color32.cs" t="Include" />
+                  <e p="ES3Type_ColorBySpeedModule.cs" t="Include" />
+                  <e p="ES3Type_ColorOverLifetimeModule.cs" t="Include" />
+                  <e p="ES3Type_EmissionModule.cs" t="Include" />
+                  <e p="ES3Type_ExternalForcesModule.cs" t="Include" />
+                  <e p="ES3Type_Flare.cs" t="Include" />
+                  <e p="ES3Type_Font.cs" t="Include" />
+                  <e p="ES3Type_ForceOverLifetimeModule.cs" t="Include" />
+                  <e p="ES3Type_GameObject.cs" t="Include" />
+                  <e p="ES3Type_Gradient.cs" t="Include" />
+                  <e p="ES3Type_GradientAlphaKey.cs" t="Include" />
+                  <e p="ES3Type_GradientColorKey.cs" t="Include" />
+                  <e p="ES3Type_InheritVelocityModule.cs" t="Include" />
+                  <e p="ES3Type_Keyframe.cs" t="Include" />
+                  <e p="ES3Type_LayerMask.cs" t="Include" />
+                  <e p="ES3Type_Light.cs" t="Include" />
+                  <e p="ES3Type_LightsModule.cs" t="Include" />
+                  <e p="ES3Type_LimitVelocityOverLifetimeModule.cs" t="Include" />
+                  <e p="ES3Type_MainModule.cs" t="Include" />
+                  <e p="ES3Type_Material.cs" t="Include" />
+                  <e p="ES3Type_Matrix4x4.cs" t="Include" />
+                  <e p="ES3Type_Mesh.cs" t="Include" />
+                  <e p="ES3Type_MinMaxCurve.cs" t="Include" />
+                  <e p="ES3Type_MinMaxGradient.cs" t="Include" />
+                  <e p="ES3Type_NoiseModule.cs" t="Include" />
+                  <e p="ES3Type_PhysicMaterial.cs" t="Include" />
+                  <e p="ES3Type_PhysicsMaterial2D.cs" t="Include" />
+                  <e p="ES3Type_Quaternion.cs" t="Include" />
+                  <e p="ES3Type_Rect.cs" t="Include" />
+                  <e p="ES3Type_RectTransform.cs" t="Include" />
+                  <e p="ES3Type_RotationBySpeedModule.cs" t="Include" />
+                  <e p="ES3Type_RotationOverLifetimeModule.cs" t="Include" />
+                  <e p="ES3Type_Shader.cs" t="Include" />
+                  <e p="ES3Type_ShapeModule.cs" t="Include" />
+                  <e p="ES3Type_SizeBySpeedModule.cs" t="Include" />
+                  <e p="ES3Type_SizeOverLifetimeModule.cs" t="Include" />
+                  <e p="ES3Type_SkinnedMeshRenderer.cs" t="Include" />
+                  <e p="ES3Type_Sprite.cs" t="Include" />
+                  <e p="ES3Type_SpriteRenderer.cs" t="Include" />
+                  <e p="ES3Type_SubEmittersModule.cs" t="Include" />
+                  <e p="ES3Type_Texture.cs" t="Include" />
+                  <e p="ES3Type_Texture2D.cs" t="Include" />
+                  <e p="ES3Type_TextureSheetAnimationModule.cs" t="Include" />
+                  <e p="ES3Type_TrailModule.cs" t="Include" />
+                  <e p="ES3Type_TriggerModule.cs" t="Include" />
+                  <e p="ES3Type_Vector2.cs" t="Include" />
+                  <e p="ES3Type_Vector3.cs" t="Include" />
+                  <e p="ES3Type_Vector3Int.cs" t="Include" />
+                  <e p="ES3Type_Vector4.cs" t="Include" />
+                  <e p="ES3Type_VelocityOverLifetimeModule.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Web" t="Include">
+                <e p="ES3Cloud.cs" t="Include" />
+                <e p="ES3WebClass.cs" t="Include" />
+              </e>
+              <e p="Writers" t="Include">
+                <e p="ES3JSONWriter.cs" t="Include" />
+                <e p="ES3Writer.cs" t="Include" />
+                <e p="ES3XMLWriter.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+        </e>
+        <e p="SoundManager" t="Include">
+          <e p="Demo" t="Include">
+            <e p="SoundManagerDemo.cs" t="Include" />
+          </e>
+          <e p="readme.txt" t="Include" />
+          <e p="SoundManager.cs" t="Include" />
+        </e>
+      </e>
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+      <e p="TheKingdomOfTheBouncingDudes.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>

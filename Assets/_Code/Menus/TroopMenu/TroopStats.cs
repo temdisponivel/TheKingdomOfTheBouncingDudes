@@ -101,8 +101,10 @@ namespace BounceDudes
             this.NameText.text = this.InputNameText.text;
             GameManager.Instance.AddNameToSoldier(this.NameText.text, CurrentSoldier._id, SoldierArray.Instance.GetInstanceId(CurrentSoldier));
             CurrentSoldier._soldierName = this.InputNameText.text;
-
+			
+			#if UNITY_ANDROID
 			GameManager.GPManagerInstance.UnlockAchievement (GPGSIds.achievement_put_your_friends__cat_in_the_game);
+			#endif			
 
 			GameManager.Instance.SaveGame();
         }

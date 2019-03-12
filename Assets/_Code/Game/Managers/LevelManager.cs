@@ -90,7 +90,9 @@ namespace BounceDudes
 			}
 
 			if (GameManager.Instance.NextLevelSoldiersDefinition.Count == 1)
+				#if UNITY_ANDROID
 				GameManager.GPManagerInstance.UnlockAchievement (GPGSIds.achievement_one_man_army);
+				#endif
 
 			this.UnpauseGame();
 		}
@@ -180,7 +182,9 @@ namespace BounceDudes
 	            if (win)
 	            {
 					if (GameManager.Instance.NextLevelSoldiersDefinition.Count == 1)
+						#if UNITY_ANDROID
 						GameManager.GPManagerInstance.UnlockAchievement (GPGSIds.achievement_true_one_man_army);
+						#endif
 					
 					AudioManager.Instance.PlayFanfareSound (0);
 	                this._winPanel.UpdateInfo(info);
@@ -200,9 +204,11 @@ namespace BounceDudes
 
 				_panelIdle = panelToIdle.transform.DOMoveY (panelToIdle.transform.position.y - 0.07f, 1.0f).SetEase(Ease.InOutCubic).SetLoops (-1, LoopType.Yoyo).SetId("Idle");
 				
+				#if UNITY_ANDROID
 				GameManager.GPManagerInstance.CommitMonstersDefeated (this.EnemiesKilled);
 				GameManager.GPManagerInstance.CheckFullComplete();
 				GameManager.GPManagerInstance.CheckKingTruePower();
+				#endif
 				
 			}));
         }
@@ -312,6 +318,7 @@ namespace BounceDudes
                 _pausePanel.Hide();
 			
             GameManager.Instance.LoadScene(GameManager.Instance.CurrentLevel.SceneName);
+            this.UnpauseGame();
             this.Dispose();
 
         }

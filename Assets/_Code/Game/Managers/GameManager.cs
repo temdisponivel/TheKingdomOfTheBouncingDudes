@@ -24,9 +24,11 @@ namespace BounceDudes
     {
         static protected GameManager _instance = null;
         static public GameManager Instance { get { return GameManager._instance; } }
-
+        
+        #if UNITY_ANDROID
 		static protected GooglePlayManager _googlePlayManagerInstance = new GooglePlayManager();
 		static public GooglePlayManager GPManagerInstance { get { return GameManager._googlePlayManagerInstance; } }
+        #endif
 
         public event Action OnStateChange;
 
@@ -57,9 +59,9 @@ namespace BounceDudes
             }
         }
 
-        public string SaveFileName = "boucedudes.save";
+        public string SaveFileName = "bouncedudes.save";
 
-        public string SaveFilePath { get { return String.Format("{0}{1}{2}", Application.persistentDataPath, "/", SaveFileName); } }
+        //public string SaveFilePath { get { return String.Format("{0}{1}{2}", Application.persistentDataPath, "/", SaveFileName); } }
 
         public List<int> FirstSoldiersToGive = new List<int>();
 
@@ -184,8 +186,7 @@ namespace BounceDudes
             {
                 LevelsById[level.Id] = level;
             }
-
-
+            
             this.LoadGame();
 
             if (this._availableSoldierInstanceIdById.Count == 0)
@@ -195,11 +196,15 @@ namespace BounceDudes
                     this._availableSoldierInstanceIdById[FirstSoldiersToGive[i]] = new List<int>() { 0 };
                     this.AddNameToSoldier(Soldiers[FirstSoldiersToGive[i]].GetComponent<Soldier>()._soldierName, FirstSoldiersToGive[i], 0);
                 }
+                
                 this.SaveGame();
             }
-
+            
             DOTween.Init(false, true, LogBehaviour.ErrorsOnly);
+            
+            #if UNITY_ANDROID
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
+            #endif
 			
 
         }
@@ -361,16 +366,34 @@ namespace BounceDudes
 
         public void SaveGame()
         {
-            FileUtil.WriteToBinaryFile(this.SaveFilePath, this.UpdateToGameInfo());
+            Debug.Log("Game Saved");
+            ES3.Save<GameInfomation>("GameSave",this.UpdateToGameInfo(), this.SaveFileName);
+            
+
+            //FileUtil.WriteToJsonFile(this.SaveFilePath, this.UpdateToGameInfo());
         }
 
         public void LoadGame()
         {
+
+            if (ES3.KeyExists("GameSave", this.SaveFileName))
+            {
+                Debug.Log("Game Loaded");
+                this.UpdateFromGameInfo(ES3.Load<GameInfomation>("GameSave", this.SaveFileName));
+            }
+            else
+            {
+                this.SaveGame();
+            }
+
+           
+            
+            /*
             if (File.Exists(this.SaveFilePath))
             {
                 try
                 {
-                    GameInfomation gameInfo = FileUtil.ReadFromBinaryFile<GameInfomation>(this.SaveFilePath);
+                    var gameInfo = FileUtil.ReadFromJsonFile<GameInfomation>(this.SaveFilePath);
                     this.UpdateFromGameInfo(gameInfo);
                 }
                 catch (SerializationException ex)
@@ -383,6 +406,8 @@ namespace BounceDudes
             {
                 this.SaveGame();
             }
+            */
+            
         }
 
         public void UpdateFromGameInfo(GameInfomation gameInfo)

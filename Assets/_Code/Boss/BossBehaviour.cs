@@ -59,7 +59,9 @@ namespace BounceDudes
                 if (_hp <= 0)
                 {
                     LevelManager.Instance.FinishLevel();
+                    #if UNITY_ANDROID
 					GameManager.GPManagerInstance.UnlockAchievement (GPGSIds.achievement_bob_is_no_more);
+					#endif
                 }
                 else
                     this.GetHit();
